@@ -13,3 +13,4 @@ C:\Users\RAM\Desktop\AFRAWY\AfrawyStore\AfrawyStore.Application\obj\Debug\net8.0
 C:\Users\RAM\Desktop\AFRAWY\AfrawyStore\AfrawyStore.Application\obj\Debug\net8.0\refint\AfrawyStore.Application.dll
 C:\Users\RAM\Desktop\AFRAWY\AfrawyStore\AfrawyStore.Application\obj\Debug\net8.0\AfrawyStore.Application.pdb
 C:\Users\RAM\Desktop\AFRAWY\AfrawyStore\AfrawyStore.Application\obj\Debug\net8.0\ref\AfrawyStore.Application.dll
+C:\Users\RAM\Desktop\AFRAWY\AfrawyStore\AfrawyStore.Application\obj\Debug\net8.0\AfrawyStore.Application.sourcelink.json

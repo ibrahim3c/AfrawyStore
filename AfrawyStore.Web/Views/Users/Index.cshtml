@@ -1,0 +1,101 @@
+@model IEnumerable<AfrawyStore.Application.DTOs.UserDto>
+@{
+    ViewData["Title"] = "إدارة المستخدمين";
+}
+
+<div class="d-flex justify-content-between align-items-center mb-4">
+    <h2 class="h3 text-primary mb-0"><i class="bi bi-people me-2"></i> @ViewData["Title"]</h2>
+    <a asp-action="Create" class="btn btn-primary-af shadow-sm">
+        <i class="bi bi-person-plus me-1"></i> إضافة مستخدم
+    </a>
+</div>
+
+@if (TempData["SuccessMessage"] != null)
+{
+    <div class="alert alert-success alert-dismissible fade show shadow-sm" role="alert">
+        <i class="bi bi-check-circle me-2"></i> @TempData["SuccessMessage"]
+        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+    </div>
+}
+@if (TempData["ErrorMessage"] != null)
+{
+    <div class="alert alert-danger alert-dismissible fade show shadow-sm" role="alert">
+        <i class="bi bi-exclamation-triangle me-2"></i> @TempData["ErrorMessage"]
+        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+    </div>
+}
+
+<div class="card shadow-sm border-0 rounded-4">
+    <div class="card-body p-0">
+        <div class="table-responsive">
+            <table class="table table-hover align-middle mb-0">
+                <thead class="table-light">
+                    <tr>
+                        <th class="ps-4">الاسم الكامل</th>
+                        <th>اسم المستخدم</th>
+                        <th>الصلاحية</th>
+                        <th>الحالة</th>
+                        <th class="text-end pe-4">الإجراءات</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var user in Model)
+                    {
+                        <tr>
+                            <td class="ps-4 fw-semibold text-dark">@user.FullName</td>
+                            <td class="text-muted">@user.Username</td>
+                            <td>
+                                @if (user.Role == AfrawyStore.Domain.Enums.UserRole.Admin)
+                                {
+                                    <span class="badge bg-primary bg-opacity-10 text-primary border border-primary-subtle px-2 py-1 rounded-3">مدير</span>
+                                }
+                                else
+                                {
+                                    <span class="badge bg-secondary bg-opacity-10 text-secondary border border-secondary-subtle px-2 py-1 rounded-3">موظف</span>
+                                }
+                            </td>
+                            <td>
+                                @if (user.IsActive)
+                                {
+                                    <span class="badge bg-success bg-opacity-10 text-success border border-success-subtle px-2 py-1 rounded-3"><i class="bi bi-check-circle-fill me-1"></i> نشط</span>
+                                }
+                                else
+                                {
+                                    <span class="badge bg-danger bg-opacity-10 text-danger border border-danger-subtle px-2 py-1 rounded-3"><i class="bi bi-x-circle-fill me-1"></i> موقوف</span>
+                                }
+                            </td>
+                            <td class="text-end pe-4">
+                                <a asp-action="Edit" asp-route-id="@user.Id" class="btn btn-sm btn-outline-primary shadow-sm">
+                                    <i class="bi bi-pencil"></i> تعديل
+                                </a>
+                                <form asp-action="ToggleStatus" asp-route-id="@user.Id" method="post" class="d-inline">
+                                    @if (user.IsActive)
+                                    {
+                                        <button type="submit" class="btn btn-sm btn-outline-danger shadow-sm ms-1" onclick="return confirm('هل أنت متأكد من إيقاف هذا المستخدم؟');">
+                                            <i class="bi bi-ban"></i> إيقاف
+                                        </button>
+                                    }
+                                    else
+                                    {
+                                        <button type="submit" class="btn btn-sm btn-outline-success shadow-sm ms-1" onclick="return confirm('هل أنت متأكد من تفعيل هذا المستخدم؟');">
+                                            <i class="bi bi-check2-circle"></i> تفعيل
+                                        </button>
+                                    }
+                                </form>
+                            </td>
+                        </tr>
+                    }
+                    @if (!Model.Any())
+                    {
+                        <tr>
+                            <td colspan="5" class="text-center py-5 text-muted">
+                                <i class="bi bi-inbox fs-2 d-block mb-2 text-black-50"></i>
+                                لا يوجد مستخدمين مسجلين
+                            </td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>

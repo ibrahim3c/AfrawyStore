@@ -1,0 +1,73 @@
+@model AfrawyStore.Application.DTOs.UserEditDto
+@using AfrawyStore.Domain.Enums
+@{
+    ViewData["Title"] = "تعديل بيانات المستخدم";
+}
+
+<div class="d-flex justify-content-between align-items-center mb-4">
+    <h2 class="h3 text-primary mb-0"><i class="bi bi-pencil-square me-2"></i> @ViewData["Title"]</h2>
+    <a asp-action="Index" class="btn btn-outline-secondary shadow-sm">
+        <i class="bi bi-arrow-right me-1"></i> عودة للقائمة
+    </a>
+</div>
+
+<div class="card shadow-sm border-0 rounded-4">
+    <div class="card-body p-4 p-md-5">
+        <form asp-action="Edit" method="post">
+            <div asp-validation-summary="ModelOnly" class="text-danger mb-3"></div>
+            <input type="hidden" asp-for="Id" />
+
+            <div class="row g-4">
+                <div class="col-md-6">
+                    <label asp-for="FullName" class="form-label fw-semibold">الاسم الكامل <span class="text-danger">*</span></label>
+                    <div class="input-group">
+                        <span class="input-group-text bg-light text-muted border-end-0"><i class="bi bi-person-badge"></i></span>
+                        <input asp-for="FullName" class="form-control border-start-0 ps-0" />
+                    </div>
+                    <span asp-validation-for="FullName" class="text-danger small"></span>
+                </div>
+                
+                <div class="col-md-6">
+                    <label asp-for="Username" class="form-label fw-semibold">اسم المستخدم <span class="text-danger">*</span></label>
+                    <div class="input-group">
+                        <span class="input-group-text bg-light text-muted border-end-0"><i class="bi bi-person"></i></span>
+                        <input asp-for="Username" class="form-control border-start-0 ps-0" />
+                    </div>
+                    <span asp-validation-for="Username" class="text-danger small"></span>
+                </div>
+
+                <div class="col-md-6">
+                    <label asp-for="Role" class="form-label fw-semibold">الصلاحية <span class="text-danger">*</span></label>
+                    <div class="input-group">
+                        <span class="input-group-text bg-light text-muted border-end-0"><i class="bi bi-shield-lock"></i></span>
+                        <select asp-for="Role" class="form-select border-start-0 ps-0">
+                            <option value="@UserRole.Employee">موظف مبيعات</option>
+                            <option value="@UserRole.Admin">مدير النظام</option>
+                        </select>
+                    </div>
+                    <span asp-validation-for="Role" class="text-danger small"></span>
+                </div>
+
+                <div class="col-12 mt-4">
+                    <div class="form-check form-switch fs-5">
+                        <input asp-for="IsActive" class="form-check-input" type="checkbox" role="switch">
+                        <label asp-for="IsActive" class="form-check-label fs-6 ms-2 pt-1">حساب نشط (يمكنه تسجيل الدخول)</label>
+                    </div>
+                </div>
+            </div>
+
+            <hr class="my-4 border-light">
+            
+            <div class="d-flex gap-2">
+                <button type="submit" class="btn btn-primary-af px-4 shadow-sm">
+                    <i class="bi bi-save me-1"></i> حفظ التعديلات
+                </button>
+                <a asp-action="Index" class="btn btn-light border shadow-sm">إلغاء</a>
+            </div>
+        </form>
+    </div>
+</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}

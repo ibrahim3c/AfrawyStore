@@ -144,3 +144,8 @@ C:\Users\RAM\Desktop\AFRAWY\AfrawyStore\AfrawyStore.Web\obj\Debug\net8.0\refint\
 C:\Users\RAM\Desktop\AFRAWY\AfrawyStore\AfrawyStore.Web\obj\Debug\net8.0\AfrawyStore.Web.pdb
 C:\Users\RAM\Desktop\AFRAWY\AfrawyStore\AfrawyStore.Web\obj\Debug\net8.0\AfrawyStore.Web.genruntimeconfig.cache
 C:\Users\RAM\Desktop\AFRAWY\AfrawyStore\AfrawyStore.Web\obj\Debug\net8.0\ref\AfrawyStore.Web.dll
+C:\Users\RAM\Desktop\AFRAWY\AfrawyStore\AfrawyStore.Web\bin\Debug\net8.0\Microsoft.Extensions.DependencyInjection.dll
+C:\Users\RAM\Desktop\AFRAWY\AfrawyStore\AfrawyStore.Web\bin\Debug\net8.0\Microsoft.Extensions.DependencyInjection.Abstractions.dll
+C:\Users\RAM\Desktop\AFRAWY\AfrawyStore\AfrawyStore.Web\bin\Debug\net8.0\Microsoft.Extensions.Logging.dll
+C:\Users\RAM\Desktop\AFRAWY\AfrawyStore\AfrawyStore.Web\bin\Debug\net8.0\Microsoft.Extensions.Logging.Abstractions.dll
+C:\Users\RAM\Desktop\AFRAWY\AfrawyStore\AfrawyStore.Web\obj\Debug\net8.0\AfrawyStore.Web.sourcelink.json

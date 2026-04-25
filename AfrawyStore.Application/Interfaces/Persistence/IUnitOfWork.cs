@@ -8,6 +8,7 @@ public interface IUnitOfWork : IDisposable
     ICategoryRepository Categories { get; }
     IInventoryRepository Inventory { get; }
     ISaleRepository Sales { get; }
+    IUserRepository Users { get; }
 
     Task<int> SaveChangesAsync();
 }

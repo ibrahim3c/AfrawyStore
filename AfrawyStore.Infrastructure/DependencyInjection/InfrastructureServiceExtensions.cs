@@ -21,6 +21,7 @@ public static class InfrastructureServiceExtensions
         services.AddScoped<ICategoryRepository, CategoryRepository>();
         services.AddScoped<IInventoryRepository, InventoryRepository>();
         services.AddScoped<ISaleRepository, SaleRepository>();
+        services.AddScoped<IUserRepository, UserRepository>();
         
         services.AddScoped<IUnitOfWork, UnitOfWork.UnitOfWork>();
 

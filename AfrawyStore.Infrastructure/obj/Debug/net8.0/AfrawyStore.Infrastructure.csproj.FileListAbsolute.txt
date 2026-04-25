@@ -15,3 +15,4 @@ C:\Users\RAM\Desktop\AFRAWY\AfrawyStore\AfrawyStore.Infrastructure\obj\Debug\net
 C:\Users\RAM\Desktop\AFRAWY\AfrawyStore\AfrawyStore.Infrastructure\obj\Debug\net8.0\refint\AfrawyStore.Infrastructure.dll
 C:\Users\RAM\Desktop\AFRAWY\AfrawyStore\AfrawyStore.Infrastructure\obj\Debug\net8.0\AfrawyStore.Infrastructure.pdb
 C:\Users\RAM\Desktop\AFRAWY\AfrawyStore\AfrawyStore.Infrastructure\obj\Debug\net8.0\ref\AfrawyStore.Infrastructure.dll
+C:\Users\RAM\Desktop\AFRAWY\AfrawyStore\AfrawyStore.Infrastructure\obj\Debug\net8.0\AfrawyStore.Infrastructure.sourcelink.json

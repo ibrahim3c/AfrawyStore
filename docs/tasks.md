@@ -20,17 +20,17 @@
 
 ---
 
-## Milestone 1 — Authentication & User Management
+## Milestone 1 — Authentication & User Management ✅ (Done)
 > Login, roles, session, user CRUD (Admin only).
 
-- [ ] 1.1 ASP.NET Core Identity integration (or custom auth with hashed passwords)
-- [ ] 1.2 AccountController — Login / Logout actions with real auth
-- [ ] 1.3 Login view wired to backend (currently a mockup)
-- [ ] 1.4 Role-based authorization ([Authorize], Admin/Employee)
-- [ ] 1.5 UsersController — CRUD (Admin only)
-- [ ] 1.6 User views: list, create/edit form
-- [ ] 1.7 Password change functionality
-- [ ] 1.8 Session timeout configuration
+- [x] 1.1 ASP.NET Core Identity integration (or custom auth with hashed passwords)
+- [x] 1.2 AccountController — Login / Logout actions with real auth
+- [x] 1.3 Login view wired to backend (currently a mockup)
+- [x] 1.4 Role-based authorization ([Authorize], Admin/Employee)
+- [x] 1.5 UsersController — CRUD (Admin only)
+- [x] 1.6 User views: list, create/edit form
+- [x] 1.7 Password change functionality
+- [x] 1.8 Session timeout configuration
 
 ---
 

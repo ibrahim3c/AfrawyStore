@@ -9,3 +9,4 @@ C:\Users\RAM\Desktop\AFRAWY\AfrawyStore\AfrawyStore.Domain\obj\Debug\net8.0\Afra
 C:\Users\RAM\Desktop\AFRAWY\AfrawyStore\AfrawyStore.Domain\obj\Debug\net8.0\refint\AfrawyStore.Domain.dll
 C:\Users\RAM\Desktop\AFRAWY\AfrawyStore\AfrawyStore.Domain\obj\Debug\net8.0\AfrawyStore.Domain.pdb
 C:\Users\RAM\Desktop\AFRAWY\AfrawyStore\AfrawyStore.Domain\obj\Debug\net8.0\ref\AfrawyStore.Domain.dll
+C:\Users\RAM\Desktop\AFRAWY\AfrawyStore\AfrawyStore.Domain\obj\Debug\net8.0\AfrawyStore.Domain.sourcelink.json
