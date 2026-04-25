@@ -11,6 +11,7 @@ public static class ApplicationServiceExtensions
         services.AddScoped<IProductService, ProductService>();
         services.AddScoped<IUserService, UserService>();
         services.AddScoped<ICategoryService, CategoryService>();
+        services.AddScoped<IInventoryService, InventoryService>();
         // Add other services here as they are implemented
         
         return services;

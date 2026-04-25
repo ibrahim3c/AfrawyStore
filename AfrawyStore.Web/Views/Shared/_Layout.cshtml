@@ -33,11 +33,9 @@
             </div>
 
             <div class="d-flex align-items-center gap-4">
-                <a href="#" class="text-secondary position-relative">
+                <a href="/Inventory?filter=low" class="text-secondary position-relative">
                     <i class="bi bi-bell fs-5"></i>
-                    <span class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger" style="font-size: 0.6rem;">
-                        3
-                    </span>
+                    @await Component.InvokeAsync("LowStockBadge")
                 </a>
                 
                 @if(User.Identity?.IsAuthenticated == true)
@@ -88,7 +86,7 @@
             <a asp-controller="Inventory" asp-action="Index" class="sidebar-nav-item text-decoration-none @(currentController == "Inventory" ? "active" : "")">
                 <i class="bi bi-layers"></i>
                 <span>المخزون</span>
-                <span class="badge bg-danger rounded-pill ms-auto">7</span>
+                @await Component.InvokeAsync("LowStockBadge")
             </a>
 
             <a asp-controller="Sales" asp-action="Index" class="sidebar-nav-item text-decoration-none @(currentController == "Sales" ? "active" : "")">

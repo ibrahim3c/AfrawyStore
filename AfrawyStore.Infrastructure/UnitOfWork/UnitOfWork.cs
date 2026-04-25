@@ -12,6 +12,7 @@ public class UnitOfWork : IUnitOfWork
     public IProductRepository Products { get; }
     public ICategoryRepository Categories { get; }
     public IInventoryRepository Inventory { get; }
+    public IInventoryLogRepository InventoryLogs { get; }
     public ISaleRepository Sales { get; }
     public IUserRepository Users { get; }
 
@@ -21,6 +22,7 @@ public class UnitOfWork : IUnitOfWork
         Products = new ProductRepository(context);
         Categories = new CategoryRepository(context);
         Inventory = new InventoryRepository(context);
+        InventoryLogs = new InventoryLogRepository(context);
         Sales = new SaleRepository(context);
         Users = new UserRepository(context);
     }

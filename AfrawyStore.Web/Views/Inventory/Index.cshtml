@@ -1,0 +1,160 @@
+@model IEnumerable<AfrawyStore.Application.DTOs.InventoryDto>
+@{
+    ViewData["Title"] = "إدارة المخزون";
+    var lowCount = Model.Count(i => i.StockStatus == "low");
+    var outCount = Model.Count(i => i.StockStatus == "out");
+}
+
+<div class="d-flex justify-content-between align-items-center mb-4">
+    <h2 class="h3 text-primary mb-0"><i class="bi bi-layers me-2"></i> @ViewData["Title"]</h2>
+    <div class="d-flex gap-2">
+        @if (ViewBag.Filter == "low")
+        {
+            <a asp-action="Index" class="btn btn-outline-secondary shadow-sm">
+                <i class="bi bi-arrow-right me-1"></i> عرض الكل
+            </a>
+        }
+        else
+        {
+            <a asp-action="Index" asp-route-filter="low" class="btn btn-outline-danger shadow-sm">
+                <i class="bi bi-exclamation-triangle me-1"></i> عرض المخزون المنخفض (@(lowCount + outCount))
+            </a>
+        }
+    </div>
+</div>
+
+@if (TempData["SuccessMessage"] != null)
+{
+    <div class="alert alert-success alert-dismissible fade show shadow-sm" role="alert">
+        <i class="bi bi-check-circle me-2"></i> @TempData["SuccessMessage"]
+        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+    </div>
+}
+@if (TempData["ErrorMessage"] != null)
+{
+    <div class="alert alert-danger alert-dismissible fade show shadow-sm" role="alert">
+        <i class="bi bi-exclamation-triangle me-2"></i> @TempData["ErrorMessage"]
+        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+    </div>
+}
+
+<!-- Summary Cards -->
+<div class="row g-3 mb-4">
+    <div class="col-md-4">
+        <div class="card shadow-sm border-0 rounded-4 border-start border-4 border-success">
+            <div class="card-body d-flex align-items-center gap-3 py-3">
+                <div class="rounded-circle bg-success bg-opacity-10 text-success d-flex align-items-center justify-content-center" style="width:48px;height:48px;">
+                    <i class="bi bi-check-circle fs-4"></i>
+                </div>
+                <div>
+                    <div class="text-muted small">متوفر</div>
+                    <div class="h4 mb-0 fw-bold text-success">@Model.Count(i => i.StockStatus == "ok")</div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-4">
+        <div class="card shadow-sm border-0 rounded-4 border-start border-4 border-warning">
+            <div class="card-body d-flex align-items-center gap-3 py-3">
+                <div class="rounded-circle bg-warning bg-opacity-10 text-warning d-flex align-items-center justify-content-center" style="width:48px;height:48px;">
+                    <i class="bi bi-exclamation-triangle fs-4"></i>
+                </div>
+                <div>
+                    <div class="text-muted small">مخزون منخفض</div>
+                    <div class="h4 mb-0 fw-bold text-warning">@lowCount</div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-4">
+        <div class="card shadow-sm border-0 rounded-4 border-start border-4 border-danger">
+            <div class="card-body d-flex align-items-center gap-3 py-3">
+                <div class="rounded-circle bg-danger bg-opacity-10 text-danger d-flex align-items-center justify-content-center" style="width:48px;height:48px;">
+                    <i class="bi bi-x-octagon fs-4"></i>
+                </div>
+                <div>
+                    <div class="text-muted small">نفد</div>
+                    <div class="h4 mb-0 fw-bold text-danger">@outCount</div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Inventory Table -->
+<div class="card shadow-sm border-0 rounded-4">
+    <div class="card-body p-0">
+        <div class="table-responsive">
+            <table class="table table-hover align-middle mb-0">
+                <thead class="table-light">
+                    <tr>
+                        <th class="ps-4">SKU</th>
+                        <th>المنتج</th>
+                        <th>الفئة</th>
+                        <th class="text-center">المخزون الحالي</th>
+                        <th class="text-center">الحد الأدنى</th>
+                        <th class="text-center">الحالة</th>
+                        <th>آخر تحديث</th>
+                        <th class="text-end pe-4">الإجراءات</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var item in Model)
+                    {
+                        var rowClass = item.StockStatus == "out" ? "table-danger" : item.StockStatus == "low" ? "table-warning" : "";
+                        <tr class="@rowClass">
+                            <td class="ps-4"><span class="badge bg-light text-dark border font-monospace">@item.ProductSKU</span></td>
+                            <td class="fw-semibold text-dark">@item.ProductName</td>
+                            <td class="text-muted small">@item.CategoryName</td>
+                            <td class="text-center">
+                                <span class="fw-bold @(item.StockStatus == "out" ? "text-danger" : item.StockStatus == "low" ? "text-warning" : "text-success")">
+                                    @item.CurrentStock
+                                </span>
+                                <small class="text-muted ms-1">@item.Unit</small>
+                            </td>
+                            <td class="text-center text-muted">@item.MinimumStock @item.Unit</td>
+                            <td class="text-center">
+                                @if (item.StockStatus == "out")
+                                {
+                                    <span class="badge bg-danger bg-opacity-10 text-danger border border-danger-subtle px-2 py-1">
+                                        <i class="bi bi-x-octagon-fill me-1"></i> نفد
+                                    </span>
+                                }
+                                else if (item.StockStatus == "low")
+                                {
+                                    <span class="badge bg-warning bg-opacity-10 text-warning border border-warning-subtle px-2 py-1">
+                                        <i class="bi bi-exclamation-triangle-fill me-1"></i> منخفض
+                                    </span>
+                                }
+                                else
+                                {
+                                    <span class="badge bg-success bg-opacity-10 text-success border border-success-subtle px-2 py-1">
+                                        <i class="bi bi-check-circle-fill me-1"></i> متوفر
+                                    </span>
+                                }
+                            </td>
+                            <td class="text-muted small">@item.LastUpdated.ToString("yyyy/MM/dd")</td>
+                            <td class="text-end pe-4">
+                                <a asp-action="Adjust" asp-route-productId="@item.ProductId" class="btn btn-sm btn-primary-af shadow-sm" title="تعديل المخزون">
+                                    <i class="bi bi-plus-slash-minus me-1"></i> تعديل
+                                </a>
+                                <a asp-action="Logs" asp-route-productId="@item.ProductId" class="btn btn-sm btn-outline-secondary shadow-sm" title="سجل الحركات">
+                                    <i class="bi bi-clock-history"></i>
+                                </a>
+                            </td>
+                        </tr>
+                    }
+                    @if (!Model.Any())
+                    {
+                        <tr>
+                            <td colspan="8" class="text-center py-5 text-muted">
+                                <i class="bi bi-inbox fs-2 d-block mb-2 text-black-50"></i>
+                                لا يوجد سجلات مخزون
+                            </td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>

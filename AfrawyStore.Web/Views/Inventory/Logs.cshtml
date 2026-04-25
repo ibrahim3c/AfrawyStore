@@ -1,0 +1,83 @@
+@model IEnumerable<AfrawyStore.Application.DTOs.InventoryLogDto>
+@{
+    ViewData["Title"] = "سجل حركات المخزون";
+}
+
+<div class="d-flex justify-content-between align-items-center mb-4">
+    <div>
+        <h2 class="h3 text-primary mb-1"><i class="bi bi-clock-history me-2"></i> @ViewData["Title"]</h2>
+        <p class="text-muted mb-0">
+            <span class="badge bg-light text-dark border font-monospace">@ViewBag.ProductSKU</span>
+            <span class="fw-semibold ms-1">@ViewBag.ProductName</span>
+        </p>
+    </div>
+    <div class="d-flex gap-2">
+        <a asp-action="Adjust" asp-route-productId="@ViewBag.ProductId" class="btn btn-primary-af shadow-sm">
+            <i class="bi bi-plus-slash-minus me-1"></i> تعديل المخزون
+        </a>
+        <a asp-action="Index" class="btn btn-outline-secondary shadow-sm">
+            <i class="bi bi-arrow-right me-1"></i> عودة للمخزون
+        </a>
+    </div>
+</div>
+
+<div class="card shadow-sm border-0 rounded-4">
+    <div class="card-body p-0">
+        <div class="table-responsive">
+            <table class="table table-hover align-middle mb-0">
+                <thead class="table-light">
+                    <tr>
+                        <th class="ps-4">#</th>
+                        <th>نوع العملية</th>
+                        <th class="text-center">الكمية</th>
+                        <th>الملاحظة</th>
+                        <th>بواسطة</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @{ int counter = 1; }
+                    @foreach (var log in Model)
+                    {
+                        <tr>
+                            <td class="ps-4 text-muted">@(counter++)</td>
+                            <td>
+                                @if (log.ChangeType == AfrawyStore.Domain.Enums.InventoryChangeType.StockIn)
+                                {
+                                    <span class="badge bg-success bg-opacity-10 text-success border border-success-subtle px-2 py-1">
+                                        <i class="bi bi-arrow-down-circle me-1"></i> @log.ChangeTypeLabel
+                                    </span>
+                                }
+                                else if (log.ChangeType == AfrawyStore.Domain.Enums.InventoryChangeType.Sale)
+                                {
+                                    <span class="badge bg-info bg-opacity-10 text-info border border-info-subtle px-2 py-1">
+                                        <i class="bi bi-cart me-1"></i> @log.ChangeTypeLabel
+                                    </span>
+                                }
+                                else
+                                {
+                                    <span class="badge bg-warning bg-opacity-10 text-warning border border-warning-subtle px-2 py-1">
+                                        <i class="bi bi-arrow-repeat me-1"></i> @log.ChangeTypeLabel
+                                    </span>
+                                }
+                            </td>
+                            <td class="text-center fw-bold @(log.QuantityChange >= 0 ? "text-success" : "text-danger")">
+                                @(log.QuantityChange >= 0 ? "+" : "")@log.QuantityChange
+                            </td>
+                            <td class="text-muted">@(string.IsNullOrEmpty(log.Note) ? "—" : log.Note)</td>
+                            <td class="text-muted small">@log.CreatedByName</td>
+                        </tr>
+                    }
+                    @if (!Model.Any())
+                    {
+                        <tr>
+                            <td colspan="5" class="text-center py-5 text-muted">
+                                <i class="bi bi-inbox fs-2 d-block mb-2 text-black-50"></i>
+                                لا يوجد حركات مسجلة لهذا المنتج
+                            </td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>

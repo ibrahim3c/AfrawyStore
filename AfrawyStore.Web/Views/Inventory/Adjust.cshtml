@@ -1,0 +1,160 @@
+@model AfrawyStore.Application.DTOs.InventoryAdjustDto
+@{
+    ViewData["Title"] = "تعديل المخزون";
+}
+
+<div class="d-flex justify-content-between align-items-center mb-4">
+    <h2 class="h3 text-primary mb-0"><i class="bi bi-plus-slash-minus me-2"></i> @ViewData["Title"]</h2>
+    <a asp-action="Index" class="btn btn-outline-secondary shadow-sm">
+        <i class="bi bi-arrow-right me-1"></i> عودة للمخزون
+    </a>
+</div>
+
+<div class="row g-4">
+    <div class="col-lg-8">
+        <div class="card shadow-sm border-0 rounded-4">
+            <div class="card-body p-4 p-md-5">
+                <form asp-action="Adjust" method="post">
+                    <div asp-validation-summary="ModelOnly" class="alert alert-danger mb-4"></div>
+                    <input type="hidden" asp-for="ProductId" />
+                    <input type="hidden" asp-for="ProductName" />
+                    <input type="hidden" asp-for="ProductSKU" />
+                    <input type="hidden" asp-for="CurrentStock" />
+                    <input type="hidden" asp-for="Unit" />
+
+                    <div class="row g-4">
+                        <div class="col-md-6">
+                            <label asp-for="ChangeType" class="form-label fw-semibold">نوع العملية <span class="text-danger">*</span></label>
+                            <select asp-for="ChangeType" class="form-select" id="changeTypeSelect">
+                                <option value="StockIn">إضافة مخزون (وارد)</option>
+                                <option value="Adjustment">تعديل / تصحيح (سحب)</option>
+                            </select>
+                            <span asp-validation-for="ChangeType" class="text-danger small"></span>
+                        </div>
+
+                        <div class="col-md-6">
+                            <label asp-for="Quantity" class="form-label fw-semibold">الكمية <span class="text-danger">*</span></label>
+                            <div class="input-group">
+                                <input asp-for="Quantity" type="number" step="0.01" min="0.01" class="form-control" id="quantityInput" placeholder="0" autofocus />
+                                <span class="input-group-text bg-light">@Model.Unit</span>
+                            </div>
+                            <span asp-validation-for="Quantity" class="text-danger small"></span>
+                        </div>
+
+                        <div class="col-md-6">
+                            <label asp-for="MinimumStock" class="form-label fw-semibold">الحد الأدنى للمخزون</label>
+                            <div class="input-group">
+                                <input asp-for="MinimumStock" type="number" step="0.01" min="0" class="form-control" />
+                                <span class="input-group-text bg-light">@Model.Unit</span>
+                            </div>
+                            <span asp-validation-for="MinimumStock" class="text-danger small"></span>
+                        </div>
+
+                        <div class="col-12">
+                            <label asp-for="Note" class="form-label fw-semibold">ملاحظة</label>
+                            <textarea asp-for="Note" class="form-control" rows="3" placeholder="سبب التعديل..."></textarea>
+                            <span asp-validation-for="Note" class="text-danger small"></span>
+                        </div>
+
+                        <!-- Live Result Preview -->
+                        <div class="col-12">
+                            <div class="alert rounded-3 p-3 mb-0" id="resultPreview">
+                                <div class="d-flex align-items-center gap-3">
+                                    <div>
+                                        <small class="text-muted d-block">المخزون الحالي</small>
+                                        <span class="fw-bold fs-5">@Model.CurrentStock @Model.Unit</span>
+                                    </div>
+                                    <div class="fs-4" id="operatorIcon">→</div>
+                                    <div>
+                                        <small class="text-muted d-block">المخزون بعد التعديل</small>
+                                        <span class="fw-bold fs-5" id="newStockDisplay">@Model.CurrentStock @Model.Unit</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <hr class="my-4 border-light">
+                    <div class="d-flex gap-2">
+                        <button type="submit" class="btn btn-primary-af px-4 shadow-sm">
+                            <i class="bi bi-check-lg me-1"></i> تطبيق التعديل
+                        </button>
+                        <a asp-action="Index" class="btn btn-light border shadow-sm">إلغاء</a>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <!-- Side Info -->
+    <div class="col-lg-4">
+        <div class="card shadow-sm border-0 rounded-4 mb-4">
+            <div class="card-header bg-white rounded-top-4 border-bottom py-3 px-4">
+                <h6 class="mb-0 fw-bold text-dark"><i class="bi bi-box-seam me-2 text-primary"></i> معلومات المنتج</h6>
+            </div>
+            <div class="card-body p-4">
+                <dl class="mb-0">
+                    <dt class="text-muted fw-normal small">المنتج</dt>
+                    <dd class="fw-semibold">@Model.ProductName</dd>
+                    <dt class="text-muted fw-normal small">رمز المنتج</dt>
+                    <dd><span class="badge bg-light text-dark border font-monospace">@Model.ProductSKU</span></dd>
+                    <dt class="text-muted fw-normal small">المخزون الحالي</dt>
+                    <dd class="fw-bold @(Model.CurrentStock <= 0 ? "text-danger" : Model.CurrentStock <= 5 ? "text-warning" : "text-success")">
+                        @Model.CurrentStock @Model.Unit
+                    </dd>
+                    <dt class="text-muted fw-normal small">الحد الأدنى</dt>
+                    <dd>@Model.MinimumStock @Model.Unit</dd>
+                </dl>
+            </div>
+        </div>
+
+        <a asp-action="Logs" asp-route-productId="@Model.ProductId" class="btn btn-outline-secondary w-100 shadow-sm">
+            <i class="bi bi-clock-history me-1"></i> عرض سجل الحركات
+        </a>
+    </div>
+</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+    <script>
+        const currentStock = @Model.CurrentStock;
+        const unit = '@Model.Unit';
+        const changeTypeSelect = document.getElementById('changeTypeSelect');
+        const quantityInput = document.getElementById('quantityInput');
+        const newStockDisplay = document.getElementById('newStockDisplay');
+        const resultPreview = document.getElementById('resultPreview');
+        const operatorIcon = document.getElementById('operatorIcon');
+
+        function updatePreview() {
+            const qty = parseFloat(quantityInput.value) || 0;
+            const type = changeTypeSelect.value;
+            let newStock;
+
+            if (type === 'StockIn') {
+                newStock = currentStock + qty;
+                operatorIcon.textContent = '+';
+                operatorIcon.className = 'fs-4 text-success fw-bold';
+            } else {
+                newStock = currentStock - qty;
+                operatorIcon.textContent = '−';
+                operatorIcon.className = 'fs-4 text-danger fw-bold';
+            }
+
+            newStockDisplay.textContent = newStock.toFixed(2) + ' ' + unit;
+
+            if (newStock < 0) {
+                resultPreview.className = 'alert rounded-3 p-3 mb-0 alert-danger border-danger-subtle';
+                newStockDisplay.className = 'fw-bold fs-5 text-danger';
+            } else if (newStock <= @Model.MinimumStock) {
+                resultPreview.className = 'alert rounded-3 p-3 mb-0 alert-warning border-warning-subtle';
+                newStockDisplay.className = 'fw-bold fs-5 text-warning';
+            } else {
+                resultPreview.className = 'alert rounded-3 p-3 mb-0 alert-success border-success-subtle';
+                newStockDisplay.className = 'fw-bold fs-5 text-success';
+            }
+        }
+
+        changeTypeSelect.addEventListener('change', updatePreview);
+        quantityInput.addEventListener('input', updatePreview);
+    </script>
+}

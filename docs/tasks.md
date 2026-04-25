@@ -62,17 +62,17 @@
 
 ---
 
-## Milestone 4 — Inventory Management
+## Milestone 4 — Inventory Management ✅ (Done)
 > Stock tracking, adjustments, low-stock alerts.
 
-- [ ] 4.1 IInventoryService + InventoryService
-- [ ] 4.2 InventoryController — Index, Adjust
-- [ ] 4.3 Inventory views: list (color-coded status), adjustment form/modal
-- [ ] 4.4 Stock-in, adjustment, and correction logging (InventoryLogs)
-- [ ] 4.5 MinimumStock threshold per product
-- [ ] 4.6 Low-stock alert logic (CurrentStock ≤ MinimumStock)
-- [ ] 4.7 Alert badge in sidebar / navbar
-- [ ] 4.8 Stock cannot drop below zero (validation)
+- [x] 4.1 IInventoryService + InventoryService
+- [x] 4.2 InventoryController — Index, Adjust
+- [x] 4.3 Inventory views: list (color-coded status), adjustment form/modal
+- [x] 4.4 Stock-in, adjustment, and correction logging (InventoryLogs)
+- [x] 4.5 MinimumStock threshold per product
+- [x] 4.6 Low-stock alert logic (CurrentStock ≤ MinimumStock)
+- [x] 4.7 Alert badge in sidebar / navbar
+- [x] 4.8 Stock cannot drop below zero (validation)
 
 ---
 
