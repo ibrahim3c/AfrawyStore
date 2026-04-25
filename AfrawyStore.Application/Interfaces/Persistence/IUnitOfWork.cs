@@ -1,0 +1,13 @@
+using AfrawyStore.Domain.Interfaces;
+
+namespace AfrawyStore.Application.Interfaces.Persistence;
+
+public interface IUnitOfWork : IDisposable
+{
+    IProductRepository Products { get; }
+    ICategoryRepository Categories { get; }
+    IInventoryRepository Inventory { get; }
+    ISaleRepository Sales { get; }
+
+    Task<int> SaveChangesAsync();
+}

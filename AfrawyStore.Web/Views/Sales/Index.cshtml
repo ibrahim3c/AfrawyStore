@@ -1,0 +1,190 @@
+@{
+    ViewData["Title"] = "بيع جديد (نقطة البيع)";
+    // In RTL, the first column in raw HTML appears on the right.
+    // So col-lg-7 (Search) comes first, and col-lg-5 (Cart) comes second.
+}
+
+<div class="row g-4 h-100" style="min-height: calc(100vh - 160px);">
+    
+    <!-- Products Search & Grid (Right Side in RTL) -->
+    <div class="col-12 col-lg-7 col-xl-8 d-flex flex-column">
+        <div class="af-card p-4 d-flex flex-column h-100 border-top-0 border-start-0 border-bottom-0 shadow-none rounded-0 rounded-end bg-transparent" style="padding-top: 0 !important;">
+            
+            <h2 class="h5 fw-bold mb-3"><i class="bi bi-search me-2 text-muted"></i>البحث عن منتج</h2>
+            
+            <div class="position-relative mb-4">
+                <i class="bi bi-upc-scan position-absolute top-50 translate-middle-y text-muted" style="right: 15px;"></i>
+                <input type="text" class="form-control form-control-af form-control-lg bg-white" placeholder="اكتب الاسم أو الباركود (SKU)... [ / للبحث ]" style="padding-right: 40px; border-width: 2px;" autofocus />
+            </div>
+            
+            <!-- Products Grid Scrollable Area -->
+            <div class="row g-3 overflow-auto pe-2 pb-2 flex-grow-1 align-content-start" style="max-height: calc(100vh - 280px);">
+                
+                <!-- Product Card 1 -->
+                <div class="col-12 col-xl-6">
+                    <div class="border rounded p-3 bg-white h-100 d-flex align-items-center gap-3 transition cursor-pointer hover-shadow" style="cursor: pointer; transition: all var(--transition-fast);">
+                        <div class="bg-light rounded d-flex align-items-center justify-content-center text-muted flex-shrink-0" style="width: 64px; height: 64px;">
+                            <i class="bi bi-image fs-4"></i>
+                        </div>
+                        <div class="flex-grow-1">
+                            <div class="fw-bold fs-sm mb-1 text-truncate" style="max-width: 140px;">دهان مائي أبيض</div>
+                            <div class="fs-caption text-muted mb-1">PT-001 · <span class="fw-semibold text-dark numeric">85.00 ج</span></div>
+                            <div class="fs-caption text-success">المخزون: 12</div>
+                        </div>
+                        <button class="btn btn-sm btn-outline-secondary rounded-pill px-3 flex-shrink-0">إضافة</button>
+                    </div>
+                </div>
+
+                <!-- Product Card 2 -->
+                <div class="col-12 col-xl-6">
+                    <div class="border rounded p-3 bg-white h-100 d-flex align-items-center gap-3 transition" style="cursor: pointer; transition: all var(--transition-fast);">
+                        <div class="bg-light rounded d-flex align-items-center justify-content-center text-muted flex-shrink-0" style="width: 64px; height: 64px;">
+                            <i class="bi bi-image fs-4"></i>
+                        </div>
+                        <div class="flex-grow-1">
+                            <div class="fw-bold fs-sm mb-1 text-truncate" style="max-width: 140px;">دهان زيتي أحمر</div>
+                            <div class="fs-caption text-muted mb-1">PT-008 · <span class="fw-semibold text-dark numeric">60.00 ج</span></div>
+                            <div class="fs-caption text-danger">المخزون: 5</div>
+                        </div>
+                        <button class="btn btn-sm btn-outline-secondary rounded-pill px-3 flex-shrink-0">إضافة</button>
+                    </div>
+                </div>
+
+                <!-- Product Card 3 (Out of stock) -->
+                <div class="col-12 col-xl-6">
+                    <div class="border rounded p-3 bg-light h-100 d-flex align-items-center gap-3 position-relative overflow-hidden" style="opacity: 0.6;">
+                        <div class="bg-white rounded d-flex align-items-center justify-content-center text-muted flex-shrink-0" style="width: 64px; height: 64px;">
+                            <i class="bi bi-image fs-4"></i>
+                        </div>
+                        <div class="flex-grow-1">
+                            <div class="fw-bold fs-sm mb-1 text-truncate" style="max-width: 140px;">فرشاة دهان 3 بوصة</div>
+                            <div class="fs-caption text-muted mb-1">BR-012 · <span class="fw-semibold text-dark numeric">15.00 ج</span></div>
+                            <div class="fs-caption text-danger fw-bold"><i class="bi bi-x-circle me-1"></i>نفذ المخزون</div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Product Card 4 -->
+                <div class="col-12 col-xl-6">
+                    <div class="border rounded p-3 bg-white h-100 d-flex align-items-center gap-3 transition" style="cursor: pointer; transition: all var(--transition-fast);">
+                        <div class="bg-light rounded d-flex align-items-center justify-content-center text-muted flex-shrink-0" style="width: 64px; height: 64px;">
+                            <i class="bi bi-image fs-4"></i>
+                        </div>
+                        <div class="flex-grow-1">
+                            <div class="fw-bold fs-sm mb-1 text-truncate" style="max-width: 140px;">جردل بلاستيك</div>
+                            <div class="fs-caption text-muted mb-1">PL-099 · <span class="fw-semibold text-dark numeric">25.00 ج</span></div>
+                            <div class="fs-caption text-success">المخزون: 40</div>
+                        </div>
+                        <button class="btn btn-sm btn-outline-secondary rounded-pill px-3 flex-shrink-0">إضافة</button>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+
+    <!-- Order Summary (Left Side in RTL) -->
+    <div class="col-12 col-lg-5 col-xl-4 d-flex flex-column">
+        <div class="af-card p-0 d-flex flex-column h-100 shadow-sm border-primary" style="border-width: 2px;">
+            
+            <div class="p-4 border-bottom bg-light rounded-top d-flex justify-content-between align-items-center">
+                <h2 class="h5 fw-bold mb-0"><i class="bi bi-receipt me-2 text-primary"></i>ملخص الطلب</h2>
+                <button class="btn btn-sm btn-outline-danger py-1 fs-caption rounded-pill"><i class="bi bi-trash me-1"></i>إفراغ</button>
+            </div>
+            
+            <!-- Cart Items Scrollable -->
+            <div class="flex-grow-1 overflow-auto p-3 bg-white" style="max-height: calc(100vh - 460px);">
+                
+                <!-- Cart Item 1 -->
+                <div class="d-flex justify-content-between align-items-start mb-3 pb-3 border-bottom">
+                    <div class="flex-grow-1 pe-3">
+                        <div class="fw-bold fs-sm mb-1">دهان مائي أبيض</div>
+                        <div class="text-muted fs-caption">85.00 ج للحبة</div>
+                        
+                        <div class="d-flex align-items-center mt-2 gap-2">
+                            <button class="btn-icon rounded-circle border" style="width: 28px; height: 28px;"><i class="bi bi-dash"></i></button>
+                            <span class="fw-bold d-inline-block text-center numeric" style="width: 24px;">3</span>
+                            <button class="btn-icon rounded-circle border text-primary" style="width: 28px; height: 28px;"><i class="bi bi-plus"></i></button>
+                        </div>
+                    </div>
+                    <div class="text-end">
+                        <div class="fw-bold numeric text-dark">255.00 ج</div>
+                        <button class="btn btn-link text-danger p-0 mt-2 fs-caption text-decoration-none"><i class="bi bi-x-lg me-1"></i>حذف</button>
+                    </div>
+                </div>
+
+                <!-- Cart Item 2 -->
+                <div class="d-flex justify-content-between align-items-start mb-3 pb-3 border-bottom">
+                    <div class="flex-grow-1 pe-3">
+                        <div class="fw-bold fs-sm mb-1">مفتاح ربط 14mm</div>
+                        <div class="text-muted fs-caption">22.50 ج للحبة</div>
+                        
+                        <div class="d-flex align-items-center mt-2 gap-2">
+                            <button class="btn-icon rounded-circle border" style="width: 28px; height: 28px;"><i class="bi bi-dash"></i></button>
+                            <span class="fw-bold d-inline-block text-center numeric" style="width: 24px;">1</span>
+                            <button class="btn-icon rounded-circle border text-primary" style="width: 28px; height: 28px;"><i class="bi bi-plus"></i></button>
+                        </div>
+                    </div>
+                    <div class="text-end">
+                        <div class="fw-bold numeric text-dark">22.50 ج</div>
+                        <button class="btn btn-link text-danger p-0 mt-2 fs-caption text-decoration-none"><i class="bi bi-x-lg me-1"></i>حذف</button>
+                    </div>
+                </div>
+
+            </div>
+            
+            <!-- Payment & Totals Footer -->
+            <div class="p-4 bg-light rounded-bottom mt-auto">
+                
+                <div class="d-flex justify-content-between mb-2 fs-sm">
+                    <span class="text-muted">المجموع الفرعي:</span>
+                    <span class="fw-semibold numeric">277.50 ج</span>
+                </div>
+                
+                <div class="d-flex justify-content-between align-items-center mb-3 fs-sm pb-3 border-bottom">
+                    <span class="text-muted">خصم:</span>
+                    <div class="d-flex align-items-center" style="width: 100px;">
+                        <input type="text" class="form-control form-control-sm text-center numeric" value="0.00" />
+                        <span class="ms-2 text-muted">ج</span>
+                    </div>
+                </div>
+                
+                <div class="d-flex justify-content-between mb-4 mt-2">
+                    <span class="h5 fw-bold mb-0">الإجمالي:</span>
+                    <span class="h4 fw-bold mb-0 text-primary numeric">277.50 ج</span>
+                </div>
+                
+                <div class="mb-3">
+                    <div class="text-muted fs-caption mb-2">طريقة الدفع:</div>
+                    <div class="btn-group w-100" role="group">
+                        <input type="radio" class="btn-check" name="payment" id="payCash" checked>
+                        <label class="btn btn-outline-primary" for="payCash"><i class="bi bi-cash me-1"></i>نقدي</label>
+
+                        <input type="radio" class="btn-check" name="payment" id="payCard">
+                        <label class="btn btn-outline-primary" for="payCard"><i class="bi bi-credit-card me-1"></i>بطاقة</label>
+
+                        <input type="radio" class="btn-check" name="payment" id="payOther">
+                        <label class="btn btn-outline-primary" for="payOther">أخرى</label>
+                    </div>
+                </div>
+
+                <div class="d-flex gap-2 mt-4">
+                    <button class="btn btn-secondary-af flex-shrink-0" style="width: 48px;"><i class="bi bi-pause-circle"></i></button>
+                    <button class="btn btn-accent w-100 fs-5 py-2 fw-bold d-flex align-items-center justify-content-center gap-2">
+                        <i class="bi bi-check2-circle"></i>إتمام البيع
+                    </button>
+                </div>
+
+            </div>
+
+        </div>
+    </div>
+</div>
+
+<style>
+    .hover-shadow:hover {
+        border-color: var(--color-primary-light) !important;
+        box-shadow: var(--shadow-sm);
+        background-color: var(--color-surface) !important;
+    }
+</style>

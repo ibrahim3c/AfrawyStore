@@ -1,0 +1,230 @@
+{
+  "format": 1,
+  "restore": {
+    "C:\\Users\\RAM\\Desktop\\AFRAWY\\AfrawyStore\\AfrawyStore.Infrastructure\\AfrawyStore.Infrastructure.csproj": {}
+  },
+  "projects": {
+    "C:\\Users\\RAM\\Desktop\\AFRAWY\\AfrawyStore\\AfrawyStore.Application\\AfrawyStore.Application.csproj": {
+      "version": "1.0.0",
+      "restore": {
+        "projectUniqueName": "C:\\Users\\RAM\\Desktop\\AFRAWY\\AfrawyStore\\AfrawyStore.Application\\AfrawyStore.Application.csproj",
+        "projectName": "AfrawyStore.Application",
+        "projectPath": "C:\\Users\\RAM\\Desktop\\AFRAWY\\AfrawyStore\\AfrawyStore.Application\\AfrawyStore.Application.csproj",
+        "packagesPath": "C:\\Users\\RAM\\.nuget\\packages\\",
+        "outputPath": "C:\\Users\\RAM\\Desktop\\AFRAWY\\AfrawyStore\\AfrawyStore.Application\\obj\\",
+        "projectStyle": "PackageReference",
+        "fallbackFolders": [
+          "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
+        ],
+        "configFilePaths": [
+          "C:\\Users\\RAM\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.FallbackLocation.config",
+          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
+        ],
+        "originalTargetFrameworks": [
+          "net8.0"
+        ],
+        "sources": {
+          "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
+          "https://api.nuget.org/v3/index.json": {}
+        },
+        "frameworks": {
+          "net8.0": {
+            "targetAlias": "net8.0",
+            "projectReferences": {
+              "C:\\Users\\RAM\\Desktop\\AFRAWY\\AfrawyStore\\AfrawyStore.Domain\\AfrawyStore.Domain.csproj": {
+                "projectPath": "C:\\Users\\RAM\\Desktop\\AFRAWY\\AfrawyStore\\AfrawyStore.Domain\\AfrawyStore.Domain.csproj"
+              }
+            }
+          }
+        },
+        "warningProperties": {
+          "warnAsError": [
+            "NU1605"
+          ]
+        },
+        "restoreAuditProperties": {
+          "enableAudit": "true",
+          "auditLevel": "low",
+          "auditMode": "direct"
+        },
+        "SdkAnalysisLevel": "9.0.300"
+      },
+      "frameworks": {
+        "net8.0": {
+          "targetAlias": "net8.0",
+          "dependencies": {
+            "Microsoft.Extensions.DependencyInjection.Abstractions": {
+              "target": "Package",
+              "version": "[8.0.0, )"
+            }
+          },
+          "imports": [
+            "net461",
+            "net462",
+            "net47",
+            "net471",
+            "net472",
+            "net48",
+            "net481"
+          ],
+          "assetTargetFallback": true,
+          "warn": true,
+          "frameworkReferences": {
+            "Microsoft.NETCore.App": {
+              "privateAssets": "all"
+            }
+          },
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\9.0.300/PortableRuntimeIdentifierGraph.json"
+        }
+      }
+    },
+    "C:\\Users\\RAM\\Desktop\\AFRAWY\\AfrawyStore\\AfrawyStore.Domain\\AfrawyStore.Domain.csproj": {
+      "version": "1.0.0",
+      "restore": {
+        "projectUniqueName": "C:\\Users\\RAM\\Desktop\\AFRAWY\\AfrawyStore\\AfrawyStore.Domain\\AfrawyStore.Domain.csproj",
+        "projectName": "AfrawyStore.Domain",
+        "projectPath": "C:\\Users\\RAM\\Desktop\\AFRAWY\\AfrawyStore\\AfrawyStore.Domain\\AfrawyStore.Domain.csproj",
+        "packagesPath": "C:\\Users\\RAM\\.nuget\\packages\\",
+        "outputPath": "C:\\Users\\RAM\\Desktop\\AFRAWY\\AfrawyStore\\AfrawyStore.Domain\\obj\\",
+        "projectStyle": "PackageReference",
+        "fallbackFolders": [
+          "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
+        ],
+        "configFilePaths": [
+          "C:\\Users\\RAM\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.FallbackLocation.config",
+          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
+        ],
+        "originalTargetFrameworks": [
+          "net8.0"
+        ],
+        "sources": {
+          "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
+          "https://api.nuget.org/v3/index.json": {}
+        },
+        "frameworks": {
+          "net8.0": {
+            "targetAlias": "net8.0",
+            "projectReferences": {}
+          }
+        },
+        "warningProperties": {
+          "warnAsError": [
+            "NU1605"
+          ]
+        },
+        "restoreAuditProperties": {
+          "enableAudit": "true",
+          "auditLevel": "low",
+          "auditMode": "direct"
+        },
+        "SdkAnalysisLevel": "9.0.300"
+      },
+      "frameworks": {
+        "net8.0": {
+          "targetAlias": "net8.0",
+          "imports": [
+            "net461",
+            "net462",
+            "net47",
+            "net471",
+            "net472",
+            "net48",
+            "net481"
+          ],
+          "assetTargetFallback": true,
+          "warn": true,
+          "frameworkReferences": {
+            "Microsoft.NETCore.App": {
+              "privateAssets": "all"
+            }
+          },
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\9.0.300/PortableRuntimeIdentifierGraph.json"
+        }
+      }
+    },
+    "C:\\Users\\RAM\\Desktop\\AFRAWY\\AfrawyStore\\AfrawyStore.Infrastructure\\AfrawyStore.Infrastructure.csproj": {
+      "version": "1.0.0",
+      "restore": {
+        "projectUniqueName": "C:\\Users\\RAM\\Desktop\\AFRAWY\\AfrawyStore\\AfrawyStore.Infrastructure\\AfrawyStore.Infrastructure.csproj",
+        "projectName": "AfrawyStore.Infrastructure",
+        "projectPath": "C:\\Users\\RAM\\Desktop\\AFRAWY\\AfrawyStore\\AfrawyStore.Infrastructure\\AfrawyStore.Infrastructure.csproj",
+        "packagesPath": "C:\\Users\\RAM\\.nuget\\packages\\",
+        "outputPath": "C:\\Users\\RAM\\Desktop\\AFRAWY\\AfrawyStore\\AfrawyStore.Infrastructure\\obj\\",
+        "projectStyle": "PackageReference",
+        "fallbackFolders": [
+          "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
+        ],
+        "configFilePaths": [
+          "C:\\Users\\RAM\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.FallbackLocation.config",
+          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
+        ],
+        "originalTargetFrameworks": [
+          "net8.0"
+        ],
+        "sources": {
+          "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
+          "https://api.nuget.org/v3/index.json": {}
+        },
+        "frameworks": {
+          "net8.0": {
+            "targetAlias": "net8.0",
+            "projectReferences": {
+              "C:\\Users\\RAM\\Desktop\\AFRAWY\\AfrawyStore\\AfrawyStore.Application\\AfrawyStore.Application.csproj": {
+                "projectPath": "C:\\Users\\RAM\\Desktop\\AFRAWY\\AfrawyStore\\AfrawyStore.Application\\AfrawyStore.Application.csproj"
+              },
+              "C:\\Users\\RAM\\Desktop\\AFRAWY\\AfrawyStore\\AfrawyStore.Domain\\AfrawyStore.Domain.csproj": {
+                "projectPath": "C:\\Users\\RAM\\Desktop\\AFRAWY\\AfrawyStore\\AfrawyStore.Domain\\AfrawyStore.Domain.csproj"
+              }
+            }
+          }
+        },
+        "warningProperties": {
+          "warnAsError": [
+            "NU1605"
+          ]
+        },
+        "restoreAuditProperties": {
+          "enableAudit": "true",
+          "auditLevel": "low",
+          "auditMode": "direct"
+        },
+        "SdkAnalysisLevel": "9.0.300"
+      },
+      "frameworks": {
+        "net8.0": {
+          "targetAlias": "net8.0",
+          "dependencies": {
+            "Microsoft.AspNetCore.Identity.EntityFrameworkCore": {
+              "target": "Package",
+              "version": "[8.0.6, )"
+            },
+            "Microsoft.EntityFrameworkCore.SqlServer": {
+              "target": "Package",
+              "version": "[8.0.6, )"
+            }
+          },
+          "imports": [
+            "net461",
+            "net462",
+            "net47",
+            "net471",
+            "net472",
+            "net48",
+            "net481"
+          ],
+          "assetTargetFallback": true,
+          "warn": true,
+          "frameworkReferences": {
+            "Microsoft.NETCore.App": {
+              "privateAssets": "all"
+            }
+          },
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\9.0.300/PortableRuntimeIdentifierGraph.json"
+        }
+      }
+    }
+  }
+}

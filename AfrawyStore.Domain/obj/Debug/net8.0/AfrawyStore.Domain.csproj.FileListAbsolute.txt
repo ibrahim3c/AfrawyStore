@@ -1,0 +1,11 @@
+C:\Users\RAM\Desktop\AFRAWY\AfrawyStore\AfrawyStore.Domain\bin\Debug\net8.0\AfrawyStore.Domain.deps.json
+C:\Users\RAM\Desktop\AFRAWY\AfrawyStore\AfrawyStore.Domain\bin\Debug\net8.0\AfrawyStore.Domain.dll
+C:\Users\RAM\Desktop\AFRAWY\AfrawyStore\AfrawyStore.Domain\bin\Debug\net8.0\AfrawyStore.Domain.pdb
+C:\Users\RAM\Desktop\AFRAWY\AfrawyStore\AfrawyStore.Domain\obj\Debug\net8.0\AfrawyStore.Domain.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\RAM\Desktop\AFRAWY\AfrawyStore\AfrawyStore.Domain\obj\Debug\net8.0\AfrawyStore.Domain.AssemblyInfoInputs.cache
+C:\Users\RAM\Desktop\AFRAWY\AfrawyStore\AfrawyStore.Domain\obj\Debug\net8.0\AfrawyStore.Domain.AssemblyInfo.cs
+C:\Users\RAM\Desktop\AFRAWY\AfrawyStore\AfrawyStore.Domain\obj\Debug\net8.0\AfrawyStore.Domain.csproj.CoreCompileInputs.cache
+C:\Users\RAM\Desktop\AFRAWY\AfrawyStore\AfrawyStore.Domain\obj\Debug\net8.0\AfrawyStore.Domain.dll
+C:\Users\RAM\Desktop\AFRAWY\AfrawyStore\AfrawyStore.Domain\obj\Debug\net8.0\refint\AfrawyStore.Domain.dll
+C:\Users\RAM\Desktop\AFRAWY\AfrawyStore\AfrawyStore.Domain\obj\Debug\net8.0\AfrawyStore.Domain.pdb
+C:\Users\RAM\Desktop\AFRAWY\AfrawyStore\AfrawyStore.Domain\obj\Debug\net8.0\ref\AfrawyStore.Domain.dll

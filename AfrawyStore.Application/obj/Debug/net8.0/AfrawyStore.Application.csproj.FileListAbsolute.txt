@@ -1,0 +1,15 @@
+C:\Users\RAM\Desktop\AFRAWY\AfrawyStore\AfrawyStore.Application\bin\Debug\net8.0\AfrawyStore.Application.deps.json
+C:\Users\RAM\Desktop\AFRAWY\AfrawyStore\AfrawyStore.Application\bin\Debug\net8.0\AfrawyStore.Application.dll
+C:\Users\RAM\Desktop\AFRAWY\AfrawyStore\AfrawyStore.Application\bin\Debug\net8.0\AfrawyStore.Application.pdb
+C:\Users\RAM\Desktop\AFRAWY\AfrawyStore\AfrawyStore.Application\bin\Debug\net8.0\AfrawyStore.Domain.dll
+C:\Users\RAM\Desktop\AFRAWY\AfrawyStore\AfrawyStore.Application\bin\Debug\net8.0\AfrawyStore.Domain.pdb
+C:\Users\RAM\Desktop\AFRAWY\AfrawyStore\AfrawyStore.Application\obj\Debug\net8.0\AfrawyStore.Application.csproj.AssemblyReference.cache
+C:\Users\RAM\Desktop\AFRAWY\AfrawyStore\AfrawyStore.Application\obj\Debug\net8.0\AfrawyStore.Application.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\RAM\Desktop\AFRAWY\AfrawyStore\AfrawyStore.Application\obj\Debug\net8.0\AfrawyStore.Application.AssemblyInfoInputs.cache
+C:\Users\RAM\Desktop\AFRAWY\AfrawyStore\AfrawyStore.Application\obj\Debug\net8.0\AfrawyStore.Application.AssemblyInfo.cs
+C:\Users\RAM\Desktop\AFRAWY\AfrawyStore\AfrawyStore.Application\obj\Debug\net8.0\AfrawyStore.Application.csproj.CoreCompileInputs.cache
+C:\Users\RAM\Desktop\AFRAWY\AfrawyStore\AfrawyStore.Application\obj\Debug\net8.0\AfrawySt.E0C4647C.Up2Date
+C:\Users\RAM\Desktop\AFRAWY\AfrawyStore\AfrawyStore.Application\obj\Debug\net8.0\AfrawyStore.Application.dll
+C:\Users\RAM\Desktop\AFRAWY\AfrawyStore\AfrawyStore.Application\obj\Debug\net8.0\refint\AfrawyStore.Application.dll
+C:\Users\RAM\Desktop\AFRAWY\AfrawyStore\AfrawyStore.Application\obj\Debug\net8.0\AfrawyStore.Application.pdb
+C:\Users\RAM\Desktop\AFRAWY\AfrawyStore\AfrawyStore.Application\obj\Debug\net8.0\ref\AfrawyStore.Application.dll

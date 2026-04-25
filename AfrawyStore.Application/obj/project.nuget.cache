@@ -1,0 +1,10 @@
+{
+  "version": 2,
+  "dgSpecHash": "h5jyQHfgIBY=",
+  "success": true,
+  "projectFilePath": "C:\\Users\\RAM\\Desktop\\AFRAWY\\AfrawyStore\\AfrawyStore.Application\\AfrawyStore.Application.csproj",
+  "expectedPackageFiles": [
+    "C:\\Users\\RAM\\.nuget\\packages\\microsoft.extensions.dependencyinjection.abstractions\\8.0.0\\microsoft.extensions.dependencyinjection.abstractions.8.0.0.nupkg.sha512"
+  ],
+  "logs": []
+}

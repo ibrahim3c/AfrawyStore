@@ -1,0 +1,172 @@
+@model IEnumerable<AfrawyStore.Application.DTOs.ProductDto>
+@{
+    ViewData["Title"] = "المنتجات";
+}
+
+<!-- Action Bar -->
+<div class="d-flex flex-wrap justify-content-between align-items-center mb-4 gap-3">
+    <div class="d-flex gap-2 flex-grow-1" style="max-width: 600px;">
+        <div class="position-relative flex-grow-1">
+            <i class="bi bi-search position-absolute top-50 translate-middle-y text-muted" style="right: 15px;"></i>
+            <input type="text" class="form-control form-control-af bg-white" placeholder="بحث بالاسم أو SKU..." style="padding-right: 40px;" />
+        </div>
+        <select class="form-select form-control-af bg-white" style="width: auto;">
+            <option>الفئة ▾</option>
+            <option>دهانات</option>
+            <option>عدد يدوية</option>
+        </select>
+        <select class="form-select form-control-af bg-white" style="width: auto;">
+            <option>الحالة ▾</option>
+            <option>نشط</option>
+            <option>غير نشط</option>
+        </select>
+    </div>
+    <a href="/Products/Create" class="btn btn-primary-af d-inline-flex align-items-center gap-2">
+        <i class="bi bi-plus-lg"></i>
+        إضافة منتج
+    </a>
+</div>
+
+<!-- Data Table -->
+<div class="af-card p-0 mb-4">
+    <div class="table-responsive af-table-container border-0 rounded-0">
+        <table class="table af-table text-nowrap align-middle">
+            <thead>
+                <tr>
+                    <th style="width: 40px;"><input class="form-check-input" type="checkbox" /></th>
+                    <th style="width: 60px;">الصورة</th>
+                    <th>الاسم</th>
+                    <th>SKU</th>
+                    <th>الفئة</th>
+                    <th>سعر البيع</th>
+                    <th>المخزون</th>
+                    <th>الحالة</th>
+                    <th class="text-end">الإجراءات</th>
+                </tr>
+            </thead>
+            <tbody>
+                @if (Model == null || !Model.Any())
+                {
+                    <tr>
+                        <td colspan="9" class="text-center py-5 text-muted">
+                            <i class="bi bi-inbox fs-1 d-block mb-3 opacity-50"></i>
+                            لا توجد منتجات مسجلة بعد.
+                        </td>
+                    </tr>
+                    
+                    <!-- Dummy rows to show design as per requirements -->
+                    <tr class="opacity-75" title="هذه بيانات تجريبية">
+                        <td><input class="form-check-input" type="checkbox" /></td>
+                        <td>
+                            <div class="bg-light rounded d-flex align-items-center justify-content-center text-muted" style="width: 40px; height: 40px;">
+                                <i class="bi bi-image"></i>
+                            </div>
+                        </td>
+                        <td class="fw-semibold">دهان مائي أبيض</td>
+                        <td class="text-muted fs-sm">PT-001</td>
+                        <td>دهانات</td>
+                        <td class="fw-bold numeric">85.00 ج</td>
+                        <td>
+                            <span class="badge bg-light text-dark border w-100 text-end">12 <small class="text-muted fw-normal ms-1">لتر</small></span>
+                        </td>
+                        <td><span class="status-pill good">● نشط</span></td>
+                        <td class="text-end">
+                            <button class="btn-icon rounded me-1" title="تعديل"><i class="bi bi-pencil"></i></button>
+                            <button class="btn-icon rounded me-1" title="عرض"><i class="bi bi-eye"></i></button>
+                            <button class="btn-icon rounded text-danger" title="حذف"><i class="bi bi-trash"></i></button>
+                        </td>
+                    </tr>
+                    <tr class="opacity-75" title="هذه بيانات تجريبية">
+                        <td><input class="form-check-input" type="checkbox" /></td>
+                        <td>
+                            <div class="bg-light rounded d-flex align-items-center justify-content-center text-muted" style="width: 40px; height: 40px;">
+                                <i class="bi bi-image"></i>
+                            </div>
+                        </td>
+                        <td class="fw-semibold">مفتاح ربط 14mm</td>
+                        <td class="text-muted fs-sm">TL-047</td>
+                        <td>عدد يدوية</td>
+                        <td class="fw-bold numeric">22.50 ج</td>
+                        <td>
+                            <span class="badge border border-danger text-danger bg-danger bg-opacity-10 w-100 text-end">
+                                2 <small class="text-danger fw-normal ms-1">قطعة</small>
+                            </span>
+                        </td>
+                        <td><span class="status-pill danger" style="animation: none;">🔴 منخفض</span></td>
+                        <td class="text-end">
+                            <button class="btn-icon rounded me-1" title="تعديل"><i class="bi bi-pencil"></i></button>
+                            <button class="btn-icon rounded me-1" title="عرض"><i class="bi bi-eye"></i></button>
+                            <button class="btn-icon rounded text-danger" title="حذف"><i class="bi bi-trash"></i></button>
+                        </td>
+                    </tr>
+                }
+                else
+                {
+                    @foreach (var item in Model)
+                    {
+                        <tr>
+                            <td><input class="form-check-input" type="checkbox" /></td>
+                            <td>
+                                @if (string.IsNullOrEmpty(item.ImagePath))
+                                {
+                                    <div class="bg-light rounded d-flex align-items-center justify-content-center text-muted" style="width: 40px; height: 40px;">
+                                        <i class="bi bi-image"></i>
+                                    </div>
+                                }
+                                else
+                                {
+                                    <img src="@item.ImagePath" alt="@item.Name" class="rounded" style="width: 40px; height: 40px; object-fit: cover;" />
+                                }
+                            </td>
+                            <td class="fw-semibold">@item.Name</td>
+                            <td class="text-muted fs-sm">@item.SKU</td>
+                            <td>@item.CategoryName</td>
+                            <td class="fw-bold numeric">@item.SellingPrice.ToString("N2") ج</td>
+                            <td>
+                                @if(item.CurrentStock <= 5) // Simple threshold dummy
+                                {
+                                    <span class="badge border border-danger text-danger bg-danger bg-opacity-10 w-100 text-end">
+                                        @item.CurrentStock <small class="text-danger fw-normal ms-1">@item.Unit</small>
+                                    </span>
+                                }
+                                else
+                                {
+                                    <span class="badge bg-light text-dark border w-100 text-end">
+                                        @item.CurrentStock <small class="text-muted fw-normal ms-1">@item.Unit</small>
+                                    </span>
+                                }
+                            </td>
+                            <td>
+                                @if (item.IsActive)
+                                {
+                                    <span class="status-pill good">● نشط</span>
+                                }
+                                else
+                                {
+                                    <span class="status-pill neutral">○ غير نشط</span>
+                                }
+                            </td>
+                            <td class="text-end">
+                                <button class="btn-icon rounded me-1" title="تعديل"><i class="bi bi-pencil"></i></button>
+                                <button class="btn-icon rounded me-1" title="عرض"><i class="bi bi-eye"></i></button>
+                                <button class="btn-icon rounded text-danger" title="حذف"><i class="bi bi-trash"></i></button>
+                            </td>
+                        </tr>
+                    }
+                }
+            </tbody>
+        </table>
+    </div>
+    <div class="p-3 border-top d-flex justify-content-between align-items-center bg-light rounded-bottom">
+        <span class="text-muted fs-sm">إظهار 1 إلى 10 من أصل 248 مدخل</span>
+        <nav aria-label="Page navigation">
+            <ul class="pagination pagination-sm mb-0">
+                <li class="page-item disabled"><a class="page-link" href="#"><i class="bi bi-chevron-right"></i></a></li>
+                <li class="page-item active"><a class="page-link" href="#">1</a></li>
+                <li class="page-item"><a class="page-link" href="#">2</a></li>
+                <li class="page-item"><a class="page-link" href="#">3</a></li>
+                <li class="page-item"><a class="page-link" href="#"><i class="bi bi-chevron-left"></i></a></li>
+            </ul>
+        </nav>
+    </div>
+</div>
