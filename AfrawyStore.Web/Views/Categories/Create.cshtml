@@ -1,0 +1,60 @@
+@model AfrawyStore.Application.DTOs.CategoryCreateDto
+@{
+    ViewData["Title"] = "إضافة فئة جديدة";
+}
+
+<div class="d-flex justify-content-between align-items-center mb-4">
+    <h2 class="h3 text-primary mb-0"><i class="bi bi-tag me-2"></i> @ViewData["Title"]</h2>
+    <a asp-action="Index" class="btn btn-outline-secondary shadow-sm">
+        <i class="bi bi-arrow-right me-1"></i> عودة للقائمة
+    </a>
+</div>
+
+<div class="card shadow-sm border-0 rounded-4">
+    <div class="card-body p-4 p-md-5">
+        <form asp-action="Create" method="post">
+            <div asp-validation-summary="ModelOnly" class="text-danger mb-3"></div>
+
+            <div class="row g-4">
+                <div class="col-md-6">
+                    <label asp-for="Name" class="form-label fw-semibold">اسم الفئة <span class="text-danger">*</span></label>
+                    <div class="input-group">
+                        <span class="input-group-text bg-light text-muted border-end-0"><i class="bi bi-fonts"></i></span>
+                        <input asp-for="Name" class="form-control border-start-0 ps-0" placeholder="مثال: دهانات داخلية" autofocus />
+                    </div>
+                    <span asp-validation-for="Name" class="text-danger small"></span>
+                </div>
+                
+                <div class="col-md-6">
+                    <label asp-for="ParentCategoryId" class="form-label fw-semibold">الفئة الرئيسية (اختياري)</label>
+                    <div class="input-group">
+                        <span class="input-group-text bg-light text-muted border-end-0"><i class="bi bi-diagram-2"></i></span>
+                        <select asp-for="ParentCategoryId" class="form-select border-start-0 ps-0" asp-items="ViewBag.ParentCategories">
+                            <option value="">-- بدون فئة رئيسية --</option>
+                        </select>
+                    </div>
+                    <span asp-validation-for="ParentCategoryId" class="text-danger small"></span>
+                </div>
+
+                <div class="col-12">
+                    <label asp-for="Description" class="form-label fw-semibold">الوصف</label>
+                    <textarea asp-for="Description" class="form-control" rows="3" placeholder="وصف إضافي للفئة..."></textarea>
+                    <span asp-validation-for="Description" class="text-danger small"></span>
+                </div>
+            </div>
+
+            <hr class="my-4 border-light">
+            
+            <div class="d-flex gap-2">
+                <button type="submit" class="btn btn-primary-af px-4 shadow-sm">
+                    <i class="bi bi-save me-1"></i> حفظ الفئة
+                </button>
+                <a asp-action="Index" class="btn btn-light border shadow-sm">إلغاء</a>
+            </div>
+        </form>
+    </div>
+</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}

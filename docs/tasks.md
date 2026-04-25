@@ -34,15 +34,15 @@
 
 ---
 
-## Milestone 2 — Category Management
+## Milestone 2 — Category Management ✅ (Done)
 > Full CRUD for categories, including subcategories.
 
-- [ ] 2.1 ICategoryService + CategoryService
-- [ ] 2.2 CategoryDto
-- [ ] 2.3 CategoriesController — Index, Create, Edit, Delete
-- [ ] 2.4 Category views: list table, create/edit form
-- [ ] 2.5 Parent/child category support (self-referencing FK)
-- [ ] 2.6 Prevent deleting a category that has products
+- [x] 2.1 ICategoryService + CategoryService
+- [x] 2.2 CategoryDto
+- [x] 2.3 CategoriesController — Index, Create, Edit, Delete
+- [x] 2.4 Category views: list table, create/edit form
+- [x] 2.5 Parent/child category support (self-referencing FK)
+- [x] 2.6 Prevent deleting a category that has products
 
 ---
 
