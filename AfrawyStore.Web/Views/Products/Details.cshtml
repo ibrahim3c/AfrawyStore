@@ -1,0 +1,121 @@
+@model AfrawyStore.Application.DTOs.ProductDto
+@{
+    ViewData["Title"] = "تفاصيل المنتج";
+    var profitMargin = Model.SellingPrice > 0 ? ((Model.SellingPrice - Model.CostPrice) / Model.SellingPrice) * 100 : 0;
+    var profitAmount = Model.SellingPrice - Model.CostPrice;
+}
+
+<div class="d-flex justify-content-between align-items-center mb-4">
+    <h2 class="h3 text-primary mb-0"><i class="bi bi-box-seam me-2"></i> تفاصيل المنتج</h2>
+    <div class="d-flex gap-2">
+        <a asp-action="Edit" asp-route-id="@Model.Id" class="btn btn-primary-af shadow-sm">
+            <i class="bi bi-pencil me-1"></i> تعديل
+        </a>
+        <a asp-action="Index" class="btn btn-outline-secondary shadow-sm">
+            <i class="bi bi-arrow-right me-1"></i> عودة
+        </a>
+    </div>
+</div>
+
+<div class="row g-4">
+    <div class="col-lg-4">
+        <div class="card shadow-sm border-0 rounded-4 mb-4">
+            <div class="card-body p-4 text-center">
+                @if (!string.IsNullOrEmpty(Model.ImagePath))
+                {
+                    <img src="@Model.ImagePath" alt="@Model.Name" class="img-fluid rounded-3 shadow-sm border mb-3" style="max-height: 250px; object-fit: contain;" />
+                }
+                else
+                {
+                    <div class="rounded-3 bg-light border d-flex flex-column align-items-center justify-content-center text-muted mb-3 mx-auto" style="height: 200px; width: 100%;">
+                        <i class="bi bi-image fs-1 mb-2"></i>
+                        <span class="small">لا توجد صورة</span>
+                    </div>
+                }
+                <h5 class="fw-bold text-dark mb-1">@Model.Name</h5>
+                <span class="badge bg-light text-dark border font-monospace mb-2">@Model.SKU</span>
+                <div class="mt-2">
+                    @if (Model.IsActive)
+                    {
+                        <span class="badge bg-success bg-opacity-10 text-success border border-success-subtle px-3 py-2"><i class="bi bi-check-circle-fill me-1"></i> نشط</span>
+                    }
+                    else
+                    {
+                        <span class="badge bg-warning bg-opacity-10 text-warning border border-warning-subtle px-3 py-2"><i class="bi bi-dash-circle-fill me-1"></i> معطل</span>
+                    }
+                </div>
+            </div>
+        </div>
+
+        <div class="card shadow-sm border-0 rounded-4">
+            <div class="card-header bg-white rounded-top-4 border-bottom py-3 px-4">
+                <h6 class="mb-0 fw-bold"><i class="bi bi-boxes me-2 text-primary"></i> المخزون الحالي</h6>
+            </div>
+            <div class="card-body p-4 text-center">
+                @if (Model.CurrentStock <= 5)
+                {
+                    <div class="display-4 fw-bold text-danger mb-1">@Model.CurrentStock</div>
+                    <div class="text-muted">@Model.Unit</div>
+                    <span class="badge bg-danger mt-2">مخزون منخفض</span>
+                }
+                else
+                {
+                    <div class="display-4 fw-bold text-success mb-1">@Model.CurrentStock</div>
+                    <div class="text-muted">@Model.Unit</div>
+                    <span class="badge bg-success mt-2">متوفر</span>
+                }
+            </div>
+        </div>
+    </div>
+
+    <div class="col-lg-8">
+        <div class="card shadow-sm border-0 rounded-4 mb-4">
+            <div class="card-header bg-white rounded-top-4 border-bottom py-3 px-4">
+                <h6 class="mb-0 fw-bold"><i class="bi bi-info-circle me-2 text-primary"></i> المعلومات الأساسية</h6>
+            </div>
+            <div class="card-body p-4">
+                <dl class="row mb-0">
+                    <dt class="col-sm-4 text-muted fw-normal">الفئة</dt>
+                    <dd class="col-sm-8 fw-semibold"><i class="bi bi-tag-fill me-1 text-primary"></i> @Model.CategoryName</dd>
+
+                    <dt class="col-sm-4 text-muted fw-normal">الوصف</dt>
+                    <dd class="col-sm-8">@(string.IsNullOrEmpty(Model.Description) ? "لا يوجد وصف" : Model.Description)</dd>
+
+                    <dt class="col-sm-4 text-muted fw-normal">وحدة القياس</dt>
+                    <dd class="col-sm-8">@Model.Unit</dd>
+                </dl>
+            </div>
+        </div>
+
+        <div class="card shadow-sm border-0 rounded-4">
+            <div class="card-header bg-white rounded-top-4 border-bottom py-3 px-4">
+                <h6 class="mb-0 fw-bold"><i class="bi bi-graph-up-arrow me-2 text-success"></i> تحليل الأسعار والأرباح</h6>
+            </div>
+            <div class="card-body p-4">
+                <div class="row g-4 text-center">
+                    <div class="col-md-4">
+                        <div class="p-3 bg-light rounded-3 border h-100">
+                            <small class="text-muted d-block mb-1">سعر التكلفة</small>
+                            <div class="h4 fw-bold text-dark mb-0">@Model.CostPrice.ToString("N2")</div>
+                            <small class="text-muted">ج.م</small>
+                        </div>
+                    </div>
+                    <div class="col-md-4">
+                        <div class="p-3 bg-light rounded-3 border h-100">
+                            <small class="text-muted d-block mb-1">سعر البيع</small>
+                            <div class="h4 fw-bold text-primary mb-0">@Model.SellingPrice.ToString("N2")</div>
+                            <small class="text-muted">ج.م</small>
+                        </div>
+                    </div>
+                    <div class="col-md-4">
+                        <div class="p-3 @(profitAmount >= 0 ? "bg-success" : "bg-danger") bg-opacity-10 rounded-3 border @(profitAmount >= 0 ? "border-success-subtle" : "border-danger-subtle") h-100">
+                            <small class="@(profitAmount >= 0 ? "text-success" : "text-danger") d-block mb-1">هامش الربح</small>
+                            <div class="h4 fw-bold @(profitAmount >= 0 ? "text-success" : "text-danger") mb-0">@profitMargin.ToString("N1")%</div>
+                            <small class="@(profitAmount >= 0 ? "text-success" : "text-danger")">@profitAmount.ToString("N2") ج.م / وحدة</small>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

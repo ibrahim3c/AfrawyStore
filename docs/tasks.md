@@ -46,19 +46,19 @@
 
 ---
 
-## Milestone 3 — Product Management
+## Milestone 3 — Product Management ✅ (Done)
 > Full CRUD, search/filter, image upload, status toggle.
 
-- [ ] 3.1 ProductsController — Create, Edit, Delete, Details actions
-- [ ] 3.2 Product views: Create/Edit form (two-column layout), Details view
-- [ ] 3.3 Search & filter (by name, SKU, category, status)
-- [ ] 3.4 Image upload to `wwwroot/uploads/products/`
-- [ ] 3.5 Live profit margin indicator on create/edit form
-- [ ] 3.6 SKU uniqueness validation
-- [ ] 3.7 SellingPrice ≥ CostPrice validation
-- [ ] 3.8 Bulk active/inactive toggle
-- [ ] 3.9 Pagination (default 20 rows)
-- [ ] 3.10 Auto-create Inventory record on product creation
+- [x] 3.1 ProductsController — Create, Edit, Delete, Details actions
+- [x] 3.2 Product views: Create/Edit form (two-column layout), Details view
+- [x] 3.3 Search & filter (by name, SKU, category, status)
+- [x] 3.4 Image upload to `wwwroot/uploads/products/`
+- [x] 3.5 Live profit margin indicator on create/edit form
+- [x] 3.6 SKU uniqueness validation
+- [x] 3.7 SellingPrice ≥ CostPrice validation
+- [x] 3.8 Bulk active/inactive toggle
+- [x] 3.9 Pagination (default 20 rows)
+- [x] 3.10 Auto-create Inventory record on product creation
 
 ---
 

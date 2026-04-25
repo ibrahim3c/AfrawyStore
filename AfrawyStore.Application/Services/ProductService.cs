@@ -14,26 +14,46 @@ public class ProductService : IProductService
         _unitOfWork = unitOfWork;
     }
 
-    public async Task<IEnumerable<ProductDto>> GetAllProductsAsync()
+    public async Task<PagedResultDto<ProductDto>> GetPagedProductsAsync(string? searchTerm, int? categoryId, bool? isActive, int page, int pageSize)
     {
-        var products = await _unitOfWork.Products.GetAllAsync();
-        return products.Select(p => new ProductDto
+        var (products, totalCount) = await _unitOfWork.Products.GetPagedProductsAsync(searchTerm, categoryId, isActive, page, pageSize);
+        
+        var items = products.Select(p => new ProductDto
         {
             Id = p.Id,
             SKU = p.SKU,
             Name = p.Name,
             CategoryId = p.CategoryId,
+            CategoryName = p.Category?.Name ?? string.Empty,
             CostPrice = p.CostPrice,
             SellingPrice = p.SellingPrice,
             Unit = p.Unit,
-            IsActive = p.IsActive
+            IsActive = p.IsActive,
+            ImagePath = p.ImagePath,
+            CurrentStock = p.Inventory?.CurrentStock ?? 0
         }).ToList();
+
+        return new PagedResultDto<ProductDto>
+        {
+            Items = items,
+            TotalCount = totalCount,
+            PageNumber = page,
+            PageSize = pageSize
+        };
     }
 
     public async Task<ProductDto?> GetProductByIdAsync(int id)
     {
+        // Need eager loading for Category and Inventory. We'll add this via a direct query since GetByIdAsync in generic repository doesn't Include by default, 
+        // but for now we'll do a focused query if needed, or just return basic info if CategoryName isn't strictly needed here.
+        // Actually, it's better to get the detailed info. Let's get the products from the paginated query as a workaround for now to get details if we just need one, or just use the generic and fetch category manually.
+        // For simplicity, let's just use the generic GetById. It won't have CategoryName unless we load it.
+        // A better approach is to use the generic but we'll add Include manually if we had access to IQueryable, but we don't.
+        // So we'll just get the product and if we need CategoryName, we fetch it.
         var p = await _unitOfWork.Products.GetByIdAsync(id);
         if (p == null) return null;
+        
+        var category = await _unitOfWork.Categories.GetByIdAsync(p.CategoryId);
         
         return new ProductDto
         {
@@ -41,6 +61,7 @@ public class ProductService : IProductService
             SKU = p.SKU,
             Name = p.Name,
             CategoryId = p.CategoryId,
+            CategoryName = category?.Name ?? string.Empty,
             CostPrice = p.CostPrice,
             SellingPrice = p.SellingPrice,
             Unit = p.Unit,
@@ -50,55 +71,99 @@ public class ProductService : IProductService
         };
     }
 
-    public async Task CreateProductAsync(Product product)
+    public async Task<bool> IsSkuUniqueAsync(string sku, int? excludeId = null)
     {
-        // Enforce basic business logic: SellingPrice >= CostPrice
-        if (product.SellingPrice < product.CostPrice)
-            throw new InvalidOperationException("Selling price must be greater than or equal to cost price.");
+        return await _unitOfWork.Products.IsSkuUniqueAsync(sku, excludeId);
+    }
 
-        // Automatically create an inventory record for the new product
-        product.Inventory = new Inventory
+    public async Task<bool> CreateProductAsync(ProductCreateDto createDto, string? imagePath)
+    {
+        if (createDto.SellingPrice < createDto.CostPrice)
+            return false;
+
+        var isSkuUnique = await IsSkuUniqueAsync(createDto.SKU);
+        if (!isSkuUnique)
+            return false;
+
+        var product = new Product
         {
-            CurrentStock = 0,
-            MinimumStock = 5,
-            LastUpdated = DateTime.UtcNow
+            SKU = createDto.SKU,
+            Name = createDto.Name,
+            Description = createDto.Description,
+            CategoryId = createDto.CategoryId,
+            CostPrice = createDto.CostPrice,
+            SellingPrice = createDto.SellingPrice,
+            Unit = createDto.Unit,
+            IsActive = createDto.IsActive,
+            ImagePath = imagePath,
+            Inventory = new Inventory
+            {
+                CurrentStock = 0,
+                MinimumStock = 5,
+                LastUpdated = DateTime.UtcNow
+            }
         };
 
         await _unitOfWork.Products.AddAsync(product);
-        await _unitOfWork.SaveChangesAsync();
+        return await _unitOfWork.SaveChangesAsync() > 0;
     }
 
-    public async Task UpdateProductAsync(Product product)
+    public async Task<bool> UpdateProductAsync(ProductEditDto editDto, string? newImagePath)
     {
-        if (product.SellingPrice < product.CostPrice)
-            throw new InvalidOperationException("Selling price must be greater than or equal to cost price.");
+        if (editDto.SellingPrice < editDto.CostPrice)
+            return false;
 
-        var existing = await _unitOfWork.Products.GetByIdAsync(product.Id);
-        if (existing != null)
+        var isSkuUnique = await IsSkuUniqueAsync(editDto.SKU, editDto.Id);
+        if (!isSkuUnique)
+            return false;
+
+        var existing = await _unitOfWork.Products.GetByIdAsync(editDto.Id);
+        if (existing == null)
+            return false;
+
+        existing.SKU = editDto.SKU;
+        existing.Name = editDto.Name;
+        existing.Description = editDto.Description;
+        existing.CategoryId = editDto.CategoryId;
+        existing.CostPrice = editDto.CostPrice;
+        existing.SellingPrice = editDto.SellingPrice;
+        existing.Unit = editDto.Unit;
+        existing.IsActive = editDto.IsActive;
+        
+        if (newImagePath != null)
         {
-            existing.SKU = product.SKU;
-            existing.Name = product.Name;
-            existing.Description = product.Description;
-            existing.CategoryId = product.CategoryId;
-            existing.CostPrice = product.CostPrice;
-            existing.SellingPrice = product.SellingPrice;
-            existing.Unit = product.Unit;
-            existing.IsActive = product.IsActive;
-            
-            _unitOfWork.Products.Update(existing);
-            await _unitOfWork.SaveChangesAsync();
+            existing.ImagePath = newImagePath;
         }
+
+        _unitOfWork.Products.Update(existing);
+        return await _unitOfWork.SaveChangesAsync() > 0;
     }
 
-    public async Task DeleteProductAsync(int id)
+    public async Task<bool> DeleteProductAsync(int id)
     {
         var product = await _unitOfWork.Products.GetByIdAsync(id);
-        if (product != null)
+        if (product == null) return false;
+        
+        // Soft delete
+        product.IsActive = false;
+        _unitOfWork.Products.Update(product);
+        return await _unitOfWork.SaveChangesAsync() > 0;
+    }
+
+    public async Task<bool> BulkToggleStatusAsync(int[] productIds, bool isActive)
+    {
+        if (productIds == null || productIds.Length == 0) return false;
+
+        foreach (var id in productIds)
         {
-            // Soft delete by setting IsActive to false
-            product.IsActive = false;
-            _unitOfWork.Products.Update(product);
-            await _unitOfWork.SaveChangesAsync();
+            var p = await _unitOfWork.Products.GetByIdAsync(id);
+            if (p != null)
+            {
+                p.IsActive = isActive;
+                _unitOfWork.Products.Update(p);
+            }
         }
+
+        return await _unitOfWork.SaveChangesAsync() > 0;
     }
 }

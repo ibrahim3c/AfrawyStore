@@ -5,9 +5,11 @@ using AfrawyStore.Domain.Entities;
 
 public interface IProductService
 {
-    Task<IEnumerable<ProductDto>> GetAllProductsAsync();
+    Task<PagedResultDto<ProductDto>> GetPagedProductsAsync(string? searchTerm, int? categoryId, bool? isActive, int page, int pageSize);
     Task<ProductDto?> GetProductByIdAsync(int id);
-    Task CreateProductAsync(Product product);
-    Task UpdateProductAsync(Product product);
-    Task DeleteProductAsync(int id);
+    Task<bool> IsSkuUniqueAsync(string sku, int? excludeId = null);
+    Task<bool> CreateProductAsync(ProductCreateDto createDto, string? imagePath);
+    Task<bool> UpdateProductAsync(ProductEditDto editDto, string? newImagePath);
+    Task<bool> DeleteProductAsync(int id);
+    Task<bool> BulkToggleStatusAsync(int[] productIds, bool isActive);
 }

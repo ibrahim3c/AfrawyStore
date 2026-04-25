@@ -1,0 +1,194 @@
+@model AfrawyStore.Application.DTOs.ProductCreateDto
+@{
+    ViewData["Title"] = "إضافة منتج جديد";
+}
+
+<div class="d-flex justify-content-between align-items-center mb-4">
+    <h2 class="h3 text-primary mb-0"><i class="bi bi-box-seam me-2"></i> @ViewData["Title"]</h2>
+    <a asp-action="Index" class="btn btn-outline-secondary shadow-sm">
+        <i class="bi bi-arrow-right me-1"></i> عودة للقائمة
+    </a>
+</div>
+
+<form asp-action="Create" method="post" enctype="multipart/form-data">
+    <div asp-validation-summary="ModelOnly" class="alert alert-danger mb-4"></div>
+
+    <div class="row g-4">
+        <!-- Right Column: Core Info -->
+        <div class="col-lg-8">
+            <div class="card shadow-sm border-0 rounded-4 mb-4">
+                <div class="card-header bg-white rounded-top-4 border-bottom py-3 px-4">
+                    <h6 class="mb-0 fw-bold text-dark"><i class="bi bi-info-circle me-2 text-primary"></i> معلومات المنتج</h6>
+                </div>
+                <div class="card-body p-4">
+                    <div class="row g-3">
+                        <div class="col-md-6">
+                            <label asp-for="SKU" class="form-label fw-semibold">رمز المنتج (SKU) <span class="text-danger">*</span></label>
+                            <input asp-for="SKU" class="form-control" placeholder="مثال: PRD-001" autofocus />
+                            <span asp-validation-for="SKU" class="text-danger small"></span>
+                        </div>
+                        <div class="col-md-6">
+                            <label asp-for="CategoryId" class="form-label fw-semibold">الفئة <span class="text-danger">*</span></label>
+                            <select asp-for="CategoryId" class="form-select" asp-items="ViewBag.Categories">
+                                <option value="">-- اختر الفئة --</option>
+                            </select>
+                            <span asp-validation-for="CategoryId" class="text-danger small"></span>
+                        </div>
+                        <div class="col-12">
+                            <label asp-for="Name" class="form-label fw-semibold">اسم المنتج <span class="text-danger">*</span></label>
+                            <input asp-for="Name" class="form-control" placeholder="مثال: دهان بلاستيك أبيض ناصع" />
+                            <span asp-validation-for="Name" class="text-danger small"></span>
+                        </div>
+                        <div class="col-12">
+                            <label asp-for="Description" class="form-label fw-semibold">الوصف</label>
+                            <textarea asp-for="Description" class="form-control" rows="3" placeholder="وصف تفصيلي للمنتج..."></textarea>
+                            <span asp-validation-for="Description" class="text-danger small"></span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="card shadow-sm border-0 rounded-4">
+                <div class="card-header bg-white rounded-top-4 border-bottom py-3 px-4">
+                    <h6 class="mb-0 fw-bold text-dark"><i class="bi bi-currency-dollar me-2 text-success"></i> الأسعار والوحدات</h6>
+                </div>
+                <div class="card-body p-4">
+                    <div class="row g-3">
+                        <div class="col-md-4">
+                            <label asp-for="CostPrice" class="form-label fw-semibold">سعر التكلفة (ج.م) <span class="text-danger">*</span></label>
+                            <input asp-for="CostPrice" type="number" step="0.01" min="0.01" class="form-control" id="costPrice" placeholder="0.00" />
+                            <span asp-validation-for="CostPrice" class="text-danger small"></span>
+                        </div>
+                        <div class="col-md-4">
+                            <label asp-for="SellingPrice" class="form-label fw-semibold">سعر البيع (ج.م) <span class="text-danger">*</span></label>
+                            <input asp-for="SellingPrice" type="number" step="0.01" min="0.01" class="form-control" id="sellingPrice" placeholder="0.00" />
+                            <span asp-validation-for="SellingPrice" class="text-danger small"></span>
+                        </div>
+                        <div class="col-md-4">
+                            <label asp-for="Unit" class="form-label fw-semibold">وحدة القياس <span class="text-danger">*</span></label>
+                            <input asp-for="Unit" class="form-control" placeholder="مثال: لتر، كيلو، علبة" />
+                            <span asp-validation-for="Unit" class="text-danger small"></span>
+                        </div>
+                        <div class="col-12">
+                            <div class="alert border rounded-3 p-3 mb-0" id="profitAlert">
+                                <div class="d-flex align-items-center gap-3">
+                                    <div>
+                                        <small class="text-muted d-block">هامش الربح</small>
+                                        <span class="fw-bold fs-5" id="profitMarginDisplay">--%</span>
+                                    </div>
+                                    <div class="vr"></div>
+                                    <div>
+                                        <small class="text-muted d-block">ربح الوحدة</small>
+                                        <span class="fw-bold fs-5" id="profitAmountDisplay">-- ج.م</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Left Column: Image & Status -->
+        <div class="col-lg-4">
+            <div class="card shadow-sm border-0 rounded-4 mb-4">
+                <div class="card-header bg-white rounded-top-4 border-bottom py-3 px-4">
+                    <h6 class="mb-0 fw-bold text-dark"><i class="bi bi-image me-2 text-info"></i> صورة المنتج</h6>
+                </div>
+                <div class="card-body p-4">
+                    <div id="imagePreviewContainer" class="text-center mb-3 d-none">
+                        <img id="imagePreview" src="#" alt="معاينة الصورة" class="img-fluid rounded-3 shadow-sm border" style="max-height: 200px; object-fit: contain;" />
+                    </div>
+                    <div id="imagePlaceholder" class="rounded-3 bg-light border border-dashed d-flex flex-column align-items-center justify-content-center text-muted mb-3" style="height: 180px;">
+                        <i class="bi bi-cloud-arrow-up fs-2 mb-2"></i>
+                        <small>اضغط لاختيار صورة</small>
+                    </div>
+                    <label class="form-label fw-semibold">رفع صورة</label>
+                    <input type="file" class="form-control" id="imageFileInput" name="ImageFile" accept="image/*" />
+                </div>
+            </div>
+
+            <div class="card shadow-sm border-0 rounded-4">
+                <div class="card-header bg-white rounded-top-4 border-bottom py-3 px-4">
+                    <h6 class="mb-0 fw-bold text-dark"><i class="bi bi-toggle-on me-2 text-warning"></i> الحالة</h6>
+                </div>
+                <div class="card-body p-4">
+                    <div class="form-check form-switch">
+                        <input asp-for="IsActive" class="form-check-input" type="checkbox" role="switch" style="width: 3rem; height: 1.5rem;" />
+                        <label asp-for="IsActive" class="form-check-label ms-2 fw-semibold">منتج نشط</label>
+                    </div>
+                    <small class="text-muted mt-2 d-block">المنتجات النشطة تظهر في المبيعات.</small>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <hr class="my-4 border-light">
+    <div class="d-flex gap-2">
+        <button type="submit" class="btn btn-primary-af px-4 shadow-sm">
+            <i class="bi bi-save me-1"></i> حفظ المنتج
+        </button>
+        <a asp-action="Index" class="btn btn-light border shadow-sm">إلغاء</a>
+    </div>
+</form>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+    <script>
+        // Live Profit Margin Calculator
+        const costPriceInput = document.getElementById('costPrice');
+        const sellingPriceInput = document.getElementById('sellingPrice');
+        const profitAlert = document.getElementById('profitAlert');
+        const profitMarginDisplay = document.getElementById('profitMarginDisplay');
+        const profitAmountDisplay = document.getElementById('profitAmountDisplay');
+
+        function calculateProfit() {
+            const cost = parseFloat(costPriceInput.value) || 0;
+            const selling = parseFloat(sellingPriceInput.value) || 0;
+
+            if (cost > 0 && selling > 0) {
+                const profit = selling - cost;
+                const margin = selling > 0 ? (profit / selling) * 100 : 0;
+                profitMarginDisplay.textContent = margin.toFixed(1) + '%';
+                profitAmountDisplay.textContent = profit.toFixed(2) + ' ج.م';
+
+                if (selling >= cost) {
+                    profitAlert.className = 'alert border rounded-3 p-3 mb-0 alert-success border-success-subtle';
+                    profitMarginDisplay.className = 'fw-bold fs-5 text-success';
+                    profitAmountDisplay.className = 'fw-bold fs-5 text-success';
+                } else {
+                    profitAlert.className = 'alert border rounded-3 p-3 mb-0 alert-danger border-danger-subtle';
+                    profitMarginDisplay.className = 'fw-bold fs-5 text-danger';
+                    profitAmountDisplay.className = 'fw-bold fs-5 text-danger';
+                }
+            } else {
+                profitAlert.className = 'alert border rounded-3 p-3 mb-0';
+                profitMarginDisplay.textContent = '--%';
+                profitAmountDisplay.textContent = '-- ج.م';
+            }
+        }
+
+        costPriceInput.addEventListener('input', calculateProfit);
+        sellingPriceInput.addEventListener('input', calculateProfit);
+        calculateProfit(); // Run on load
+
+        // Image Preview
+        const imageFileInput = document.getElementById('imageFileInput');
+        const imagePreview = document.getElementById('imagePreview');
+        const imagePreviewContainer = document.getElementById('imagePreviewContainer');
+        const imagePlaceholder = document.getElementById('imagePlaceholder');
+
+        imageFileInput.addEventListener('change', function (event) {
+            const file = event.target.files[0];
+            if (file) {
+                const reader = new FileReader();
+                reader.onload = function (e) {
+                    imagePreview.src = e.target.result;
+                    imagePreviewContainer.classList.remove('d-none');
+                    imagePlaceholder.classList.add('d-none');
+                };
+                reader.readAsDataURL(file);
+            }
+        });
+    </script>
+}

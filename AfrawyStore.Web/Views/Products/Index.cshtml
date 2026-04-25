@@ -1,172 +1,208 @@
-@model IEnumerable<AfrawyStore.Application.DTOs.ProductDto>
+@model AfrawyStore.Application.DTOs.PagedResultDto<AfrawyStore.Application.DTOs.ProductDto>
 @{
     ViewData["Title"] = "المنتجات";
+    var categories = ViewBag.Categories as SelectList;
 }
 
-<!-- Action Bar -->
-<div class="d-flex flex-wrap justify-content-between align-items-center mb-4 gap-3">
-    <div class="d-flex gap-2 flex-grow-1" style="max-width: 600px;">
-        <div class="position-relative flex-grow-1">
-            <i class="bi bi-search position-absolute top-50 translate-middle-y text-muted" style="right: 15px;"></i>
-            <input type="text" class="form-control form-control-af bg-white" placeholder="بحث بالاسم أو SKU..." style="padding-right: 40px;" />
-        </div>
-        <select class="form-select form-control-af bg-white" style="width: auto;">
-            <option>الفئة ▾</option>
-            <option>دهانات</option>
-            <option>عدد يدوية</option>
-        </select>
-        <select class="form-select form-control-af bg-white" style="width: auto;">
-            <option>الحالة ▾</option>
-            <option>نشط</option>
-            <option>غير نشط</option>
-        </select>
-    </div>
-    <a href="/Products/Create" class="btn btn-primary-af d-inline-flex align-items-center gap-2">
-        <i class="bi bi-plus-lg"></i>
-        إضافة منتج
+<div class="d-flex justify-content-between align-items-center mb-4">
+    <h2 class="h3 text-primary mb-0"><i class="bi bi-box-seam me-2"></i> @ViewData["Title"]</h2>
+    <a asp-action="Create" class="btn btn-primary-af shadow-sm">
+        <i class="bi bi-plus-lg me-1"></i> إضافة منتج
     </a>
 </div>
 
-<!-- Data Table -->
-<div class="af-card p-0 mb-4">
-    <div class="table-responsive af-table-container border-0 rounded-0">
-        <table class="table af-table text-nowrap align-middle">
-            <thead>
-                <tr>
-                    <th style="width: 40px;"><input class="form-check-input" type="checkbox" /></th>
-                    <th style="width: 60px;">الصورة</th>
-                    <th>الاسم</th>
-                    <th>SKU</th>
-                    <th>الفئة</th>
-                    <th>سعر البيع</th>
-                    <th>المخزون</th>
-                    <th>الحالة</th>
-                    <th class="text-end">الإجراءات</th>
-                </tr>
-            </thead>
-            <tbody>
-                @if (Model == null || !Model.Any())
-                {
-                    <tr>
-                        <td colspan="9" class="text-center py-5 text-muted">
-                            <i class="bi bi-inbox fs-1 d-block mb-3 opacity-50"></i>
-                            لا توجد منتجات مسجلة بعد.
-                        </td>
-                    </tr>
-                    
-                    <!-- Dummy rows to show design as per requirements -->
-                    <tr class="opacity-75" title="هذه بيانات تجريبية">
-                        <td><input class="form-check-input" type="checkbox" /></td>
-                        <td>
-                            <div class="bg-light rounded d-flex align-items-center justify-content-center text-muted" style="width: 40px; height: 40px;">
-                                <i class="bi bi-image"></i>
-                            </div>
-                        </td>
-                        <td class="fw-semibold">دهان مائي أبيض</td>
-                        <td class="text-muted fs-sm">PT-001</td>
-                        <td>دهانات</td>
-                        <td class="fw-bold numeric">85.00 ج</td>
-                        <td>
-                            <span class="badge bg-light text-dark border w-100 text-end">12 <small class="text-muted fw-normal ms-1">لتر</small></span>
-                        </td>
-                        <td><span class="status-pill good">● نشط</span></td>
-                        <td class="text-end">
-                            <button class="btn-icon rounded me-1" title="تعديل"><i class="bi bi-pencil"></i></button>
-                            <button class="btn-icon rounded me-1" title="عرض"><i class="bi bi-eye"></i></button>
-                            <button class="btn-icon rounded text-danger" title="حذف"><i class="bi bi-trash"></i></button>
-                        </td>
-                    </tr>
-                    <tr class="opacity-75" title="هذه بيانات تجريبية">
-                        <td><input class="form-check-input" type="checkbox" /></td>
-                        <td>
-                            <div class="bg-light rounded d-flex align-items-center justify-content-center text-muted" style="width: 40px; height: 40px;">
-                                <i class="bi bi-image"></i>
-                            </div>
-                        </td>
-                        <td class="fw-semibold">مفتاح ربط 14mm</td>
-                        <td class="text-muted fs-sm">TL-047</td>
-                        <td>عدد يدوية</td>
-                        <td class="fw-bold numeric">22.50 ج</td>
-                        <td>
-                            <span class="badge border border-danger text-danger bg-danger bg-opacity-10 w-100 text-end">
-                                2 <small class="text-danger fw-normal ms-1">قطعة</small>
-                            </span>
-                        </td>
-                        <td><span class="status-pill danger" style="animation: none;">🔴 منخفض</span></td>
-                        <td class="text-end">
-                            <button class="btn-icon rounded me-1" title="تعديل"><i class="bi bi-pencil"></i></button>
-                            <button class="btn-icon rounded me-1" title="عرض"><i class="bi bi-eye"></i></button>
-                            <button class="btn-icon rounded text-danger" title="حذف"><i class="bi bi-trash"></i></button>
-                        </td>
-                    </tr>
-                }
-                else
-                {
-                    @foreach (var item in Model)
-                    {
-                        <tr>
-                            <td><input class="form-check-input" type="checkbox" /></td>
-                            <td>
-                                @if (string.IsNullOrEmpty(item.ImagePath))
-                                {
-                                    <div class="bg-light rounded d-flex align-items-center justify-content-center text-muted" style="width: 40px; height: 40px;">
-                                        <i class="bi bi-image"></i>
-                                    </div>
-                                }
-                                else
-                                {
-                                    <img src="@item.ImagePath" alt="@item.Name" class="rounded" style="width: 40px; height: 40px; object-fit: cover;" />
-                                }
-                            </td>
-                            <td class="fw-semibold">@item.Name</td>
-                            <td class="text-muted fs-sm">@item.SKU</td>
-                            <td>@item.CategoryName</td>
-                            <td class="fw-bold numeric">@item.SellingPrice.ToString("N2") ج</td>
-                            <td>
-                                @if(item.CurrentStock <= 5) // Simple threshold dummy
-                                {
-                                    <span class="badge border border-danger text-danger bg-danger bg-opacity-10 w-100 text-end">
-                                        @item.CurrentStock <small class="text-danger fw-normal ms-1">@item.Unit</small>
-                                    </span>
-                                }
-                                else
-                                {
-                                    <span class="badge bg-light text-dark border w-100 text-end">
-                                        @item.CurrentStock <small class="text-muted fw-normal ms-1">@item.Unit</small>
-                                    </span>
-                                }
-                            </td>
-                            <td>
-                                @if (item.IsActive)
-                                {
-                                    <span class="status-pill good">● نشط</span>
-                                }
-                                else
-                                {
-                                    <span class="status-pill neutral">○ غير نشط</span>
-                                }
-                            </td>
-                            <td class="text-end">
-                                <button class="btn-icon rounded me-1" title="تعديل"><i class="bi bi-pencil"></i></button>
-                                <button class="btn-icon rounded me-1" title="عرض"><i class="bi bi-eye"></i></button>
-                                <button class="btn-icon rounded text-danger" title="حذف"><i class="bi bi-trash"></i></button>
-                            </td>
-                        </tr>
-                    }
-                }
-            </tbody>
-        </table>
+@if (TempData["SuccessMessage"] != null)
+{
+    <div class="alert alert-success alert-dismissible fade show shadow-sm" role="alert">
+        <i class="bi bi-check-circle me-2"></i> @TempData["SuccessMessage"]
+        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
     </div>
-    <div class="p-3 border-top d-flex justify-content-between align-items-center bg-light rounded-bottom">
-        <span class="text-muted fs-sm">إظهار 1 إلى 10 من أصل 248 مدخل</span>
-        <nav aria-label="Page navigation">
-            <ul class="pagination pagination-sm mb-0">
-                <li class="page-item disabled"><a class="page-link" href="#"><i class="bi bi-chevron-right"></i></a></li>
-                <li class="page-item active"><a class="page-link" href="#">1</a></li>
-                <li class="page-item"><a class="page-link" href="#">2</a></li>
-                <li class="page-item"><a class="page-link" href="#">3</a></li>
-                <li class="page-item"><a class="page-link" href="#"><i class="bi bi-chevron-left"></i></a></li>
-            </ul>
-        </nav>
+}
+@if (TempData["ErrorMessage"] != null)
+{
+    <div class="alert alert-danger alert-dismissible fade show shadow-sm" role="alert">
+        <i class="bi bi-exclamation-triangle me-2"></i> @TempData["ErrorMessage"]
+        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+    </div>
+}
+
+<div class="card shadow-sm border-0 rounded-4 mb-4">
+    <div class="card-body p-4">
+        <form method="get" asp-action="Index" class="row g-3">
+            <div class="col-md-4">
+                <div class="input-group">
+                    <span class="input-group-text bg-light border-end-0"><i class="bi bi-search text-muted"></i></span>
+                    <input type="text" name="searchTerm" class="form-control border-start-0 ps-0" placeholder="بحث بالاسم أو SKU..." value="@ViewBag.SearchTerm">
+                </div>
+            </div>
+            <div class="col-md-3">
+                <select name="categoryId" class="form-select" asp-items="categories">
+                    <option value="">جميع الفئات</option>
+                </select>
+            </div>
+            <div class="col-md-3">
+                <select name="isActive" class="form-select">
+                    <option value="" selected="@(ViewBag.IsActive == null ? "selected" : null)">جميع الحالات</option>
+                    <option value="true" selected="@(ViewBag.IsActive == true ? "selected" : null)">نشط</option>
+                    <option value="false" selected="@(ViewBag.IsActive == false ? "selected" : null)">غير نشط</option>
+                </select>
+            </div>
+            <div class="col-md-2 d-flex gap-2">
+                <button type="submit" class="btn btn-primary w-100 shadow-sm">بحث</button>
+                <a asp-action="Index" class="btn btn-light border w-100 shadow-sm" title="إعادة ضبط">مسح</a>
+            </div>
+        </form>
     </div>
 </div>
+
+<form method="post" asp-action="BulkToggleStatus" id="bulkForm">
+    <div class="card shadow-sm border-0 rounded-4">
+        <div class="card-header bg-white border-bottom-0 pt-4 pb-0 px-4 d-flex justify-content-between align-items-center">
+            <h5 class="mb-0 text-muted">قائمة المنتجات (@Model.TotalCount)</h5>
+            <div class="dropdown">
+                <button class="btn btn-outline-secondary btn-sm dropdown-toggle shadow-sm" type="button" data-bs-toggle="dropdown" aria-expanded="false" id="bulkActionsBtn" disabled>
+                    إجراءات جماعية (<span id="selectedCount">0</span>)
+                </button>
+                <ul class="dropdown-menu">
+                    <li><button type="submit" name="isActive" value="true" class="dropdown-item text-success"><i class="bi bi-eye me-2"></i> تفعيل المحدد</button></li>
+                    <li><button type="submit" name="isActive" value="false" class="dropdown-item text-warning"><i class="bi bi-eye-slash me-2"></i> إلغاء تفعيل المحدد</button></li>
+                </ul>
+            </div>
+        </div>
+        <div class="card-body p-0 mt-3">
+            <div class="table-responsive">
+                <table class="table table-hover align-middle mb-0">
+                    <thead class="table-light">
+                        <tr>
+                            <th class="ps-4" style="width: 40px;">
+                                <input class="form-check-input" type="checkbox" id="selectAll">
+                            </th>
+                            <th style="width: 60px;">صورة</th>
+                            <th>SKU</th>
+                            <th>المنتج</th>
+                            <th>الفئة</th>
+                            <th>سعر البيع</th>
+                            <th>المخزون</th>
+                            <th>الحالة</th>
+                            <th class="text-end pe-4">الإجراءات</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach (var product in Model.Items)
+                        {
+                            <tr>
+                                <td class="ps-4">
+                                    <input class="form-check-input row-checkbox" type="checkbox" name="selectedIds" value="@product.Id">
+                                </td>
+                                <td>
+                                    @if (!string.IsNullOrEmpty(product.ImagePath))
+                                    {
+                                        <img src="@product.ImagePath" alt="@product.Name" class="rounded object-fit-cover shadow-sm border" style="width: 40px; height: 40px;">
+                                    }
+                                    else
+                                    {
+                                        <div class="rounded bg-light text-muted d-flex align-items-center justify-content-center border" style="width: 40px; height: 40px;">
+                                            <i class="bi bi-image"></i>
+                                        </div>
+                                    }
+                                </td>
+                                <td><span class="badge bg-light text-dark border font-monospace">@product.SKU</span></td>
+                                <td class="fw-semibold text-dark">@product.Name</td>
+                                <td><span class="text-muted small"><i class="bi bi-tag-fill me-1 text-primary-af"></i> @product.CategoryName</span></td>
+                                <td class="fw-bold text-success">@product.SellingPrice.ToString("N2")</td>
+                                <td>
+                                    @if(product.CurrentStock <= 5) {
+                                        <span class="badge bg-danger">@product.CurrentStock @product.Unit</span>
+                                    } else {
+                                        <span class="badge bg-success">@product.CurrentStock @product.Unit</span>
+                                    }
+                                </td>
+                                <td>
+                                    @if (product.IsActive)
+                                    {
+                                        <span class="badge bg-success bg-opacity-10 text-success border border-success-subtle px-2 py-1"><i class="bi bi-check-circle-fill me-1"></i> نشط</span>
+                                    }
+                                    else
+                                    {
+                                        <span class="badge bg-warning bg-opacity-10 text-warning border border-warning-subtle px-2 py-1"><i class="bi bi-dash-circle-fill me-1"></i> معطل</span>
+                                    }
+                                </td>
+                                <td class="text-end pe-4">
+                                    <a asp-action="Details" asp-route-id="@product.Id" class="btn btn-sm btn-light border shadow-sm" title="التفاصيل">
+                                        <i class="bi bi-eye"></i>
+                                    </a>
+                                    <a asp-action="Edit" asp-route-id="@product.Id" class="btn btn-sm btn-outline-primary shadow-sm" title="تعديل">
+                                        <i class="bi bi-pencil"></i>
+                                    </a>
+                                </td>
+                            </tr>
+                        }
+                        @if (!Model.Items.Any())
+                        {
+                            <tr>
+                                <td colspan="9" class="text-center py-5 text-muted">
+                                    <i class="bi bi-inbox fs-2 d-block mb-2 text-black-50"></i>
+                                    لا يوجد منتجات تطابق بحثك
+                                </td>
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+            </div>
+        </div>
+        
+        <!-- Pagination -->
+        @if (Model.TotalPages > 1)
+        {
+            <div class="card-footer bg-white border-top py-3 d-flex justify-content-center">
+                <nav aria-label="Page navigation">
+                    <ul class="pagination pagination-sm mb-0 shadow-sm">
+                        <li class="page-item @(Model.PageNumber == 1 ? "disabled" : "")">
+                            <a class="page-link" href="@Url.Action("Index", new { page = Model.PageNumber - 1, searchTerm = ViewBag.SearchTerm, categoryId = ViewBag.CategoryId, isActive = ViewBag.IsActive })">السابق</a>
+                        </li>
+                        
+                        @for (int i = 1; i <= Model.TotalPages; i++)
+                        {
+                            <li class="page-item @(i == Model.PageNumber ? "active" : "")">
+                                <a class="page-link" href="@Url.Action("Index", new { page = i, searchTerm = ViewBag.SearchTerm, categoryId = ViewBag.CategoryId, isActive = ViewBag.IsActive })">@i</a>
+                            </li>
+                        }
+
+                        <li class="page-item @(Model.PageNumber == Model.TotalPages ? "disabled" : "")">
+                            <a class="page-link" href="@Url.Action("Index", new { page = Model.PageNumber + 1, searchTerm = ViewBag.SearchTerm, categoryId = ViewBag.CategoryId, isActive = ViewBag.IsActive })">التالي</a>
+                        </li>
+                    </ul>
+                </nav>
+            </div>
+        }
+    </div>
+</form>
+
+@section Scripts {
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            const selectAll = document.getElementById('selectAll');
+            const checkboxes = document.querySelectorAll('.row-checkbox');
+            const bulkBtn = document.getElementById('bulkActionsBtn');
+            const selectedCountSpan = document.getElementById('selectedCount');
+
+            function updateBulkActionState() {
+                const checkedCount = document.querySelectorAll('.row-checkbox:checked').length;
+                selectedCountSpan.textContent = checkedCount;
+                bulkBtn.disabled = checkedCount === 0;
+                selectAll.checked = checkedCount === checkboxes.length && checkboxes.length > 0;
+            }
+
+            if (selectAll) {
+                selectAll.addEventListener('change', function () {
+                    checkboxes.forEach(cb => cb.checked = selectAll.checked);
+                    updateBulkActionState();
+                });
+            }
+
+            checkboxes.forEach(cb => {
+                cb.addEventListener('change', updateBulkActionState);
+            });
+        });
+    </script>
+}

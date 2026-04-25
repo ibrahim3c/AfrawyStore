@@ -13,7 +13,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("AfrawyStore.Web")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+a27e6c113515d07d6295070d8e43e4232d8b5282")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+884cc28d71d19284b53c479c53bb844eda516355")]
 [assembly: System.Reflection.AssemblyProductAttribute("AfrawyStore.Web")]
 [assembly: System.Reflection.AssemblyTitleAttribute("AfrawyStore.Web")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]
