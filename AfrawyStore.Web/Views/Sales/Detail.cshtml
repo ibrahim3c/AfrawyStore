@@ -1,0 +1,212 @@
+@model AfrawyStore.Application.DTOs.SaleDetailDto
+@{
+    ViewData["Title"] = $"فاتورة #{Model.Id}";
+    var isAdmin = (bool)(ViewBag.IsAdmin ?? false);
+    var isVoided = Model.Status == AfrawyStore.Domain.Enums.SaleStatus.Voided;
+}
+
+<div class="d-flex justify-content-between align-items-center mb-4">
+    <div>
+        <h2 class="h3 text-primary mb-1"><i class="bi bi-receipt me-2"></i> @ViewData["Title"]</h2>
+        <span class="text-muted small">@Model.SaleDate.ToString("yyyy/MM/dd hh:mm tt")</span>
+    </div>
+    <div class="d-flex gap-2 d-print-none">
+        <a asp-action="Index" class="btn btn-outline-secondary shadow-sm">
+            <i class="bi bi-arrow-right me-1"></i> العودة للمبيعات
+        </a>
+        <button onclick="window.print()" class="btn btn-primary-af shadow-sm">
+            <i class="bi bi-printer me-1"></i> طباعة
+        </button>
+        @if (isAdmin && !isVoided)
+        {
+            <form asp-action="Void" asp-route-id="@Model.Id" method="post" 
+                  onsubmit="return confirm('هل أنت متأكد من إلغاء هذه الفاتورة؟ سيتم إعادة المخزون.');">
+                <button type="submit" class="btn btn-outline-danger shadow-sm">
+                    <i class="bi bi-x-octagon me-1"></i> إلغاء الفاتورة
+                </button>
+            </form>
+        }
+    </div>
+</div>
+
+@if (TempData["SuccessMessage"] != null)
+{
+    <div class="alert alert-success alert-dismissible fade show shadow-sm d-print-none" role="alert">
+        <i class="bi bi-check-circle me-2"></i> @TempData["SuccessMessage"]
+        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+    </div>
+}
+@if (TempData["ErrorMessage"] != null)
+{
+    <div class="alert alert-danger alert-dismissible fade show shadow-sm d-print-none" role="alert">
+        <i class="bi bi-exclamation-triangle me-2"></i> @TempData["ErrorMessage"]
+        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+    </div>
+}
+
+<!-- Voided Banner -->
+@if (isVoided)
+{
+    <div class="alert alert-danger border-danger shadow-sm">
+        <div class="d-flex align-items-center gap-2">
+            <i class="bi bi-x-octagon-fill fs-4"></i>
+            <div>
+                <strong>هذه الفاتورة ملغاة</strong>
+                <div class="small opacity-75">تم إلغاء هذه العملية وإعادة المخزون</div>
+            </div>
+        </div>
+    </div>
+}
+
+<div class="row g-4">
+    <!-- Receipt Card -->
+    <div class="col-lg-8">
+        <div class="card shadow-sm border-0 rounded-4 @(isVoided ? "border border-danger" : "")">
+            
+            <!-- Receipt Header -->
+            <div class="card-header bg-white border-bottom py-4 text-center receipt-header">
+                <h3 class="fw-bold mb-1"><i class="bi bi-gem me-2"></i>AFRAWY STORE</h3>
+                <div class="text-muted small">فاتورة مبيعات</div>
+                <div class="text-muted small mt-1">@Model.SaleDate.ToString("yyyy/MM/dd hh:mm tt")</div>
+            </div>
+            
+            <!-- Items Table -->
+            <div class="card-body p-0">
+                <div class="table-responsive">
+                    <table class="table align-middle mb-0">
+                        <thead class="table-light">
+                            <tr>
+                                <th class="ps-4">#</th>
+                                <th>المنتج</th>
+                                <th class="text-center">الكمية</th>
+                                <th class="text-center">سعر الوحدة</th>
+                                <th class="text-end pe-4">الإجمالي</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @{ int index = 1; }
+                            @foreach (var item in Model.Items)
+                            {
+                                <tr>
+                                    <td class="ps-4 text-muted">@index</td>
+                                    <td>
+                                        <div class="fw-semibold">@item.ProductName</div>
+                                        <small class="text-muted font-monospace">@item.ProductSKU</small>
+                                    </td>
+                                    <td class="text-center numeric">@item.Quantity</td>
+                                    <td class="text-center numeric">@item.UnitPrice.ToString("N2") ج</td>
+                                    <td class="text-end pe-4 fw-bold numeric">@item.LineTotal.ToString("N2") ج</td>
+                                </tr>
+                                index++;
+                            }
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+            
+            <!-- Totals Footer -->
+            <div class="card-footer bg-white py-4 px-4">
+                <div class="row justify-content-end">
+                    <div class="col-md-5">
+                        <div class="d-flex justify-content-between mb-2">
+                            <span class="text-muted">المجموع الفرعي:</span>
+                            <span class="fw-semibold numeric">@Model.SubTotal.ToString("N2") ج</span>
+                        </div>
+                        @if (Model.Discount > 0)
+                        {
+                            <div class="d-flex justify-content-between mb-2 text-danger">
+                                <span>خصم:</span>
+                                <span class="fw-semibold numeric">-@Model.Discount.ToString("N2") ج</span>
+                            </div>
+                        }
+                        <hr class="my-2" />
+                        <div class="d-flex justify-content-between">
+                            <span class="h5 fw-bold mb-0">الإجمالي:</span>
+                            <span class="h5 fw-bold mb-0 text-primary numeric">@Model.TotalAmount.ToString("N2") ج</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Sale Info Sidebar -->
+    <div class="col-lg-4">
+        <div class="card shadow-sm border-0 rounded-4 mb-4">
+            <div class="card-header bg-white border-bottom">
+                <h6 class="mb-0 fw-bold"><i class="bi bi-info-circle me-1"></i> معلومات الفاتورة</h6>
+            </div>
+            <div class="card-body">
+                <div class="mb-3">
+                    <small class="text-muted d-block">رقم الفاتورة</small>
+                    <span class="fw-bold font-monospace">#@Model.Id</span>
+                </div>
+                <div class="mb-3">
+                    <small class="text-muted d-block">الحالة</small>
+                    @if (isVoided)
+                    {
+                        <span class="badge bg-danger bg-opacity-10 text-danger border border-danger-subtle px-2 py-1">
+                            <i class="bi bi-x-octagon-fill me-1"></i>@Model.StatusLabel
+                        </span>
+                    }
+                    else
+                    {
+                        <span class="badge bg-success bg-opacity-10 text-success border border-success-subtle px-2 py-1">
+                            <i class="bi bi-check-circle-fill me-1"></i>@Model.StatusLabel
+                        </span>
+                    }
+                </div>
+                <div class="mb-3">
+                    <small class="text-muted d-block">طريقة الدفع</small>
+                    <span class="fw-semibold">
+                        @{
+                            var icon = Model.PaymentMethod == AfrawyStore.Domain.Enums.PaymentMethod.Cash ? "bi-cash" :
+                                       Model.PaymentMethod == AfrawyStore.Domain.Enums.PaymentMethod.Card ? "bi-credit-card" : "bi-wallet2";
+                        }
+                        <i class="bi @icon me-1"></i>@Model.PaymentMethodLabel
+                    </span>
+                </div>
+                <div class="mb-3">
+                    <small class="text-muted d-block">الكاشير</small>
+                    <span class="fw-semibold">@Model.CreatedByName</span>
+                </div>
+                <div class="mb-3">
+                    <small class="text-muted d-block">عدد الأصناف</small>
+                    <span class="fw-semibold">@Model.Items.Count</span>
+                </div>
+                @if (!string.IsNullOrEmpty(Model.Note))
+                {
+                    <div class="mb-0">
+                        <small class="text-muted d-block">ملاحظة</small>
+                        <span>@Model.Note</span>
+                    </div>
+                }
+            </div>
+        </div>
+
+        <!-- Quick Actions -->
+        <div class="card shadow-sm border-0 rounded-4 d-print-none">
+            <div class="card-body">
+                <a asp-action="New" class="btn btn-accent w-100 mb-2">
+                    <i class="bi bi-plus-circle me-1"></i> بيع جديد
+                </a>
+                <a asp-action="Index" class="btn btn-outline-secondary w-100">
+                    <i class="bi bi-list-ul me-1"></i> سجل المبيعات
+                </a>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Print styles -->
+<style>
+    @@media print {
+        .top-navbar, .main-sidebar, .breadcrumb, .d-print-none,
+        h1.h3.mb-0.fw-bold { display: none !important; }
+        .main-content { margin: 0 !important; padding: 0 !important; }
+        .card { border: none !important; box-shadow: none !important; }
+        .receipt-header { border-bottom: 2px dashed #333 !important; }
+        .card-footer { border-top: 2px dashed #333 !important; }
+        body { font-size: 12px; }
+    }
+</style>

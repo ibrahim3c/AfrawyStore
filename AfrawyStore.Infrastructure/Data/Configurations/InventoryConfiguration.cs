@@ -11,7 +11,6 @@ public class InventoryConfiguration : IEntityTypeConfiguration<Inventory>
         builder.HasKey(x => x.Id);
         
         builder.Property(x => x.CurrentStock).HasColumnType("decimal(10,2)").HasDefaultValue(0);
-        builder.Property(x => x.MinimumStock).HasColumnType("decimal(10,2)").HasDefaultValue(5);
 
         builder.HasOne(x => x.Product)
             .WithOne(x => x.Inventory)

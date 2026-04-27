@@ -2,6 +2,7 @@ using AfrawyStore.Application.DTOs;
 using AfrawyStore.Application.Interfaces.Persistence;
 using AfrawyStore.Application.Interfaces.Services;
 using AfrawyStore.Domain.Entities;
+using AfrawyStore.Domain.Enums;
 
 namespace AfrawyStore.Application.Services;
 
@@ -30,7 +31,8 @@ public class ProductService : IProductService
             Unit = p.Unit,
             IsActive = p.IsActive,
             ImagePath = p.ImagePath,
-            CurrentStock = p.Inventory?.CurrentStock ?? 0
+            CurrentStock = p.Inventory?.CurrentStock ?? 0,
+            MinimumStock = p.MinimumStock
         }).ToList();
 
         return new PagedResultDto<ProductDto>
@@ -67,7 +69,8 @@ public class ProductService : IProductService
             Unit = p.Unit,
             IsActive = p.IsActive,
             Description = p.Description,
-            ImagePath = p.ImagePath
+            ImagePath = p.ImagePath,
+            MinimumStock = p.MinimumStock
         };
     }
 
@@ -76,7 +79,7 @@ public class ProductService : IProductService
         return await _unitOfWork.Products.IsSkuUniqueAsync(sku, excludeId);
     }
 
-    public async Task<bool> CreateProductAsync(ProductCreateDto createDto, string? imagePath)
+    public async Task<bool> CreateProductAsync(ProductCreateDto createDto, string? imagePath, int userId)
     {
         if (createDto.SellingPrice < createDto.CostPrice)
             return false;
@@ -94,15 +97,27 @@ public class ProductService : IProductService
             CostPrice = createDto.CostPrice,
             SellingPrice = createDto.SellingPrice,
             Unit = createDto.Unit,
+            MinimumStock = createDto.MinimumStock,
             IsActive = createDto.IsActive,
             ImagePath = imagePath,
             Inventory = new Inventory
             {
-                CurrentStock = 0,
-                MinimumStock = 5,
+                CurrentStock = createDto.InitialStock,
                 LastUpdated = DateTime.UtcNow
             }
         };
+
+        if (createDto.InitialStock > 0)
+        {
+            product.InventoryLogs.Add(new InventoryLog
+            {
+                ChangeType = InventoryChangeType.StockIn,
+                QuantityChange = createDto.InitialStock,
+                Note = "الرصيد الافتتاحي عند إنشاء المنتج",
+                CreatedAt = DateTime.UtcNow,
+                CreatedById = userId
+            });
+        }
 
         await _unitOfWork.Products.AddAsync(product);
         return await _unitOfWork.SaveChangesAsync() > 0;
@@ -128,6 +143,7 @@ public class ProductService : IProductService
         existing.CostPrice = editDto.CostPrice;
         existing.SellingPrice = editDto.SellingPrice;
         existing.Unit = editDto.Unit;
+        existing.MinimumStock = editDto.MinimumStock;
         existing.IsActive = editDto.IsActive;
         
         if (newImagePath != null)

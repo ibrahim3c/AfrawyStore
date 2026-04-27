@@ -76,8 +76,36 @@ build_metadata.AdditionalFiles.CssScope =
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcUHJvZHVjdHNcSW5kZXguY3NodG1s
 build_metadata.AdditionalFiles.CssScope = 
 
+[C:/Users/RAM/Desktop/AFRAWY/AfrawyStore/AfrawyStore.Web/Views/Reports/Index.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcUmVwb3J0c1xJbmRleC5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/RAM/Desktop/AFRAWY/AfrawyStore/AfrawyStore.Web/Views/Reports/_InventoryReport.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcUmVwb3J0c1xfSW52ZW50b3J5UmVwb3J0LmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/RAM/Desktop/AFRAWY/AfrawyStore/AfrawyStore.Web/Views/Reports/_LowStockReport.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcUmVwb3J0c1xfTG93U3RvY2tSZXBvcnQuY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/RAM/Desktop/AFRAWY/AfrawyStore/AfrawyStore.Web/Views/Reports/_ProfitLossReport.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcUmVwb3J0c1xfUHJvZml0TG9zc1JlcG9ydC5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/RAM/Desktop/AFRAWY/AfrawyStore/AfrawyStore.Web/Views/Reports/_SalesReport.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcUmVwb3J0c1xfU2FsZXNSZXBvcnQuY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/RAM/Desktop/AFRAWY/AfrawyStore/AfrawyStore.Web/Views/Sales/Detail.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcU2FsZXNcRGV0YWlsLmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
 [C:/Users/RAM/Desktop/AFRAWY/AfrawyStore/AfrawyStore.Web/Views/Sales/Index.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcU2FsZXNcSW5kZXguY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/RAM/Desktop/AFRAWY/AfrawyStore/AfrawyStore.Web/Views/Sales/New.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcU2FsZXNcTmV3LmNzaHRtbA==
 build_metadata.AdditionalFiles.CssScope = 
 
 [C:/Users/RAM/Desktop/AFRAWY/AfrawyStore/AfrawyStore.Web/Views/Shared/Components/LowStockBadge/Default.cshtml]

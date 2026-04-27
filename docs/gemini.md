@@ -449,12 +449,19 @@ When generating code for this project, follow these conventions:
 
 ---
 
+MAKE SURE THAT FILE IS UPTODATE WITH TASK.MD
 ## 17. Current Progress
 
 Refer to `tasks.md` for the current milestone status. As of the latest update:
 
-- ✅ **Milestone 0** (Foundation & Architecture) — Partially complete (entities, repos, UoW, DbContext done; migration & DI pending).
-- ⬜ **Milestones 1–10** — Not started.
+- ✅ **Milestone 0** (Foundation & Architecture) — Completed.
+- ✅ **Milestone 1** (Authentication & User Management) — Completed.
+- ✅ **Milestone 2** (Category Management) — Completed.
+- ✅ **Milestone 3** (Product Management) — Completed.
+- ✅ **Milestone 4** (Inventory Management) — Completed.
+- ✅ **Milestone 5** (Sales & POS) — Completed.
+- ✅ **Milestone 6** (Dashboard) — Completed.
+- ⬜ **Milestones 7–10** — Pending implementation.
 
 ---
 

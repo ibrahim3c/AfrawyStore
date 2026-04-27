@@ -1,0 +1,180 @@
+@inject Microsoft.AspNetCore.Antiforgery.IAntiforgery Antiforgery
+@{
+    ViewData["Title"] = "بيع جديد (نقطة البيع)";
+    var token = Antiforgery.GetAndStoreTokens(Context).RequestToken;
+}
+
+<div class="row g-4 h-100" style="min-height: calc(100vh - 160px);">
+    
+    <!-- Products Search & Grid (Right Side in RTL) -->
+    <div class="col-12 col-lg-7 col-xl-8 d-flex flex-column">
+        <div class="af-card p-4 d-flex flex-column h-100 border-top-0 border-start-0 border-bottom-0 shadow-none rounded-0 rounded-end bg-transparent" style="padding-top: 0 !important;">
+            
+            <div class="d-flex justify-content-between align-items-center mb-3">
+                <h2 class="h5 fw-bold mb-0"><i class="bi bi-search me-2 text-muted"></i>البحث عن منتج</h2>
+                <a asp-action="Index" class="btn btn-sm btn-outline-secondary rounded-pill px-3">
+                    <i class="bi bi-list-ul me-1"></i>سجل المبيعات
+                </a>
+            </div>
+            
+            <div class="position-relative mb-4">
+                <i class="bi bi-upc-scan position-absolute top-50 translate-middle-y text-muted" style="right: 15px;"></i>
+                <input type="text" id="posSearch" class="form-control form-control-af form-control-lg bg-white" 
+                       placeholder="اكتب الاسم أو الباركود (SKU)..." 
+                       style="padding-right: 40px; border-width: 2px;" autofocus />
+            </div>
+            
+            <!-- Products Grid Scrollable Area -->
+            <div id="productsGrid" class="row g-3 overflow-auto pe-2 pb-2 flex-grow-1 align-content-start" style="max-height: calc(100vh - 280px);">
+                <!-- Loading state -->
+                <div id="productsLoading" class="col-12 text-center py-5 text-muted">
+                    <div class="spinner-border spinner-border-sm text-primary me-2" role="status"></div>
+                    جاري تحميل المنتجات...
+                </div>
+                <!-- Products will be rendered here by JS -->
+            </div>
+        </div>
+    </div>
+
+    <!-- Order Summary (Left Side in RTL) -->
+    <div class="col-12 col-lg-5 col-xl-4 d-flex flex-column">
+        <div class="af-card p-0 d-flex flex-column h-100 shadow-sm border-primary" style="border-width: 2px;">
+            
+            <div class="p-4 border-bottom bg-light rounded-top d-flex justify-content-between align-items-center">
+                <h2 class="h5 fw-bold mb-0"><i class="bi bi-receipt me-2 text-primary"></i>ملخص الطلب</h2>
+                <div class="d-flex align-items-center gap-2">
+                    <span id="cartCount" class="badge bg-primary rounded-pill">0</span>
+                    <button id="btnClearCart" class="btn btn-sm btn-outline-danger py-1 fs-caption rounded-pill" title="إفراغ السلة">
+                        <i class="bi bi-trash me-1"></i>إفراغ
+                    </button>
+                </div>
+            </div>
+            
+            <!-- Cart Items Scrollable -->
+            <div id="cartItems" class="flex-grow-1 overflow-auto p-3 bg-white" style="max-height: calc(100vh - 460px);">
+                <!-- Empty state -->
+                <div id="cartEmpty" class="text-center py-5 text-muted">
+                    <i class="bi bi-cart-x fs-1 d-block mb-2 text-black-50"></i>
+                    <div>السلة فارغة</div>
+                    <small>ابحث عن منتج وأضفه للسلة</small>
+                </div>
+                <!-- Cart items will be rendered here by JS -->
+            </div>
+            
+            <!-- Payment & Totals Footer -->
+            <div class="p-4 bg-light rounded-bottom mt-auto">
+                
+                <div class="d-flex justify-content-between mb-2 fs-sm">
+                    <span class="text-muted">المجموع الفرعي:</span>
+                    <span id="subTotal" class="fw-semibold numeric">0.00 ج</span>
+                </div>
+                
+                <div class="d-flex justify-content-between align-items-center mb-3 fs-sm pb-3 border-bottom">
+                    <span class="text-muted">خصم:</span>
+                    <div class="d-flex align-items-center" style="width: 120px;">
+                        <input type="number" id="discountInput" class="form-control form-control-sm text-center numeric" 
+                               value="0" min="0" step="0.5" />
+                        <span class="ms-2 text-muted">ج</span>
+                    </div>
+                </div>
+                
+                <div class="d-flex justify-content-between mb-4 mt-2">
+                    <span class="h5 fw-bold mb-0">الإجمالي:</span>
+                    <span id="grandTotal" class="h4 fw-bold mb-0 text-primary numeric">0.00 ج</span>
+                </div>
+                
+                <div class="mb-3">
+                    <div class="text-muted fs-caption mb-2">طريقة الدفع:</div>
+                    <div class="btn-group w-100" role="group">
+                        <input type="radio" class="btn-check" name="payment" id="payCash" value="Cash" checked>
+                        <label class="btn btn-outline-primary" for="payCash"><i class="bi bi-cash me-1"></i>نقدي</label>
+
+                        <input type="radio" class="btn-check" name="payment" id="payCard" value="Card">
+                        <label class="btn btn-outline-primary" for="payCard"><i class="bi bi-credit-card me-1"></i>بطاقة</label>
+
+                        <input type="radio" class="btn-check" name="payment" id="payOther" value="Other">
+                        <label class="btn btn-outline-primary" for="payOther">أخرى</label>
+                    </div>
+                </div>
+
+                <!-- Note -->
+                <div class="mb-3">
+                    <input type="text" id="saleNote" class="form-control form-control-sm form-control-af" placeholder="ملاحظة (اختياري)..." />
+                </div>
+
+                <!-- Error message -->
+                <div id="checkoutError" class="alert alert-danger py-2 fs-caption d-none mb-3" role="alert">
+                    <i class="bi bi-exclamation-triangle me-1"></i>
+                    <span id="checkoutErrorText"></span>
+                </div>
+
+                <div class="d-flex gap-2 mt-2">
+                    <button id="btnCheckout" class="btn btn-accent w-100 fs-5 py-2 fw-bold d-flex align-items-center justify-content-center gap-2" disabled>
+                        <i class="bi bi-check2-circle"></i>إتمام البيع
+                    </button>
+                </div>
+
+            </div>
+
+        </div>
+    </div>
+</div>
+
+<!-- Hidden anti-forgery token for AJAX -->
+<input type="hidden" id="antiForgeryToken" value="@token" />
+
+<style>
+    .hover-shadow:hover {
+        border-color: var(--color-primary-light) !important;
+        box-shadow: var(--shadow-sm);
+        background-color: var(--color-surface) !important;
+    }
+    .product-card {
+        transition: all 0.15s ease;
+        cursor: pointer;
+    }
+    .product-card:hover {
+        border-color: var(--color-primary-light) !important;
+        box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+    }
+    .product-card.out-of-stock {
+        opacity: 0.5;
+        cursor: not-allowed;
+    }
+    .qty-btn {
+        width: 28px;
+        height: 28px;
+        padding: 0;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        border-radius: 50%;
+        border: 1px solid #dee2e6;
+        background: #fff;
+        cursor: pointer;
+        transition: all 0.15s ease;
+    }
+    .qty-btn:hover {
+        background: var(--color-primary);
+        color: #fff;
+        border-color: var(--color-primary);
+    }
+    .cart-item {
+        animation: slideIn 0.2s ease;
+    }
+    @@keyframes slideIn {
+        from { opacity: 0; transform: translateX(-10px); }
+        to { opacity: 1; transform: translateX(0); }
+    }
+    #btnCheckout:disabled {
+        opacity: 0.5;
+    }
+    .checkout-loading .spinner-border {
+        width: 1.2rem;
+        height: 1.2rem;
+    }
+</style>
+
+@section Scripts {
+    <script src="~/js/sales-pos.js" asp-append-version="true"></script>
+}

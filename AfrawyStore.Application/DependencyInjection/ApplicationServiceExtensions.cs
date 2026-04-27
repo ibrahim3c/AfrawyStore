@@ -12,7 +12,9 @@ public static class ApplicationServiceExtensions
         services.AddScoped<IUserService, UserService>();
         services.AddScoped<ICategoryService, CategoryService>();
         services.AddScoped<IInventoryService, InventoryService>();
-        // Add other services here as they are implemented
+        services.AddScoped<ISaleService, SaleService>();
+        services.AddScoped<IDashboardService, DashboardService>();
+        services.AddScoped<IReportService, ReportService>();
         
         return services;
     }

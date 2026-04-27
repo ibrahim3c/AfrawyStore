@@ -1,0 +1,151 @@
+@model AfrawyStore.Application.DTOs.ProfitLossReportDto
+
+<div class="row g-3 mb-4">
+    <div class="col-md-3 col-sm-6">
+        <div class="card shadow-sm border-0 rounded-4 border-start border-4 border-primary">
+            <div class="card-body d-flex align-items-center gap-3 py-3">
+                <div class="rounded-circle bg-primary bg-opacity-10 text-primary d-flex align-items-center justify-content-center" style="width:48px;height:48px;">
+                    <i class="bi bi-currency-dollar fs-4"></i>
+                </div>
+                <div>
+                    <div class="text-muted small">إجمالي الإيرادات</div>
+                    <div class="h4 mb-0 fw-bold text-primary">@Model.TotalRevenue.ToString("F2") ج.م</div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-3 col-sm-6">
+        <div class="card shadow-sm border-0 rounded-4 border-start border-4 border-danger">
+            <div class="card-body d-flex align-items-center gap-3 py-3">
+                <div class="rounded-circle bg-danger bg-opacity-10 text-danger d-flex align-items-center justify-content-center" style="width:48px;height:48px;">
+                    <i class="bi bi-bag-dash fs-4"></i>
+                </div>
+                <div>
+                    <div class="text-muted small">إجمالي التكلفة</div>
+                    <div class="h4 mb-0 fw-bold text-danger">@Model.TotalCost.ToString("F2") ج.م</div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-3 col-sm-6">
+        <div class="card shadow-sm border-0 rounded-4 border-start border-4 border-success">
+            <div class="card-body d-flex align-items-center gap-3 py-3">
+                <div class="rounded-circle bg-success bg-opacity-10 text-success d-flex align-items-center justify-content-center" style="width:48px;height:48px;">
+                    <i class="bi bi-graph-up-arrow fs-4"></i>
+                </div>
+                <div>
+                    <div class="text-muted small">الربح الإجمالي</div>
+                    <div class="h4 mb-0 fw-bold text-success">@Model.GrossProfit.ToString("F2") ج.م</div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-3 col-sm-6">
+        <div class="card shadow-sm border-0 rounded-4 border-start border-4 border-warning">
+            <div class="card-body d-flex align-items-center gap-3 py-3">
+                <div class="rounded-circle bg-warning bg-opacity-10 text-warning d-flex align-items-center justify-content-center" style="width:48px;height:48px;">
+                    <i class="bi bi-percent fs-4"></i>
+                </div>
+                <div>
+                    <div class="text-muted small">هامش الربح</div>
+                    <div class="h4 mb-0 fw-bold text-warning">@Model.ProfitMarginPercent%</div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="row g-3">
+    <!-- By Category -->
+    <div class="col-lg-6">
+        <div class="card shadow-sm border-0 rounded-4 h-100">
+            <div class="card-header bg-transparent border-0 pt-4 px-4">
+                <h6 class="fw-semibold mb-0"><i class="bi bi-folder2-open me-1"></i>حسب الفئة</h6>
+            </div>
+            <div class="card-body p-0">
+                <div class="table-responsive">
+                    <table class="table table-hover align-middle mb-0">
+                        <thead class="table-light">
+                            <tr>
+                                <th class="ps-4">الفئة</th>
+                                <th class="text-center">الإيرادات</th>
+                                <th class="text-center">الربح</th>
+                                <th class="text-center pe-4">الهامش%</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @foreach (var row in Model.CategoryRows)
+                            {
+                                <tr>
+                                    <td class="ps-4 fw-semibold">@row.Name</td>
+                                    <td class="text-center text-muted">@row.Revenue.ToString("F2")</td>
+                                    <td class="text-center @(row.Profit >= 0 ? "text-success" : "text-danger") fw-semibold">
+                                        @row.Profit.ToString("F2")
+                                    </td>
+                                    <td class="text-center pe-4">
+                                        <span class="badge @(row.MarginPercent >= 20 ? "bg-success" : row.MarginPercent >= 10 ? "bg-warning text-dark" : "bg-danger") bg-opacity-75 px-2">
+                                            @row.MarginPercent%
+                                        </span>
+                                    </td>
+                                </tr>
+                            }
+                            @if (!Model.CategoryRows.Any())
+                            {
+                                <tr><td colspan="4" class="text-center py-4 text-muted">لا توجد بيانات</td></tr>
+                            }
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- By Product (Top 20) -->
+    <div class="col-lg-6">
+        <div class="card shadow-sm border-0 rounded-4 h-100">
+            <div class="card-header bg-transparent border-0 pt-4 px-4">
+                <h6 class="fw-semibold mb-0"><i class="bi bi-box-seam me-1"></i>أفضل المنتجات (أعلى 20 ربحاً)</h6>
+            </div>
+            <div class="card-body p-0">
+                <div class="table-responsive">
+                    <table class="table table-hover align-middle mb-0">
+                        <thead class="table-light">
+                            <tr>
+                                <th class="ps-4">المنتج</th>
+                                <th class="text-center">الكمية</th>
+                                <th class="text-center">الربح</th>
+                                <th class="text-center pe-4">الهامش%</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @{ int rank = 1; }
+                            @foreach (var row in Model.ProductRows)
+                            {
+                                <tr>
+                                    <td class="ps-4">
+                                        <span class="badge bg-secondary bg-opacity-10 text-secondary me-1">@rank</span>
+                                        <span class="fw-semibold">@row.Name</span>
+                                    </td>
+                                    <td class="text-center text-muted">@row.TotalQuantity.ToString("F2")</td>
+                                    <td class="text-center fw-semibold @(row.Profit >= 0 ? "text-success" : "text-danger")">
+                                        @row.Profit.ToString("F2") ج.م
+                                    </td>
+                                    <td class="text-center pe-4">
+                                        <span class="badge @(row.MarginPercent >= 20 ? "bg-success" : row.MarginPercent >= 10 ? "bg-warning text-dark" : "bg-danger") bg-opacity-75 px-2">
+                                            @row.MarginPercent%
+                                        </span>
+                                    </td>
+                                </tr>
+                                rank++;
+                            }
+                            @if (!Model.ProductRows.Any())
+                            {
+                                <tr><td colspan="4" class="text-center py-4 text-muted">لا توجد بيانات</td></tr>
+                            }
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

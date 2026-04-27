@@ -17,6 +17,7 @@ public class ProductConfiguration : IEntityTypeConfiguration<Product>
         builder.Property(x => x.SellingPrice).HasColumnType("decimal(10,2)");
         builder.Property(x => x.Unit).HasMaxLength(30);
         builder.Property(x => x.ImagePath).HasMaxLength(300);
+        builder.Property(x => x.MinimumStock).HasColumnType("decimal(10,2)").HasDefaultValue(0);
 
         builder.HasOne(x => x.Category)
             .WithMany(x => x.Products)

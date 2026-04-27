@@ -59,6 +59,8 @@
 - [x] 3.8 Bulk active/inactive toggle
 - [x] 3.9 Pagination (default 20 rows)
 - [x] 3.10 Auto-create Inventory record on product creation
+- [x] 3.11 Refactor: MinimumStock moved to Product (Inventory Refactor)
+- [x] 3.12 InitialStock field on creation (Inventory Refactor)
 
 ---
 
@@ -79,32 +81,32 @@
 ## Milestone 5 — Sales & Point of Sale
 > POS interface, cart, checkout, receipt, void.
 
-- [ ] 5.1 ISaleService + SaleService
-- [ ] 5.2 SaleDto + SaleItemDto
-- [ ] 5.3 SalesController — Index, New, Detail, Void actions
-- [ ] 5.4 POS view (Sales/New) — wired to real product search + cart logic
-- [ ] 5.5 `sales-pos.js` — real-time cart, quantity controls, total calculation
-- [ ] 5.6 Stock availability check before sale completion
-- [ ] 5.7 Inventory deduction on sale confirmation
-- [ ] 5.8 Inventory restoration on sale void
-- [ ] 5.9 Price/cost snapshot in SaleItems
-- [ ] 5.10 Discount field support
-- [ ] 5.11 Payment method selection (Cash / Card / Other)
-- [ ] 5.12 Sale Detail / receipt view (printable)
-- [ ] 5.13 Sales list with date filter, search, pagination
-- [ ] 5.14 Void restricted to Admin only
+- [x] 5.1 ISaleService + SaleService
+- [x] 5.2 SaleDto + SaleItemDto
+- [x] 5.3 SalesController — Index, New, Detail, Void actions
+- [x] 5.4 POS view (Sales/New) — wired to real product search + cart logic
+- [x] 5.5 `sales-pos.js` — real-time cart, quantity controls, total calculation
+- [x] 5.6 Stock availability check before sale completion
+- [x] 5.7 Inventory deduction on sale confirmation
+- [x] 5.8 Inventory restoration on sale void
+- [x] 5.9 Price/cost snapshot in SaleItems
+- [x] 5.10 Discount field support
+- [x] 5.11 Payment method selection (Cash / Card / Other)
+- [x] 5.12 Sale Detail / receipt view (printable)
+- [x] 5.13 Sales list with date filter, search, pagination
+- [x] 5.14 Void restricted to Admin only
 
 ---
 
-## Milestone 6 — Dashboard (Data-Driven)
+## Milestone 6 — Dashboard (Data-Driven) ✅ (Done)
 > Replace static mockup data with real queries.
 
-- [ ] 6.1 DashboardViewModel (totals, chart data, latest sales, low-stock list)
-- [ ] 6.2 DashboardController — aggregate queries via services
-- [ ] 6.3 Wire summary cards to real data
-- [ ] 6.4 Wire Chart.js to real last-7-days sales data
-- [ ] 6.5 Wire latest transactions table to real sales
-- [ ] 6.6 Wire low-stock panel to real inventory alerts
+- [x] 6.1 DashboardViewModel (totals, chart data, latest sales, low-stock list)
+- [x] 6.2 DashboardController — aggregate queries via services
+- [x] 6.3 Wire summary cards to real data
+- [x] 6.4 Wire Chart.js to real last-7-days sales data
+- [x] 6.5 Wire latest transactions table to real sales
+- [x] 6.6 Wire low-stock panel to real inventory alerts
 
 ---
 

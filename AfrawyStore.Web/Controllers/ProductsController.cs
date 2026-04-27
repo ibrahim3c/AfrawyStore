@@ -5,6 +5,7 @@ using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
+using System.Security.Claims;
 
 namespace AfrawyStore.Web.Controllers;
 
@@ -71,7 +72,9 @@ public class ProductsController : Controller
             else
             {
                 string? imagePath = await ProcessUploadedFile(ImageFile);
-                var success = await _productService.CreateProductAsync(model, imagePath);
+                
+                var userId = int.Parse(User.FindFirstValue(ClaimTypes.NameIdentifier) ?? "0");
+                var success = await _productService.CreateProductAsync(model, imagePath, userId);
 
                 if (success)
                 {
@@ -102,6 +105,7 @@ public class ProductsController : Controller
             SellingPrice = product.SellingPrice,
             Unit = product.Unit,
             IsActive = product.IsActive,
+            MinimumStock = product.MinimumStock,
             ExistingImagePath = product.ImagePath
         };
 

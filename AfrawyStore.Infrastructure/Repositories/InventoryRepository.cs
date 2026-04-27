@@ -33,6 +33,15 @@ public class InventoryRepository : GenericRepository<Inventory>, IInventoryRepos
     {
         return await _context.Set<Inventory>()
             .Where(i => i.Product.IsActive)
-            .CountAsync(i => i.CurrentStock <= i.MinimumStock);
+            .CountAsync(i => i.CurrentStock <= i.Product.MinimumStock);
+    }
+
+    public async Task<IEnumerable<Inventory>> GetLowStockItemsAsync()
+    {
+        return await _context.Set<Inventory>()
+            .Include(i => i.Product)
+            .Where(i => i.Product.IsActive && i.CurrentStock <= i.Product.MinimumStock)
+            .OrderBy(i => i.CurrentStock)
+            .ToListAsync();
     }
 }

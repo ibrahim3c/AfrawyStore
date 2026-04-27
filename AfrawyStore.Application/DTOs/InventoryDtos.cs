@@ -38,9 +38,7 @@ public class InventoryAdjustDto
 
     [MaxLength(500, ErrorMessage = "الملاحظة يجب ألا تتجاوز 500 حرف")]
     public string? Note { get; set; }
-    
-    [Required(ErrorMessage = "الحد الأدنى مطلوب")]
-    [Range(0, 1000000, ErrorMessage = "الحد الأدنى يجب أن يكون صفر أو أكثر")]
+
     public decimal MinimumStock { get; set; }
 }
 

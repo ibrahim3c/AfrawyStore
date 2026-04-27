@@ -16,6 +16,7 @@ public class ProductDto
     public string? ImagePath { get; set; }
     public bool IsActive { get; set; }
     public decimal CurrentStock { get; set; }
+    public decimal MinimumStock { get; set; }
 }
 
 public class ProductCreateDto
@@ -45,6 +46,14 @@ public class ProductCreateDto
     [Required(ErrorMessage = "وحدة القياس مطلوبة")]
     [MaxLength(20, ErrorMessage = "وحدة القياس يجب ألا تتجاوز 20 حرف")]
     public string Unit { get; set; } = string.Empty;
+
+    [Required(ErrorMessage = "الرصيد الافتتاحي مطلوب")]
+    [Range(0, 1000000, ErrorMessage = "الرصيد الافتتاحي يجب أن يكون صفر أو أكثر")]
+    public decimal InitialStock { get; set; } = 0;
+
+    [Required(ErrorMessage = "حد الطلب مطلوب")]
+    [Range(0, 1000000, ErrorMessage = "حد الطلب يجب أن يكون صفر أو أكثر")]
+    public decimal MinimumStock { get; set; } = 5;
 
     public bool IsActive { get; set; } = true;
 }
@@ -78,6 +87,10 @@ public class ProductEditDto
     [Required(ErrorMessage = "وحدة القياس مطلوبة")]
     [MaxLength(20, ErrorMessage = "وحدة القياس يجب ألا تتجاوز 20 حرف")]
     public string Unit { get; set; } = string.Empty;
+
+    [Required(ErrorMessage = "حد الطلب مطلوب")]
+    [Range(0, 1000000, ErrorMessage = "حد الطلب يجب أن يكون صفر أو أكثر")]
+    public decimal MinimumStock { get; set; }
 
     public bool IsActive { get; set; }
 

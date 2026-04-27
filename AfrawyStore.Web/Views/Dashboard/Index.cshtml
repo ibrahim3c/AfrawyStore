@@ -1,10 +1,13 @@
+@using AfrawyStore.Application.DTOs
+@using AfrawyStore.Domain.Enums
+@model DashboardViewModel
 @{
     ViewData["Title"] = "لوحة التحكم";
 }
 
 <!-- Summary Cards Row -->
 <div class="row g-4 mb-4">
-    <!-- Card 1 -->
+    <!-- Card 1: Total Products -->
     <div class="col-12 col-sm-6 col-xl-3">
         <div class="af-card d-flex gap-3">
             <div class="summary-icon-box" style="background-color: var(--color-primary-light); color: white;">
@@ -12,12 +15,12 @@
             </div>
             <div>
                 <div class="text-mute fs-sm fw-semibold mb-1">إجمالي المنتجات</div>
-                <div class="fs-4 fw-bold numeric">248</div>
-                <div class="fs-caption text-success mt-1"><i class="bi bi-arrow-up-short"></i> +3 هذا الأسبوع</div>
+                <div class="fs-4 fw-bold numeric">@Model.TotalProducts</div>
+                <div class="fs-caption text-muted mt-1">منتج نشط</div>
             </div>
         </div>
     </div>
-    <!-- Card 2 -->
+    <!-- Card 2: Total Categories -->
     <div class="col-12 col-sm-6 col-xl-3">
         <div class="af-card d-flex gap-3">
             <div class="summary-icon-box" style="background-color: var(--color-primary-light); color: white;">
@@ -25,12 +28,12 @@
             </div>
             <div>
                 <div class="text-mute fs-sm fw-semibold mb-1">إجمالي الفئات</div>
-                <div class="fs-4 fw-bold numeric">12</div>
-                <div class="fs-caption text-secondary mt-1">منتظمة</div>
+                <div class="fs-4 fw-bold numeric">@Model.TotalCategories</div>
+                <div class="fs-caption text-secondary mt-1">فئة مسجلة</div>
             </div>
         </div>
     </div>
-    <!-- Card 3 -->
+    <!-- Card 3: Today's Sales -->
     <div class="col-12 col-sm-6 col-xl-3">
         <div class="af-card d-flex gap-3">
             <div class="summary-icon-box" style="background-color: var(--color-accent-soft); color: var(--color-accent);">
@@ -38,12 +41,12 @@
             </div>
             <div>
                 <div class="text-mute fs-sm fw-semibold mb-1">مبيعات اليوم</div>
-                <div class="fs-4 fw-bold numeric text-primary">1,450.00 ج</div>
-                <div class="fs-caption text-success mt-1"><i class="bi bi-arrow-up-short"></i> +15% عن الأمس</div>
+                <div class="fs-4 fw-bold numeric text-primary">@Model.TodaySales.ToString("N2") ج</div>
+                <div class="fs-caption text-success mt-1">@Model.TodaySalesCount عملية اليوم</div>
             </div>
         </div>
     </div>
-    <!-- Card 4 -->
+    <!-- Card 4: Low Stock Alerts -->
     <div class="col-12 col-sm-6 col-xl-3">
         <div class="af-card d-flex gap-3" style="border-right: 4px solid var(--status-danger);">
             <div class="summary-icon-box" style="background-color: var(--status-danger-bg); color: var(--status-danger);">
@@ -51,7 +54,7 @@
             </div>
             <div>
                 <div class="text-mute fs-sm fw-semibold mb-1">منتجات منخفضة</div>
-                <div class="fs-4 fw-bold numeric text-danger">7</div>
+                <div class="fs-4 fw-bold numeric text-danger">@Model.LowStockCount</div>
                 <div class="fs-caption text-danger mt-1">تتطلب إعادة طلب</div>
             </div>
         </div>
@@ -84,27 +87,28 @@
             </div>
             <div class="p-0">
                 <ul class="list-group list-group-flush">
-                    <li class="list-group-item d-flex justify-content-between align-items-center p-3">
-                        <div>
-                            <div class="fw-semibold">مفتاح ربط 14mm</div>
-                            <div class="fs-caption text-muted">الحد الأدنى: 5</div>
-                        </div>
-                        <span class="badge rounded-pill bg-danger">2 متوفر</span>
-                    </li>
-                    <li class="list-group-item d-flex justify-content-between align-items-center p-3">
-                        <div>
-                            <div class="fw-semibold">دهان زيتي أحمر</div>
-                            <div class="fs-caption text-muted">الحد الأدنى: 10</div>
-                        </div>
-                        <span class="badge rounded-pill bg-danger">5 متوفر</span>
-                    </li>
-                    <li class="list-group-item d-flex justify-content-between align-items-center p-3">
-                        <div>
-                            <div class="fw-semibold">طقم مفكات 6 قطع</div>
-                            <div class="fs-caption text-muted">الحد الأدنى: 3</div>
-                        </div>
-                        <span class="badge rounded-pill bg-warning text-dark">3 متوفر</span>
-                    </li>
+                    @if (Model.LowStockItems.Any())
+                    {
+                        @foreach (var item in Model.LowStockItems)
+                        {
+                            <li class="list-group-item d-flex justify-content-between align-items-center p-3">
+                                <div style="max-width: 70%;">
+                                    <div class="fw-semibold text-truncate">@item.ProductName</div>
+                                    <div class="fs-caption text-muted">الحد الأدنى: @item.MinimumStock @item.Unit</div>
+                                </div>
+                                <span class="badge rounded-pill @(item.CurrentStock == 0 ? "bg-danger" : "bg-warning text-dark")">
+                                    @item.CurrentStock متوفر
+                                </span>
+                            </li>
+                        }
+                    }
+                    else
+                    {
+                        <li class="list-group-item p-4 text-center text-muted">
+                            <i class="bi bi-check-circle text-success fs-3 d-block mb-2"></i>
+                            لا توجد تنبيهات حالياً
+                        </li>
+                    }
                 </ul>
             </div>
             <div class="p-3 bg-light text-center">
@@ -134,39 +138,42 @@
                 </tr>
             </thead>
             <tbody>
-                <tr>
-                    <td><span class="fw-semibold numeric">#SA-8042</span></td>
-                    <td class="text-muted"><i class="bi bi-clock me-1 d-inline-block"></i> منذ 10 دقائق</td>
-                    <td class="numeric">3</td>
-                    <td class="fw-bold numeric">255.00 ج</td>
-                    <td><span class="badge bg-light text-dark border">نقدي</span></td>
-                    <td><span class="status-pill good">✓ مكتمل</span></td>
-                    <td class="text-end">
-                        <button class="btn-icon rounded"><i class="bi bi-printer"></i></button>
-                    </td>
-                </tr>
-                <tr>
-                    <td><span class="fw-semibold numeric">#SA-8041</span></td>
-                    <td class="text-muted"><i class="bi bi-clock me-1 d-inline-block"></i> منذ 45 دقيقة</td>
-                    <td class="numeric">1</td>
-                    <td class="fw-bold numeric">45.50 ج</td>
-                    <td><span class="badge bg-light text-dark border"><i class="bi bi-credit-card me-1"></i>بطاقة</span></td>
-                    <td><span class="status-pill good">✓ مكتمل</span></td>
-                    <td class="text-end">
-                        <button class="btn-icon rounded"><i class="bi bi-printer"></i></button>
-                    </td>
-                </tr>
-                <tr>
-                    <td><span class="fw-semibold numeric">#SA-8040</span></td>
-                    <td class="text-muted"><i class="bi bi-calendar me-1 d-inline-block"></i> اليوم 08:30 ص</td>
-                    <td class="numeric">12</td>
-                    <td class="fw-bold numeric">1,240.00 ج</td>
-                    <td><span class="badge bg-light text-dark border">نقدي</span></td>
-                    <td><span class="status-pill danger">✕ ملغي</span></td>
-                    <td class="text-end">
-                        <button class="btn-icon rounded"><i class="bi bi-printer"></i></button>
-                    </td>
-                </tr>
+                @if (Model.LatestSales.Any())
+                {
+                    @foreach (var sale in Model.LatestSales)
+                    {
+                        <tr>
+                            <td><span class="fw-semibold numeric">#SA-@sale.Id.ToString("D4")</span></td>
+                            <td class="text-muted">
+                                <i class="bi bi-calendar me-1 d-inline-block"></i> @sale.SaleDate.ToString("yyyy/MM/dd HH:mm")
+                            </td>
+                            <td class="numeric">@sale.ItemCount</td>
+                            <td class="fw-bold numeric">@sale.TotalAmount.ToString("N2") ج</td>
+                            <td><span class="badge bg-light text-dark border">@sale.PaymentMethodLabel</span></td>
+                            <td>
+                                @if (sale.Status == SaleStatus.Completed)
+                                {
+                                    <span class="status-pill good">✓ @sale.StatusLabel</span>
+                                }
+                                else
+                                {
+                                    <span class="status-pill danger">✕ @sale.StatusLabel</span>
+                                }
+                            </td>
+                            <td class="text-end">
+                                <a href="/Sales/Detail/@sale.Id" class="btn-icon rounded"><i class="bi bi-eye"></i></a>
+                            </td>
+                        </tr>
+                    }
+                }
+                else
+                {
+                    <tr>
+                        <td colspan="7" class="text-center p-5 text-muted">
+                            لا توجد عمليات بيع مسجلة بعد
+                        </td>
+                    </tr>
+                }
             </tbody>
         </table>
     </div>
@@ -185,10 +192,10 @@
             new Chart(ctx, {
                 type: 'bar',
                 data: {
-                    labels: ['الجمعة', 'السبت', 'الأحد', 'الإثنين', 'الثلاثاء', 'الأربعاء', 'الخميس'],
+                    labels: @Html.Raw(Json.Serialize(Model.Last7DaysSales.Select(s => s.DayLabel))),
                     datasets: [{
                         label: 'المبيعات (ج.م)',
-                        data: [800, 1500, 1200, 1600, 1900, 2100, 1450],
+                        data: @Html.Raw(Json.Serialize(Model.Last7DaysSales.Select(s => s.Total))),
                         backgroundColor: gradient,
                         borderRadius: 6,
                         borderSkipped: false,

@@ -10,6 +10,7 @@ public class Product : BaseEntity
     public decimal SellingPrice { get; set; }
     public string Unit { get; set; } = string.Empty;
     public string? ImagePath { get; set; }
+    public decimal MinimumStock { get; set; } = 0;
     public bool IsActive { get; set; } = true;
 
     // Navigation properties

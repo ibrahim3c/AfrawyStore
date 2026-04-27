@@ -1,0 +1,110 @@
+@model AfrawyStore.Application.DTOs.ReportFilterDto
+@{
+    ViewData["Title"] = "التقارير";
+    var activeTab = ViewBag.ActiveTab as string ?? "sales";
+    var isAdmin   = (bool)(ViewBag.IsAdmin ?? false);
+    var dateFrom  = ViewBag.DateFrom as string ?? DateTime.Today.AddDays(-29).ToString("yyyy-MM-dd");
+    var dateTo    = ViewBag.DateTo   as string ?? DateTime.Today.ToString("yyyy-MM-dd");
+}
+
+<div class="d-flex justify-content-between align-items-center mb-4">
+    <h2 class="h3 mb-0"><i class="bi bi-bar-chart-line me-2 text-primary"></i>التقارير</h2>
+    @if (isAdmin)
+    {
+        <div class="d-flex gap-2">
+            <a href="/Reports/ExportCsv?tab=@activeTab&dateFrom=@dateFrom&dateTo=@dateTo"
+               class="btn btn-outline-success shadow-sm">
+                <i class="bi bi-filetype-csv me-1"></i> تصدير CSV
+            </a>
+            <a href="/Reports/ExportPdf?tab=@activeTab&dateFrom=@dateFrom&dateTo=@dateTo"
+               class="btn btn-outline-danger shadow-sm">
+                <i class="bi bi-file-earmark-pdf me-1"></i> تصدير PDF
+            </a>
+        </div>
+    }
+</div>
+
+<!-- Tab Navigation -->
+<div class="card shadow-sm border-0 rounded-4 mb-4">
+    <div class="card-body p-0">
+        <ul class="nav nav-tabs border-0 px-3 pt-3" id="reportTabs">
+            <li class="nav-item">
+                <a class="nav-link @(activeTab == "sales" ? "active fw-semibold" : "text-muted")"
+                   href="/Reports?tab=sales&dateFrom=@dateFrom&dateTo=@dateTo">
+                    <i class="bi bi-cart3 me-1"></i> المبيعات
+                </a>
+            </li>
+            @if (isAdmin)
+            {
+                <li class="nav-item">
+                    <a class="nav-link @(activeTab == "inventory" ? "active fw-semibold" : "text-muted")"
+                       href="/Reports?tab=inventory">
+                        <i class="bi bi-layers me-1"></i> المخزون
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link @(activeTab == "profit" ? "active fw-semibold" : "text-muted")"
+                       href="/Reports?tab=profit&dateFrom=@dateFrom&dateTo=@dateTo">
+                        <i class="bi bi-graph-up-arrow me-1"></i> الأرباح والخسائر
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link @(activeTab == "lowstock" ? "active fw-semibold" : "text-muted")"
+                       href="/Reports?tab=lowstock">
+                        <i class="bi bi-exclamation-triangle me-1"></i> المخزون المنخفض
+                    </a>
+                </li>
+            }
+        </ul>
+    </div>
+</div>
+
+<!-- Date Range Filter (for Sales and Profit tabs) -->
+@if (activeTab == "sales" || activeTab == "profit")
+{
+    <div class="card shadow-sm border-0 rounded-4 mb-4">
+        <div class="card-body">
+            <form method="get" action="/Reports" class="row g-3 align-items-end">
+                <input type="hidden" name="tab" value="@activeTab" />
+                <div class="col-md-4">
+                    <label class="form-label small fw-semibold text-muted">من تاريخ</label>
+                    <input type="date" name="dateFrom" value="@dateFrom"
+                           class="form-control form-control-af" />
+                </div>
+                <div class="col-md-4">
+                    <label class="form-label small fw-semibold text-muted">إلى تاريخ</label>
+                    <input type="date" name="dateTo" value="@dateTo"
+                           class="form-control form-control-af" />
+                </div>
+                <div class="col-md-4">
+                    <button type="submit" class="btn btn-primary-af w-100">
+                        <i class="bi bi-funnel me-1"></i> تطبيق الفلتر
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
+}
+
+<!-- Tab Content -->
+<div class="tab-content">
+    @if (activeTab == "sales" && ViewBag.SalesData != null)
+    {
+        @await Html.PartialAsync("_SalesReport", (AfrawyStore.Application.DTOs.SalesReportDto)ViewBag.SalesData)
+    }
+    else if (activeTab == "inventory" && ViewBag.InventoryData != null)
+    {
+        @await Html.PartialAsync("_InventoryReport",
+            (IEnumerable<AfrawyStore.Application.DTOs.InventoryReportDto>)ViewBag.InventoryData)
+    }
+    else if (activeTab == "profit" && ViewBag.ProfitData != null)
+    {
+        @await Html.PartialAsync("_ProfitLossReport",
+            (AfrawyStore.Application.DTOs.ProfitLossReportDto)ViewBag.ProfitData)
+    }
+    else if (activeTab == "lowstock" && ViewBag.LowStockData != null)
+    {
+        @await Html.PartialAsync("_LowStockReport",
+            (IEnumerable<AfrawyStore.Application.DTOs.LowStockReportDto>)ViewBag.LowStockData)
+    }
+</div>

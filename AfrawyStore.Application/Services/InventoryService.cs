@@ -27,7 +27,7 @@ public class InventoryService : IInventoryService
             CategoryName = i.Product.Category?.Name ?? string.Empty,
             Unit = i.Product.Unit,
             CurrentStock = i.CurrentStock,
-            MinimumStock = i.MinimumStock,
+            MinimumStock = i.Product.MinimumStock,
             LastUpdated = i.LastUpdated
         }).ToList();
     }
@@ -44,7 +44,7 @@ public class InventoryService : IInventoryService
             ProductSKU = inventory.Product.SKU,
             CurrentStock = inventory.CurrentStock,
             Unit = inventory.Product.Unit,
-            MinimumStock = inventory.MinimumStock,
+            MinimumStock = inventory.Product.MinimumStock,
             ChangeType = InventoryChangeType.StockIn,
             Quantity = 0
         };
@@ -73,7 +73,6 @@ public class InventoryService : IInventoryService
 
         // Update inventory
         inventory.CurrentStock = newStock;
-        inventory.MinimumStock = adjustDto.MinimumStock;
         inventory.LastUpdated = DateTime.UtcNow;
         _unitOfWork.Inventory.Update(inventory);
 
