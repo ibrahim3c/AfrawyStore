@@ -3,136 +3,144 @@
 <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>@ViewData["Title"] - Afrawy Store</title>
-    <!-- Bootstrap RTL -->
+    <title>@ViewData["Title"] — El-Afrawy Store </title>
     <link rel="stylesheet" href="~/css/bootstrap.rtl.min.css" />
-    <!-- Cairo Font -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700&display=swap" rel="stylesheet">
-    <!-- Bootstrap Icons -->
+    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
-    <!-- Global Custom Styles -->
     <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
 </head>
 <body>
-    <div class="app-wrapper">
+<div class="app-wrapper">
 
-        <!-- Top Navigation -->
-        <header class="top-navbar d-flex justify-content-between align-items-center">
-            <div class="brand-section">
-                <i class="bi bi-gem fs-4"></i>
-                <span class="fs-5">AFRAWY</span>
+    <!-- ── Top Navbar ── -->
+    <header class="top-navbar d-flex justify-content-between">
+        <div class="brand-section">
+            <div class="brand-icon">
+                <i class="bi bi-gem"></i>
             </div>
-            
-            <div class="d-flex align-items-center flex-grow-1 px-4">
-                <div class="position-relative w-50 max-w-lg">
-                    <i class="bi bi-search position-absolute top-50 translate-middle-y text-muted" style="right: 15px;"></i>
-                    <input type="text" class="form-control form-control-af bg-light" placeholder="بحث عام..." style="padding-right: 40px;" />
-                </div>
+            <span>AFRAWY</span>
+        </div>
+
+        @* <div class="d-flex align-items-center flex-grow-1 px-4">
+            <div class="position-relative" style="max-width:380px;width:100%;">
+                <i class="bi bi-search position-absolute top-50 translate-middle-y text-muted" style="right:14px;font-size:.85rem;"></i>
+                <input type="text" class="form-control form-control-af" placeholder="بحث سريع..." style="padding-right:40px;height:38px;font-size:.875rem;" />
             </div>
+        </div> *@
 
-            <div class="d-flex align-items-center gap-4">
-                <a href="/Inventory?filter=low" class="text-secondary position-relative">
-                    <i class="bi bi-bell fs-5"></i>
-                    @await Component.InvokeAsync("LowStockBadge")
-                </a>
-                
-                @if(User.Identity?.IsAuthenticated == true)
-                {
-                    <div class="dropdown">
-                        <a href="#" class="d-flex align-items-center text-dark text-decoration-none dropdown-toggle" data-bs-toggle="dropdown">
-                            <span class="fw-semibold">@User.Identity.Name</span>
-                        </a>
-                        <ul class="dropdown-menu shadow-sm border-0 text-end">
-                            <li><a class="dropdown-item" href="#">الملف الشخصي</a></li>
-                            <li><hr class="dropdown-divider"></li>
-                            <li><a class="dropdown-item text-danger" href="/Account/Logout">تسجيل خروج</a></li>
-                        </ul>
-                    </div>
-                }
-                else
-                {
-                    <a href="/Account/Login" class="btn btn-primary-af btn-sm rounded-pill px-3">تسجيل الدخول</a>
-                }
-            </div>
-        </header>
-
-        <!-- Right Sidebar -->
-        <nav class="main-sidebar">
-            <div class="px-4 mb-3">
-                <small class="text-uppercase text-white-50 fw-bold" style="letter-spacing: 1px;">القائمة الرئيسية</small>
-            </div>
-            
-            @{
-                var currentController = ViewContext.RouteData.Values["Controller"]?.ToString();
-            }
-
-            <a asp-controller="Dashboard" asp-action="Index" class="sidebar-nav-item text-decoration-none @(currentController == "Dashboard" ? "active" : "")">
-                <i class="bi bi-grid-1x2"></i>
-                <span>لوحة التحكم</span>
-            </a>
-            
-            <a asp-controller="Products" asp-action="Index" class="sidebar-nav-item text-decoration-none @(currentController == "Products" ? "active" : "")">
-                <i class="bi bi-box-seam"></i>
-                <span>المنتجات</span>
-            </a>
-
-            <a asp-controller="Categories" asp-action="Index" class="sidebar-nav-item text-decoration-none @(currentController == "Categories" ? "active" : "")">
-                <i class="bi bi-folder2-open"></i>
-                <span>الفئات</span>
-            </a>
-
-            <a asp-controller="Inventory" asp-action="Index" class="sidebar-nav-item text-decoration-none @(currentController == "Inventory" ? "active" : "")">
-                <i class="bi bi-layers"></i>
-                <span>المخزون</span>
+        <div class="d-flex align-items-center gap-3">
+            @* <!-- Bell -->
+            <a href="/Inventory?filter=low" class="position-relative d-flex align-items-center justify-content-center"
+               style="width:38px;height:38px;background:var(--surface-2);border:1px solid var(--border);border-radius:var(--radius);color:var(--ink-muted);transition:all var(--t-fast);"
+               onmouseover="this.style.color='var(--primary)';this.style.borderColor='var(--primary)'"
+               onmouseout="this.style.color='var(--ink-muted)';this.style.borderColor='var(--border)'">
+                <i class="bi bi-bell" style="font-size:1rem;"></i>
                 @await Component.InvokeAsync("LowStockBadge")
-            </a>
+            </a> *@
 
-            <a asp-controller="Sales" asp-action="Index" class="sidebar-nav-item text-decoration-none @(currentController == "Sales" ? "active" : "")">
-                <i class="bi bi-cart3"></i>
-                <span>المبيعات</span>
-            </a>
-            
-            <a asp-controller="Reports" asp-action="Index" class="sidebar-nav-item text-decoration-none @(currentController == "Reports" ? "active" : "")">
-                <i class="bi bi-bar-chart"></i>
-                <span>التقارير</span>
-            </a>
+            @if (User.Identity?.IsAuthenticated == true)
+            {
+                <div class="dropdown">
+                    <a href="#" class="d-flex align-items-center gap-2 text-decoration-none dropdown-toggle" data-bs-toggle="dropdown"
+                       style="padding:6px 12px;background:var(--surface-2);border:1px solid var(--border);border-radius:var(--radius);transition:all var(--t-fast);"
+                       onmouseover="this.style.borderColor='var(--primary)'"
+                       onmouseout="this.style.borderColor='var(--border)'">
+                        <div style="width:28px;height:28px;background:linear-gradient(135deg,var(--primary),var(--primary-dark));border-radius:50%;display:flex;align-items:center;justify-content:center;color:white;font-size:.75rem;font-weight:700;flex-shrink:0;">
+                            @(User.Identity.Name?.Substring(0,1).ToUpper() ?? "U")
+                        </div>
+                        <span class="fw-semibold" style="font-size:.875rem;color:var(--ink);">@User.Identity.Name</span>
+                    </a>
+                    <ul class="dropdown-menu shadow border-0 text-end">
+                        <li>
+                            <form asp-controller="Account" asp-action="Logout" method="post" class="d-inline w-100">
+                                <button type="submit" class="dropdown-item text-danger fw-semibold w-100 text-start border-0 bg-transparent" style="cursor:pointer;"><i class="bi bi-box-arrow-right me-2"></i>تسجيل خروج</button>
+                            </form>
+                        </li>
+                    </ul>
+                </div>
+            }
+            else
+            {
+                <a href="/Account/Login" class="btn btn-primary-af btn-sm">تسجيل الدخول</a>
+            }
+        </div>
+    </header>
 
-            <hr class="border-secondary mx-3 my-4">
 
-            <a asp-controller="Users" asp-action="Index" class="sidebar-nav-item text-decoration-none @(currentController == "Users" ? "active" : "")">
-                <i class="bi bi-people"></i>
-                <span>المستخدمون</span>
-            </a>
-            
-            <div class="mt-auto p-4 opacity-50 text-center fs-caption">
-                AFRAWY STORE v1.1<br>
-                للاستخدام الداخلي فقط
-            </div>
-        </nav>
+    <!-- ── Sidebar ── -->
+    <nav class="main-sidebar">
+        @{
+            var ctrl = ViewContext.RouteData.Values["Controller"]?.ToString();
+        }
 
-        <!-- Main Content Area -->
-        <main class="main-content">
-            <!-- Breadcrumbs / Page Title Context -->
-            <div class="mb-4">
-                <nav aria-label="breadcrumb">
-                    <ol class="breadcrumb fs-sm mb-1">
-                        <li class="breadcrumb-item"><a href="/" class="text-secondary">الرئيسية</a></li>
-                        <li class="breadcrumb-item active" aria-current="page">@ViewData["Title"]</li>
-                    </ol>
-                </nav>
-                <h1 class="h3 mb-0 fw-bold">@ViewData["Title"]</h1>
-            </div>
+        <div class="sidebar-section-label">القائمة الرئيسية</div>
 
-            @RenderBody()
-        </main>
-    </div>
+        <a asp-controller="Dashboard" asp-action="Index"
+           class="sidebar-nav-item text-decoration-none @(ctrl == "Dashboard" ? "active" : "")">
+            <i class="bi bi-grid-1x2-fill"></i><span>لوحة التحكم</span>
+        </a>
 
-    <!-- Scripts -->
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-    <script src="~/js/site.js" asp-append-version="true"></script>
-    @await RenderSectionAsync("Scripts", required: false)
+        <a asp-controller="Products" asp-action="Index"
+           class="sidebar-nav-item text-decoration-none @(ctrl == "Products" ? "active" : "")">
+            <i class="bi bi-box-seam-fill"></i><span>المنتجات</span>
+        </a>
+
+        <a asp-controller="Categories" asp-action="Index"
+           class="sidebar-nav-item text-decoration-none @(ctrl == "Categories" ? "active" : "")">
+            <i class="bi bi-folder2-open"></i><span>الفئات</span>
+        </a>
+
+        <a asp-controller="Inventory" asp-action="Index"
+           class="sidebar-nav-item text-decoration-none @(ctrl == "Inventory" ? "active" : "")">
+            <i class="bi bi-layers-fill"></i>
+            <span>المخزون</span>
+            @await Component.InvokeAsync("LowStockBadge")
+        </a>
+
+        <a asp-controller="Sales" asp-action="Index"
+           class="sidebar-nav-item text-decoration-none @(ctrl == "Sales" ? "active" : "")">
+            <i class="bi bi-cart-fill"></i><span>المبيعات</span>
+        </a>
+
+        <a asp-controller="Reports" asp-action="Index"
+           class="sidebar-nav-item text-decoration-none @(ctrl == "Reports" ? "active" : "")">
+            <i class="bi bi-bar-chart-fill"></i><span>التقارير</span>
+        </a>
+
+        <div class="sidebar-divider"></div>
+        <div class="sidebar-section-label">الإدارة</div>
+
+        <a asp-controller="Users" asp-action="Index"
+           class="sidebar-nav-item text-decoration-none @(ctrl == "Users" ? "active" : "")">
+            <i class="bi bi-people-fill"></i><span>المستخدمون</span>
+        </a>
+
+        <div class="sidebar-footer">
+            AFRAWY STORE v1.1<br>للاستخدام الداخلي فقط
+        </div>
+    </nav>
+
+    <!-- ── Main Content ── -->
+    <main class="main-content">
+        <div class="mb-4">
+            <nav aria-label="breadcrumb">
+                <ol class="breadcrumb fs-caption mb-1">
+                    <li class="breadcrumb-item"><a href="/" class="text-muted">الرئيسية</a></li>
+                    <li class="breadcrumb-item active text-muted" aria-current="page">@ViewData["Title"]</li>
+                </ol>
+            </nav>
+            <h1 class="h4 fw-bold mb-0" style="color:var(--ink);letter-spacing:-.01em;">@ViewData["Title"]</h1>
+        </div>
+
+        @RenderBody()
+    </main>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<script src="~/js/site.js" asp-append-version="true"></script>
+@await RenderSectionAsync("Scripts", required: false)
 </body>
 </html>

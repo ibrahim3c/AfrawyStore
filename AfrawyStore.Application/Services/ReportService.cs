@@ -32,9 +32,6 @@ public class ReportService : IReportService
             TotalRevenue    = sales.Sum(s => s.TotalAmount),
             TotalProfit     = sales.Sum(s => s.TotalProfit),
             TotalDiscount   = sales.Sum(s => s.Discount),
-            CashCount       = sales.Count(s => s.PaymentMethod == Domain.Enums.PaymentMethod.Cash),
-            CardCount       = sales.Count(s => s.PaymentMethod == Domain.Enums.PaymentMethod.Card),
-            OtherCount      = sales.Count(s => s.PaymentMethod == Domain.Enums.PaymentMethod.Other),
         };
 
         report.AverageSaleValue = report.TotalSalesCount > 0

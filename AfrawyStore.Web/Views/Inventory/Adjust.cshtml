@@ -52,16 +52,24 @@
 
                         <!-- Live Result Preview -->
                         <div class="col-12">
-                            <div class="alert rounded-3 p-3 mb-0" id="resultPreview">
-                                <div class="d-flex align-items-center gap-3">
-                                    <div>
-                                        <small class="text-muted d-block">المخزون الحالي</small>
-                                        <span class="fw-bold fs-5">@Model.CurrentStock @Model.Unit</span>
+                            <div class="inventory-preview-card p-4 rounded-4 border-0 shadow-sm mb-0 alert-success" id="resultPreview">
+                                <div class="row align-items-center text-center g-0">
+                                    <div class="col-5">
+                                        <div class="preview-item text-end pe-3 border-end">
+                                            <span class="preview-label d-block mb-1">المخزون الحالي</span>
+                                            <div class="preview-value h4 fw-bold mb-0">@Model.CurrentStock <small class="fw-normal fs-6">@Model.Unit</small></div>
+                                        </div>
                                     </div>
-                                    <div class="fs-4" id="operatorIcon">→</div>
-                                    <div>
-                                        <small class="text-muted d-block">المخزون بعد التعديل</small>
-                                        <span class="fw-bold fs-5" id="newStockDisplay">@Model.CurrentStock @Model.Unit</span>
+                                    <div class="col-2 position-relative">
+                                        <div class="preview-icon-wrapper">
+                                            <i class="bi bi-arrow-left fs-4 text-muted" id="operatorIcon"></i>
+                                        </div>
+                                    </div>
+                                    <div class="col-5">
+                                        <div class="preview-item text-start ps-3 border-start">
+                                            <span class="preview-label d-block mb-1">بعد التعديل</span>
+                                            <div class="preview-value h4 fw-bold mb-0" id="newStockDisplay">@Model.CurrentStock <small class="fw-normal fs-6">@Model.Unit</small></div>
+                                        </div>
                                     </div>
                                 </div>
                             </div>
@@ -92,8 +100,20 @@
                     <dd class="fw-semibold">@Model.ProductName</dd>
                     <dt class="text-muted fw-normal small">رمز المنتج</dt>
                     <dd><span class="badge bg-light text-dark border font-monospace">@Model.ProductSKU</span></dd>
+
+                    @* <dt class="text-muted fw-normal small">الحد الأدنى للمخزون</dt>
+                    <dd class="fw-semibold mb-3">
+                        @Model.MinimumStock @Model.Unit
+                    </dd> *@
+                    <dt class="text-muted fw-normal small">الحد الأدنى للمخزون</dt>
+                    <dd class="mb-3">
+                        <span class="badge bg-warning text-dark fs-6">
+                            @Model.MinimumStock @Model.Unit
+                        </span>
+                    </dd>
+
                     <dt class="text-muted fw-normal small">المخزون الحالي</dt>
-                    <dd class="fw-bold @(Model.CurrentStock <= 0 ? "text-danger" : Model.CurrentStock <= 5 ? "text-warning" : "text-success")">
+                    <dd class="fw-bold @(Model.CurrentStock <= 0 ? "text-danger" : Model.CurrentStock <= Model.MinimumStock ? "text-warning" : "text-success")">
                         @Model.CurrentStock @Model.Unit
                     </dd>
 
@@ -125,25 +145,22 @@
 
             if (type === 'StockIn') {
                 newStock = currentStock + qty;
-                operatorIcon.textContent = '+';
-                operatorIcon.className = 'fs-4 text-success fw-bold';
+                // operatorIcon.textContent = '+';
+                // operatorIcon.className = 'fs-4 text-success fw-bold';
             } else {
                 newStock = currentStock - qty;
-                operatorIcon.textContent = '−';
-                operatorIcon.className = 'fs-4 text-danger fw-bold';
+                // operatorIcon.textContent = '−';
+                // operatorIcon.className = 'fs-4 text-danger fw-bold';
             }
 
-            newStockDisplay.textContent = newStock.toFixed(2) + ' ' + unit;
+            newStockDisplay.innerHTML = newStock.toFixed(2) + ' <small class="fw-normal fs-6">' + unit + '</small>';
 
             if (newStock < 0) {
-                resultPreview.className = 'alert rounded-3 p-3 mb-0 alert-danger border-danger-subtle';
-                newStockDisplay.className = 'fw-bold fs-5 text-danger';
+                resultPreview.className = 'inventory-preview-card p-4 rounded-4 border-0 shadow-sm mb-0 alert-danger';
             } else if (newStock <= @Model.MinimumStock) {
-                resultPreview.className = 'alert rounded-3 p-3 mb-0 alert-warning border-warning-subtle';
-                newStockDisplay.className = 'fw-bold fs-5 text-warning';
+                resultPreview.className = 'inventory-preview-card p-4 rounded-4 border-0 shadow-sm mb-0 alert-warning';
             } else {
-                resultPreview.className = 'alert rounded-3 p-3 mb-0 alert-success border-success-subtle';
-                newStockDisplay.className = 'fw-bold fs-5 text-success';
+                resultPreview.className = 'inventory-preview-card p-4 rounded-4 border-0 shadow-sm mb-0 alert-success';
             }
         }
 

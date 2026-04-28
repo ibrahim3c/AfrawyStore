@@ -5,244 +5,270 @@
     ViewData["Title"] = "لوحة التحكم";
 }
 
-<!-- Summary Cards Row -->
-<div class="row g-4 mb-4">
-    <!-- Card 1: Total Products -->
+<!-- ── KPI Cards ── -->
+<div class="row g-3 mb-4">
     <div class="col-12 col-sm-6 col-xl-3">
-        <div class="af-card d-flex gap-3">
-            <div class="summary-icon-box" style="background-color: var(--color-primary-light); color: white;">
-                <i class="bi bi-tag-fill"></i>
+        <div class="stat-card primary">
+            <div class="d-flex align-items-center justify-content-between mb-3">
+                <div class="stat-label">إجمالي المنتجات</div>
+                <div class="summary-icon-box icon-primary">
+                    <i class="bi bi-box-seam-fill"></i>
+                </div>
             </div>
-            <div>
-                <div class="text-mute fs-sm fw-semibold mb-1">إجمالي المنتجات</div>
-                <div class="fs-4 fw-bold numeric">@Model.TotalProducts</div>
-                <div class="fs-caption text-muted mt-1">منتج نشط</div>
-            </div>
+            <div class="stat-value">@Model.TotalProducts</div>
+            <div class="stat-sub">منتج نشط في النظام</div>
         </div>
     </div>
-    <!-- Card 2: Total Categories -->
     <div class="col-12 col-sm-6 col-xl-3">
-        <div class="af-card d-flex gap-3">
-            <div class="summary-icon-box" style="background-color: var(--color-primary-light); color: white;">
-                <i class="bi bi-folder-fill"></i>
+        <div class="stat-card success">
+            <div class="d-flex align-items-center justify-content-between mb-3">
+                <div class="stat-label">إجمالي الفئات</div>
+                <div class="summary-icon-box icon-success">
+                    <i class="bi bi-folder-fill"></i>
+                </div>
             </div>
-            <div>
-                <div class="text-mute fs-sm fw-semibold mb-1">إجمالي الفئات</div>
-                <div class="fs-4 fw-bold numeric">@Model.TotalCategories</div>
-                <div class="fs-caption text-secondary mt-1">فئة مسجلة</div>
-            </div>
+            <div class="stat-value">@Model.TotalCategories</div>
+            <div class="stat-sub">فئة مسجلة</div>
         </div>
     </div>
-    <!-- Card 3: Today's Sales -->
     <div class="col-12 col-sm-6 col-xl-3">
-        <div class="af-card d-flex gap-3">
-            <div class="summary-icon-box" style="background-color: var(--color-accent-soft); color: var(--color-accent);">
-                <i class="bi bi-cash-stack"></i>
+        <div class="stat-card warning">
+            <div class="d-flex align-items-center justify-content-between mb-3">
+                <div class="stat-label">مبيعات اليوم</div>
+                <div class="summary-icon-box icon-warning">
+                    <i class="bi bi-cash-stack"></i>
+                </div>
             </div>
-            <div>
-                <div class="text-mute fs-sm fw-semibold mb-1">مبيعات اليوم</div>
-                <div class="fs-4 fw-bold numeric text-primary">@Model.TodaySales.ToString("N2") ج</div>
-                <div class="fs-caption text-success mt-1">@Model.TodaySalesCount عملية اليوم</div>
-            </div>
+            <div class="stat-value numeric" style="font-size:1.6rem;">@Model.TodaySales.ToString("N0")<small style="font-size:.7em;font-weight:600;margin-right:4px;">ج</small></div>
+            <div class="stat-sub">@Model.TodaySalesCount عملية اليوم</div>
         </div>
     </div>
-    <!-- Card 4: Low Stock Alerts -->
     <div class="col-12 col-sm-6 col-xl-3">
-        <div class="af-card d-flex gap-3" style="border-right: 4px solid var(--status-danger);">
-            <div class="summary-icon-box" style="background-color: var(--status-danger-bg); color: var(--status-danger);">
-                <i class="bi bi-exclamation-triangle-fill"></i>
+        <div class="stat-card danger">
+            <div class="d-flex align-items-center justify-content-between mb-3">
+                <div class="stat-label">تنبيهات المخزون</div>
+                <div class="summary-icon-box icon-danger">
+                    <i class="bi bi-exclamation-triangle-fill"></i>
+                </div>
             </div>
-            <div>
-                <div class="text-mute fs-sm fw-semibold mb-1">منتجات منخفضة</div>
-                <div class="fs-4 fw-bold numeric text-danger">@Model.LowStockCount</div>
-                <div class="fs-caption text-danger mt-1">تتطلب إعادة طلب</div>
-            </div>
+            <div class="stat-value" style="color:var(--danger);">@Model.LowStockCount</div>
+            <div class="stat-sub" style="color:var(--danger);opacity:.7;">منتج يتطلب إعادة طلب</div>
         </div>
     </div>
 </div>
 
-<!-- Chart & Latest Transactions Row -->
-<div class="row g-4 mb-4">
-    <!-- Sales Chart -->
+<!-- ── Chart + Low Stock ── -->
+<div class="row g-3 mb-4">
+    <!-- Chart -->
     <div class="col-12 col-xl-8">
-        <div class="af-card h-100">
-            <div class="d-flex justify-content-between align-items-center mb-4">
-                <h2 class="h5 fw-bold mb-0">مبيعات آخر 7 أيام</h2>
-                <div class="btn-group">
-                    <button class="btn btn-sm btn-outline-secondary active">7 أيام</button>
-                    <button class="btn btn-sm btn-outline-secondary">30 يوم</button>
+        <div class="card border-0 shadow-sm h-100" style="border-radius:var(--radius-lg)!important;">
+            <div class="card-header d-flex justify-content-between align-items-center">
+                <div>
+                    <h2 class="h6 fw-bold mb-0">مبيعات آخر 7 أيام</h2>
+                    <p class="fs-caption text-mute mb-0 mt-1">إيرادات يومية بالجنيه المصري</p>
                 </div>
+                <a href="/Reports?tab=sales" class="btn btn-secondary-af btn-sm">
+                    <i class="bi bi-arrow-up-left me-1"></i> التقارير
+                </a>
             </div>
-            <div style="height: 300px; width: 100%;">
-                <canvas id="salesChart"></canvas>
+            <div class="card-body pt-2">
+                <div style="height:280px;">
+                    <canvas id="salesChart"></canvas>
+                </div>
             </div>
         </div>
     </div>
 
-    <!-- Alert Panel / Low Stock -->
+    <!-- Low Stock Panel -->
     <div class="col-12 col-xl-4">
-        <div class="af-card h-100 p-0 overflow-hidden" style="border-top: 4px solid var(--status-danger);">
-            <div class="p-4 border-bottom bg-light">
-                <h2 class="h5 fw-bold mb-0 text-danger"><i class="bi bi-exclamation-circle me-2"></i>تنبيه المخزون المنخفض</h2>
+        <div class="card border-0 shadow-sm h-100" style="border-radius:var(--radius-lg)!important;overflow:hidden;">
+            <div class="card-header" style="background:linear-gradient(135deg,#fef2f2,#fff5f5)!important;border-bottom:1px solid #fee2e2!important;">
+                <div class="d-flex align-items-center gap-2">
+                    <div style="width:8px;height:8px;border-radius:50%;background:var(--danger);animation:pulse-danger 1.5s infinite;"></div>
+                    <h2 class="h6 fw-bold mb-0" style="color:var(--danger);">تنبيه المخزون المنخفض</h2>
+                    @if (Model.LowStockCount > 0)
+                    {
+                        <span class="badge ms-auto" style="background:var(--danger);color:white;border-radius:var(--radius-pill);">@Model.LowStockCount</span>
+                    }
+                </div>
             </div>
-            <div class="p-0">
+            <div class="card-body p-0" style="overflow-y:auto;max-height:280px;">
                 <ul class="list-group list-group-flush">
                     @if (Model.LowStockItems.Any())
                     {
                         @foreach (var item in Model.LowStockItems)
                         {
-                            <li class="list-group-item d-flex justify-content-between align-items-center p-3">
-                                <div style="max-width: 70%;">
-                                    <div class="fw-semibold text-truncate">@item.ProductName</div>
-                                    <div class="fs-caption text-muted">الحد الأدنى: @item.MinimumStock @item.Unit</div>
+                            <li class="list-group-item d-flex justify-content-between align-items-center px-4 py-3" style="border-color:var(--border-light)!important;">
+                                <div>
+                                    <div class="fw-semibold" style="font-size:.875rem;color:var(--ink);">@item.ProductName</div>
+                                    <div class="fs-caption" style="color:var(--ink-subtle);">الحد الأدنى: @item.MinimumStock @item.Unit</div>
                                 </div>
-                                <span class="badge rounded-pill @(item.CurrentStock == 0 ? "bg-danger" : "bg-warning text-dark")">
-                                    @item.CurrentStock متوفر
+                                <span class="badge rounded-pill" style="@(item.CurrentStock == 0 ? "background:var(--danger);" : "background:var(--warning);") color:white;font-size:.72rem;">
+                                    @item.CurrentStock @item.Unit
                                 </span>
                             </li>
                         }
                     }
                     else
                     {
-                        <li class="list-group-item p-4 text-center text-muted">
-                            <i class="bi bi-check-circle text-success fs-3 d-block mb-2"></i>
-                            لا توجد تنبيهات حالياً
+                        <li class="list-group-item p-5 text-center border-0">
+                            <i class="bi bi-check-circle-fill fs-2 d-block mb-2" style="color:var(--success);"></i>
+                            <span style="color:var(--ink-muted);font-size:.875rem;">المخزون بمستويات جيدة</span>
                         </li>
                     }
                 </ul>
             </div>
-            <div class="p-3 bg-light text-center">
-                <a href="/Inventory" class="btn btn-sm btn-secondary-af w-100">عرض كل المخزون</a>
+            <div class="card-footer text-center py-3" style="background:var(--surface-2)!important;border-top:1px solid var(--border)!important;">
+                <a href="/Inventory" class="btn btn-secondary-af btn-sm w-100">
+                    <i class="bi bi-layers-fill me-1"></i> عرض كل المخزون
+                </a>
             </div>
         </div>
     </div>
 </div>
 
-<!-- Latest Transactions Table -->
-<div class="af-card p-0 mb-5">
-    <div class="p-4 border-bottom d-flex justify-content-between align-items-center">
-        <h2 class="h5 fw-bold mb-0">أحدث العمليات</h2>
-        <a href="/Sales" class="btn btn-sm btn-primary-af">عرض المبيعات</a>
+<!-- ── Latest Transactions ── -->
+<div class="card border-0 shadow-sm" style="border-radius:var(--radius-lg)!important;">
+    <div class="card-header d-flex justify-content-between align-items-center">
+        <div>
+            <h2 class="h6 fw-bold mb-0">أحدث العمليات</h2>
+            <p class="fs-caption text-mute mb-0 mt-1">آخر 10 عمليات بيع</p>
+        </div>
+        <a href="/Sales" class="btn btn-primary-af btn-sm">
+            <i class="bi bi-cart-fill me-1"></i> كل المبيعات
+        </a>
     </div>
-    <div class="table-responsive af-table-container border-0 rounded-0">
-        <table class="table af-table text-nowrap">
-            <thead>
-                <tr>
-                    <th>رقم البيع</th>
-                    <th>التاريخ</th>
-                    <th>العناصر</th>
-                    <th>الإجمالي</th>
-                    <th>طريقة الدفع</th>
-                    <th>الحالة</th>
-                    <th></th>
-                </tr>
-            </thead>
-            <tbody>
-                @if (Model.LatestSales.Any())
-                {
-                    @foreach (var sale in Model.LatestSales)
+    <div class="card-body p-0">
+        <div class="table-responsive">
+            <table class="table table-hover align-middle mb-0">
+                <thead>
+                    <tr>
+                        <th class="ps-4">رقم الفاتورة</th>
+                        <th>التاريخ</th>
+                        <th class="text-center">الأصناف</th>
+                        <th class="text-center">الإجمالي</th>
+                        <th class="text-center">طريقة الدفع</th>
+                        <th class="text-center">الحالة</th>
+                        <th class="pe-4"></th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @if (Model.LatestSales.Any())
+                    {
+                        @foreach (var sale in Model.LatestSales)
+                        {
+                            <tr>
+                                <td class="ps-4">
+                                    <span class="badge" style="background:var(--surface-2);color:var(--ink);border:1px solid var(--border);font-family:monospace;font-size:.8rem;padding:5px 10px;">
+                                        #SA-@sale.Id.ToString("D4")
+                                    </span>
+                                </td>
+                                <td style="color:var(--ink-muted);font-size:.85rem;">
+                                    @sale.SaleDate.ToString("yyyy/MM/dd — HH:mm")
+                                </td>
+                                <td class="text-center">
+                                    <span class="badge" style="background:var(--info-bg);color:var(--info);border-radius:var(--radius-pill);">@sale.ItemCount صنف</span>
+                                </td>
+                                <td class="text-center fw-bold numeric" style="color:var(--ink);">
+                                    @sale.TotalAmount.ToString("N2") ج
+                                </td>
+                                <td class="text-center" style="color:var(--ink-muted);font-size:.85rem;">
+                                    @sale.CreatedByName
+                                </td>
+                                <td class="text-center">
+                                    @if (sale.Status == SaleStatus.Completed)
+                                    {
+                                        <span class="status-pill good"><i class="bi bi-check-circle-fill"></i> مكتملة</span>
+                                    }
+                                    else
+                                    {
+                                        <span class="status-pill danger"><i class="bi bi-x-circle-fill"></i> ملغاة</span>
+                                    }
+                                </td>
+                                <td class="pe-4">
+                                    <a href="/Sales/Detail/@sale.Id" class="btn-icon">
+                                        <i class="bi bi-eye"></i>
+                                    </a>
+                                </td>
+                            </tr>
+                        }
+                    }
+                    else
                     {
                         <tr>
-                            <td><span class="fw-semibold numeric">#SA-@sale.Id.ToString("D4")</span></td>
-                            <td class="text-muted">
-                                <i class="bi bi-calendar me-1 d-inline-block"></i> @sale.SaleDate.ToString("yyyy/MM/dd HH:mm")
-                            </td>
-                            <td class="numeric">@sale.ItemCount</td>
-                            <td class="fw-bold numeric">@sale.TotalAmount.ToString("N2") ج</td>
-                            <td><span class="badge bg-light text-dark border">@sale.PaymentMethodLabel</span></td>
-                            <td>
-                                @if (sale.Status == SaleStatus.Completed)
-                                {
-                                    <span class="status-pill good">✓ @sale.StatusLabel</span>
-                                }
-                                else
-                                {
-                                    <span class="status-pill danger">✕ @sale.StatusLabel</span>
-                                }
-                            </td>
-                            <td class="text-end">
-                                <a href="/Sales/Detail/@sale.Id" class="btn-icon rounded"><i class="bi bi-eye"></i></a>
+                            <td colspan="7" class="text-center py-5" style="color:var(--ink-subtle);">
+                                <i class="bi bi-inbox fs-1 d-block mb-3" style="opacity:.3;"></i>
+                                لا توجد عمليات بيع بعد
                             </td>
                         </tr>
                     }
-                }
-                else
-                {
-                    <tr>
-                        <td colspan="7" class="text-center p-5 text-muted">
-                            لا توجد عمليات بيع مسجلة بعد
-                        </td>
-                    </tr>
-                }
-            </tbody>
-        </table>
+                </tbody>
+            </table>
+        </div>
     </div>
 </div>
 
 @section Scripts {
-    <script>
-        document.addEventListener("DOMContentLoaded", function () {
-            const ctx = document.getElementById('salesChart').getContext('2d');
-            
-            // Gradient fill setup
-            const gradient = ctx.createLinearGradient(0, 0, 0, 300);
-            gradient.addColorStop(0, '#1A3C5E');
-            gradient.addColorStop(1, '#2C5F8A');
-            
-            new Chart(ctx, {
-                type: 'bar',
-                data: {
-                    labels: @Html.Raw(Json.Serialize(Model.Last7DaysSales.Select(s => s.DayLabel))),
-                    datasets: [{
-                        label: 'المبيعات (ج.م)',
-                        data: @Html.Raw(Json.Serialize(Model.Last7DaysSales.Select(s => s.Total))),
-                        backgroundColor: gradient,
-                        borderRadius: 6,
-                        borderSkipped: false,
-                        barPercentage: 0.6
-                    }]
-                },
-                options: {
-                    responsive: true,
-                    maintainAspectRatio: false,
-                    animation: {
-                        duration: 800,
-                        easing: 'easeOutQuart'
-                    },
-                    plugins: {
-                        legend: { display: false },
-                        tooltip: {
-                            backgroundColor: '#1E1E1E',
-                            titleFont: { family: 'Cairo', size: 14 },
-                            bodyFont: { family: 'Cairo', size: 13, weight: 'bold' },
-                            padding: 12,
-                            displayColors: false,
-                            callbacks: {
-                                label: function(context) {
-                                    return context.parsed.y + ' ج.م';
-                                }
-                            }
-                        }
-                    },
-                    scales: {
-                        y: {
-                            beginAtZero: true,
-                            grid: { color: '#D4CFC8', drawBorder: false, borderDash: [5, 5] },
-                            ticks: {
-                                font: { family: 'Cairo' },
-                                color: '#6B6560'
-                            }
-                        },
-                        x: {
-                            grid: { display: false, drawBorder: false },
-                            ticks: {
-                                font: { family: 'Cairo', weight: '600' },
-                                color: '#6B6560'
-                            }
-                        }
+<script>
+document.addEventListener("DOMContentLoaded", function () {
+    const ctx = document.getElementById('salesChart').getContext('2d');
+
+    const grad = ctx.createLinearGradient(0, 0, 0, 280);
+    grad.addColorStop(0,   'rgba(99,102,241,0.9)');
+    grad.addColorStop(1,   'rgba(99,102,241,0.15)');
+
+    const gradLine = ctx.createLinearGradient(0, 0, 400, 0);
+    gradLine.addColorStop(0, '#818cf8');
+    gradLine.addColorStop(1, '#6366f1');
+
+    new Chart(ctx, {
+        type: 'bar',
+        data: {
+            labels: @Html.Raw(Json.Serialize(Model.Last7DaysSales.Select(s => s.DayLabel))),
+            datasets: [{
+                label: 'المبيعات (ج.م)',
+                data:  @Html.Raw(Json.Serialize(Model.Last7DaysSales.Select(s => s.Total))),
+                backgroundColor: grad,
+                borderColor: gradLine,
+                borderWidth: 2,
+                borderRadius: 10,
+                borderSkipped: false,
+                barPercentage: 0.55
+            }]
+        },
+        options: {
+            responsive: true,
+            maintainAspectRatio: false,
+            animation: { duration: 900, easing: 'easeOutQuart' },
+            plugins: {
+                legend: { display: false },
+                tooltip: {
+                    backgroundColor: '#0f172a',
+                    titleFont: { family: 'Cairo', size: 13, weight: '600' },
+                    bodyFont:  { family: 'Cairo', size: 14, weight: '700' },
+                    padding: 14,
+                    cornerRadius: 10,
+                    displayColors: false,
+                    callbacks: {
+                        label: ctx => ctx.parsed.y.toLocaleString('ar-EG') + ' ج.م'
                     }
                 }
-            });
-        });
-    </script>
+            },
+            scales: {
+                y: {
+                    beginAtZero: true,
+                    grid: { color: 'rgba(226,232,240,0.6)', drawBorder: false },
+                    ticks: { font: { family: 'Cairo', size: 11 }, color: '#94a3b8', padding: 8 },
+                    border: { display: false }
+                },
+                x: {
+                    grid: { display: false, drawBorder: false },
+                    ticks: { font: { family: 'Cairo', size: 11, weight: '600' }, color: '#64748b' },
+                    border: { display: false }
+                }
+            }
+        }
+    });
+});
+</script>
 }

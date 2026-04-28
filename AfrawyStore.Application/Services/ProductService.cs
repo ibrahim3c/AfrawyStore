@@ -56,6 +56,7 @@ public class ProductService : IProductService
         if (p == null) return null;
         
         var category = await _unitOfWork.Categories.GetByIdAsync(p.CategoryId);
+        var inventory = await _unitOfWork.Inventory.GetByProductIdAsync(id);
         
         return new ProductDto
         {
@@ -70,6 +71,7 @@ public class ProductService : IProductService
             IsActive = p.IsActive,
             Description = p.Description,
             ImagePath = p.ImagePath,
+            CurrentStock = inventory?.CurrentStock ?? 0,
             MinimumStock = p.MinimumStock
         };
     }

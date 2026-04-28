@@ -3,152 +3,209 @@
     ViewData["Title"] = "إضافة منتج جديد";
 }
 
-<div class="d-flex justify-content-between align-items-center mb-4">
-    <h2 class="h3 text-primary mb-0"><i class="bi bi-box-seam me-2"></i> @ViewData["Title"]</h2>
-    <a asp-action="Index" class="btn btn-outline-secondary shadow-sm">
-        <i class="bi bi-arrow-right me-1"></i> عودة للقائمة
-    </a>
-</div>
-
 <form asp-action="Create" method="post" enctype="multipart/form-data">
     <div asp-validation-summary="ModelOnly" class="alert alert-danger mb-4"></div>
 
     <div class="row g-4">
-        <!-- Right Column: Core Info -->
+
+        <!-- ═══ Right Column: Main Form ═══ -->
         <div class="col-lg-8">
-            <div class="card shadow-sm border-0 rounded-4 mb-4">
-                <div class="card-header bg-white rounded-top-4 border-bottom py-3 px-4">
-                    <h6 class="mb-0 fw-bold text-dark"><i class="bi bi-info-circle me-2 text-primary"></i> معلومات المنتج</h6>
+
+            <!-- Section 1: Product Identity -->
+            <div class="card border-0 shadow-sm mb-4" style="border-radius:var(--radius-lg)!important;">
+                <div class="card-header d-flex align-items-center gap-2">
+                    <div class="summary-icon-box icon-primary" style="width:36px;height:36px;font-size:1rem;border-radius:8px;">
+                        <i class="bi bi-box-seam-fill"></i>
+                    </div>
+                    <div>
+                        <h6 class="mb-0 fw-bold" style="color:var(--ink);">معلومات المنتج</h6>
+                        <small style="color:var(--ink-subtle);font-size:.72rem;">البيانات الأساسية للمنتج</small>
+                    </div>
                 </div>
-                <div class="card-body p-4">
+                <div class="card-body" style="padding:24px!important;">
                     <div class="row g-3">
                         <div class="col-md-6">
-                            <label asp-for="SKU" class="form-label fw-semibold">رمز المنتج (SKU) <span class="text-danger">*</span></label>
-                            <input asp-for="SKU" class="form-control" placeholder="مثال: PRD-001" autofocus />
+                            <label asp-for="SKU" class="form-label">رمز المنتج (SKU) <span class="text-danger">*</span></label>
+                            <div class="input-group">
+                                <span class="input-group-text" style="border-radius:0 var(--radius) var(--radius) 0;"><i class="bi bi-upc-scan"></i></span>
+                                <input asp-for="SKU" class="form-control" placeholder="مثال: PRD-001" autofocus />
+                            </div>
                             <span asp-validation-for="SKU" class="text-danger small"></span>
                         </div>
                         <div class="col-md-6">
-                            <label asp-for="CategoryId" class="form-label fw-semibold">الفئة <span class="text-danger">*</span></label>
+                            <label asp-for="CategoryId" class="form-label">الفئة <span class="text-danger">*</span></label>
                             <select asp-for="CategoryId" class="form-select" asp-items="ViewBag.Categories">
                                 <option value="">-- اختر الفئة --</option>
                             </select>
                             <span asp-validation-for="CategoryId" class="text-danger small"></span>
                         </div>
                         <div class="col-12">
-                            <label asp-for="Name" class="form-label fw-semibold">اسم المنتج <span class="text-danger">*</span></label>
+                            <label asp-for="Name" class="form-label">اسم المنتج <span class="text-danger">*</span></label>
                             <input asp-for="Name" class="form-control" placeholder="مثال: دهان بلاستيك أبيض ناصع" />
                             <span asp-validation-for="Name" class="text-danger small"></span>
                         </div>
                         <div class="col-12">
-                            <label asp-for="Description" class="form-label fw-semibold">الوصف</label>
-                            <textarea asp-for="Description" class="form-control" rows="3" placeholder="وصف تفصيلي للمنتج..."></textarea>
+                            <label asp-for="Description" class="form-label">الوصف</label>
+                            <textarea asp-for="Description" class="form-control" rows="3" placeholder="وصف تفصيلي للمنتج..." style="height:auto;"></textarea>
                             <span asp-validation-for="Description" class="text-danger small"></span>
                         </div>
                     </div>
                 </div>
             </div>
 
-            <div class="card shadow-sm border-0 rounded-4">
-                <div class="card-header bg-white rounded-top-4 border-bottom py-3 px-4">
-                    <h6 class="mb-0 fw-bold text-dark"><i class="bi bi-currency-dollar me-2 text-success"></i> الأسعار والوحدات</h6>
+            <!-- Section 2: Pricing -->
+            <div class="card border-0 shadow-sm mb-4" style="border-radius:var(--radius-lg)!important;">
+                <div class="card-header d-flex align-items-center gap-2">
+                    <div class="summary-icon-box icon-success" style="width:36px;height:36px;font-size:1rem;border-radius:8px;">
+                        <i class="bi bi-currency-dollar"></i>
+                    </div>
+                    <div>
+                        <h6 class="mb-0 fw-bold" style="color:var(--ink);">الأسعار والوحدات</h6>
+                        <small style="color:var(--ink-subtle);font-size:.72rem;">تكلفة وسعر البيع ووحدة القياس</small>
+                    </div>
                 </div>
-                <div class="card-body p-4">
+                <div class="card-body" style="padding:24px!important;">
                     <div class="row g-3">
                         <div class="col-md-4">
-                            <label asp-for="CostPrice" class="form-label fw-semibold">سعر التكلفة (ج.م) <span class="text-danger">*</span></label>
-                            <input asp-for="CostPrice" type="number" step="0.01" min="0.01" class="form-control" id="costPrice" placeholder="0.00" />
+                            <label asp-for="CostPrice" class="form-label">سعر التكلفة (ج.م) <span class="text-danger">*</span></label>
+                            <div class="input-group">
+                                <span class="input-group-text" style="border-radius:0 var(--radius) var(--radius) 0;"><i class="bi bi-tag"></i></span>
+                                <input asp-for="CostPrice" type="number" step="0.01" min="0.01" class="form-control" id="costPrice" placeholder="0.00" />
+                            </div>
                             <span asp-validation-for="CostPrice" class="text-danger small"></span>
                         </div>
                         <div class="col-md-4">
-                            <label asp-for="SellingPrice" class="form-label fw-semibold">سعر البيع (ج.م) <span class="text-danger">*</span></label>
-                            <input asp-for="SellingPrice" type="number" step="0.01" min="0.01" class="form-control" id="sellingPrice" placeholder="0.00" />
+                            <label asp-for="SellingPrice" class="form-label">سعر البيع (ج.م) <span class="text-danger">*</span></label>
+                            <div class="input-group">
+                                <span class="input-group-text" style="border-radius:0 var(--radius) var(--radius) 0;"><i class="bi bi-cash-coin"></i></span>
+                                <input asp-for="SellingPrice" type="number" step="0.01" min="0.01" class="form-control" id="sellingPrice" placeholder="0.00" />
+                            </div>
                             <span asp-validation-for="SellingPrice" class="text-danger small"></span>
                         </div>
                         <div class="col-md-4">
-                            <label asp-for="Unit" class="form-label fw-semibold">وحدة القياس <span class="text-danger">*</span></label>
-                            <input asp-for="Unit" class="form-control" placeholder="مثال: لتر، كيلو، علبة" />
+                            <label asp-for="Unit" class="form-label">وحدة القياس <span class="text-danger">*</span></label>
+                            <input asp-for="Unit" class="form-control" placeholder="لتر، كيلو، علبة" />
                             <span asp-validation-for="Unit" class="text-danger small"></span>
                         </div>
-                        <div class="col-12">
-                            <div class="alert border rounded-3 p-3 mb-0" id="profitAlert">
-                                <div class="d-flex align-items-center gap-3">
-                                    <div>
-                                        <small class="text-muted d-block">هامش الربح</small>
-                                        <span class="fw-bold fs-5" id="profitMarginDisplay">--%</span>
-                                    </div>
-                                    <div class="vr"></div>
-                                    <div>
-                                        <small class="text-muted d-block">ربح الوحدة</small>
-                                        <span class="fw-bold fs-5" id="profitAmountDisplay">-- ج.م</span>
-                                    </div>
-                                </div>
+                    </div>
+
+                    <!-- Profit Calculator -->
+                    <div class="mt-3 p-3 rounded-3" id="profitAlert"
+                         style="background:var(--surface-2);border:1px solid var(--border);">
+                        <div class="d-flex align-items-center gap-4">
+                            <div>
+                                <small class="d-block" style="color:var(--ink-subtle);font-size:.72rem;font-weight:600;text-transform:uppercase;letter-spacing:.04em;">هامش الربح</small>
+                                <span class="fw-bold" style="font-size:1.15rem;" id="profitMarginDisplay">--%</span>
+                            </div>
+                            <div style="width:1px;height:32px;background:var(--border);"></div>
+                            <div>
+                                <small class="d-block" style="color:var(--ink-subtle);font-size:.72rem;font-weight:600;text-transform:uppercase;letter-spacing:.04em;">ربح الوحدة</small>
+                                <span class="fw-bold" style="font-size:1.15rem;" id="profitAmountDisplay">-- ج.م</span>
                             </div>
                         </div>
                     </div>
                 </div>
-                <div class="card shadow-sm border-0 rounded-4 mb-4">
-                <div class="card-header bg-white rounded-top-4 border-bottom py-3 px-4">
-                    <h6 class="mb-0 fw-bold text-dark"><i class="bi bi-boxes me-2 text-primary"></i> إعدادات المخزون</h6>
+            </div>
+
+            <!-- Section 3: Inventory Settings -->
+            <div class="card border-0 shadow-sm" style="border-radius:var(--radius-lg)!important;">
+                <div class="card-header d-flex align-items-center gap-2">
+                    <div class="summary-icon-box icon-warning" style="width:36px;height:36px;font-size:1rem;border-radius:8px;">
+                        <i class="bi bi-layers-fill"></i>
+                    </div>
+                    <div>
+                        <h6 class="mb-0 fw-bold" style="color:var(--ink);">إعدادات المخزون</h6>
+                        <small style="color:var(--ink-subtle);font-size:.72rem;">الرصيد الافتتاحي وحد التنبيه</small>
+                    </div>
                 </div>
-                <div class="card-body p-4">
+                <div class="card-body" style="padding:24px!important;">
                     <div class="row g-3">
                         <div class="col-md-6">
-                            <label asp-for="InitialStock" class="form-label fw-semibold">الرصيد الافتتاحي <span class="text-danger">*</span></label>
-                            <input asp-for="InitialStock" type="number" step="0.01" min="0" class="form-control" placeholder="0.00" />
+                            <label asp-for="InitialStock" class="form-label">الرصيد الافتتاحي <span class="text-danger">*</span></label>
+                            <div class="input-group">
+                                <span class="input-group-text" style="border-radius:0 var(--radius) var(--radius) 0;"><i class="bi bi-archive"></i></span>
+                                <input asp-for="InitialStock" type="number" step="0.01" min="0" class="form-control" placeholder="0.00" />
+                            </div>
                             <span asp-validation-for="InitialStock" class="text-danger small"></span>
-                            <div class="form-text">الكمية المتوفرة حالياً في المخزن.</div>
+                            <div class="form-text" style="font-size:.75rem;color:var(--ink-subtle);">الكمية المتوفرة حالياً في المخزن.</div>
                         </div>
                         <div class="col-md-6">
-                            <label asp-for="MinimumStock" class="form-label fw-semibold">حد الطلب (الأمان) <span class="text-danger">*</span></label>
-                            <input asp-for="MinimumStock" type="number" step="0.01" min="0" class="form-control" placeholder="5.00" />
+                            <label asp-for="MinimumStock" class="form-label">حد الطلب (الأمان) <span class="text-danger">*</span></label>
+                            <div class="input-group">
+                                <span class="input-group-text" style="border-radius:0 var(--radius) var(--radius) 0;"><i class="bi bi-shield-exclamation"></i></span>
+                                <input asp-for="MinimumStock" type="number" step="0.01" min="0" class="form-control" placeholder="5.00" />
+                            </div>
                             <span asp-validation-for="MinimumStock" class="text-danger small"></span>
-                            <div class="form-text">سيظهر تنبيه عندما يصل المخزون لهذا المستوى.</div>
+                            <div class="form-text" style="font-size:.75rem;color:var(--ink-subtle);">سيظهر تنبيه عندما يصل المخزون لهذا المستوى.</div>
                         </div>
                     </div>
                 </div>
             </div>
         </div>
 
-        <!-- Left Column: Image & Status -->
+        <!-- ═══ Left Column: Image & Status & Actions ═══ -->
         <div class="col-lg-4">
-            <div class="card shadow-sm border-0 rounded-4 mb-4">
-                <div class="card-header bg-white rounded-top-4 border-bottom py-3 px-4">
-                    <h6 class="mb-0 fw-bold text-dark"><i class="bi bi-image me-2 text-info"></i> صورة المنتج</h6>
+
+            <!-- Image Upload -->
+            <div class="card border-0 shadow-sm mb-4" style="border-radius:var(--radius-lg)!important;">
+                <div class="card-header d-flex align-items-center gap-2">
+                    <div class="summary-icon-box icon-info" style="width:36px;height:36px;font-size:1rem;border-radius:8px;">
+                        <i class="bi bi-image"></i>
+                    </div>
+                    <h6 class="mb-0 fw-bold" style="color:var(--ink);">صورة المنتج</h6>
                 </div>
-                <div class="card-body p-4">
+                <div class="card-body" style="padding:24px!important;">
                     <div id="imagePreviewContainer" class="text-center mb-3 d-none">
-                        <img id="imagePreview" src="#" alt="معاينة الصورة" class="img-fluid rounded-3 shadow-sm border" style="max-height: 200px; object-fit: contain;" />
+                        <img id="imagePreview" src="#" alt="معاينة الصورة" class="img-fluid rounded-3 shadow-sm" style="max-height: 200px; object-fit: contain; border: 1px solid var(--border);" />
                     </div>
-                    <div id="imagePlaceholder" class="rounded-3 bg-light border border-dashed d-flex flex-column align-items-center justify-content-center text-muted mb-3" style="height: 180px;">
-                        <i class="bi bi-cloud-arrow-up fs-2 mb-2"></i>
-                        <small>اضغط لاختيار صورة</small>
-                    </div>
-                    <label class="form-label fw-semibold">رفع صورة</label>
-                    <input type="file" class="form-control" id="imageFileInput" name="ImageFile" accept="image/*" />
+                    <label for="imageFileInput" id="imagePlaceholder" class="d-flex flex-column align-items-center justify-content-center text-center rounded-3 mb-3"
+                           style="height:180px;background:var(--surface-2);border:2px dashed var(--border);cursor:pointer;transition:all var(--t-std);"
+                           onmouseover="this.style.borderColor='var(--primary)';this.style.background='rgba(99,102,241,0.04)'"
+                           onmouseout="this.style.borderColor='var(--border)';this.style.background='var(--surface-2)'">
+                        <i class="bi bi-cloud-arrow-up" style="font-size:2rem;color:var(--ink-subtle);margin-bottom:8px;"></i>
+                        <span style="font-size:.85rem;color:var(--ink-muted);font-weight:500;">اسحب أو اضغط لاختيار صورة</span>
+                        <span style="font-size:.72rem;color:var(--ink-subtle);">PNG, JPG حتى 2MB</span>
+                    </label>
+                    <input type="file" class="form-control" id="imageFileInput" name="ImageFile" accept="image/*" style="display:none;" />
+                    <button type="button" class="btn btn-secondary-af btn-sm w-100" onclick="document.getElementById('imageFileInput').click()">
+                        <i class="bi bi-folder2-open me-1"></i> اختيار ملف
+                    </button>
                 </div>
             </div>
 
-            <div class="card shadow-sm border-0 rounded-4">
-                <div class="card-header bg-white rounded-top-4 border-bottom py-3 px-4">
-                    <h6 class="mb-0 fw-bold text-dark"><i class="bi bi-toggle-on me-2 text-warning"></i> الحالة</h6>
-                </div>
-                <div class="card-body p-4">
-                    <div class="form-check form-switch">
-                        <input asp-for="IsActive" class="form-check-input" type="checkbox" role="switch" style="width: 3rem; height: 1.5rem;" />
-                        <label asp-for="IsActive" class="form-check-label ms-2 fw-semibold">منتج نشط</label>
+            <!-- Status Toggle -->
+            <div class="card border-0 shadow-sm mb-4" style="border-radius:var(--radius-lg)!important;">
+                <div class="card-header d-flex align-items-center gap-2">
+                    <div class="summary-icon-box" style="width:36px;height:36px;font-size:1rem;border-radius:8px;background:linear-gradient(135deg,#a78bfa,#7c3aed);color:white;box-shadow:0 4px 12px rgba(124,58,237,.35);">
+                        <i class="bi bi-toggle-on"></i>
                     </div>
-                    <small class="text-muted mt-2 d-block">المنتجات النشطة تظهر في المبيعات.</small>
+                    <h6 class="mb-0 fw-bold" style="color:var(--ink);">الحالة</h6>
+                </div>
+                <div class="card-body" style="padding:24px!important;">
+                    <div class="d-flex align-items-center justify-content-between p-3 rounded-3" style="background:var(--surface-2);border:1px solid var(--border);">
+                        <div>
+                            <div class="fw-semibold" style="font-size:.9rem;color:var(--ink);">منتج نشط</div>
+                            <small style="color:var(--ink-subtle);font-size:.75rem;">المنتجات النشطة تظهر في المبيعات</small>
+                        </div>
+                        <div class="form-check form-switch mb-0">
+                            <input asp-for="IsActive" class="form-check-input" type="checkbox" role="switch" style="width:3rem;height:1.5rem;" />
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Action Buttons -->
+            <div class="card border-0 shadow-sm" style="border-radius:var(--radius-lg)!important;">
+                <div class="card-body d-grid gap-2" style="padding:24px!important;">
+                    <button type="submit" class="btn btn-primary-af">
+                        <i class="bi bi-check-circle me-1"></i> حفظ المنتج
+                    </button>
+                    <a asp-action="Index" class="btn btn-secondary-af">
+                        <i class="bi bi-x-circle me-1"></i> إلغاء والعودة
+                    </a>
                 </div>
             </div>
         </div>
-    </div>
-
-    <hr class="my-4 border-light">
-    <div class="d-flex gap-2">
-        <button type="submit" class="btn btn-primary-af px-4 shadow-sm">
-            <i class="bi bi-save me-1"></i> حفظ المنتج
-        </button>
-        <a asp-action="Index" class="btn btn-light border shadow-sm">إلغاء</a>
     </div>
 </form>
 
@@ -173,16 +230,21 @@
                 profitAmountDisplay.textContent = profit.toFixed(2) + ' ج.م';
 
                 if (selling >= cost) {
-                    profitAlert.className = 'alert border rounded-3 p-3 mb-0 alert-success border-success-subtle';
-                    profitMarginDisplay.className = 'fw-bold fs-5 text-success';
-                    profitAmountDisplay.className = 'fw-bold fs-5 text-success';
+                    profitAlert.style.background = 'var(--success-bg)';
+                    profitAlert.style.borderColor = 'var(--success)';
+                    profitMarginDisplay.style.color = 'var(--success)';
+                    profitAmountDisplay.style.color = 'var(--success)';
                 } else {
-                    profitAlert.className = 'alert border rounded-3 p-3 mb-0 alert-danger border-danger-subtle';
-                    profitMarginDisplay.className = 'fw-bold fs-5 text-danger';
-                    profitAmountDisplay.className = 'fw-bold fs-5 text-danger';
+                    profitAlert.style.background = 'var(--danger-bg)';
+                    profitAlert.style.borderColor = 'var(--danger)';
+                    profitMarginDisplay.style.color = 'var(--danger)';
+                    profitAmountDisplay.style.color = 'var(--danger)';
                 }
             } else {
-                profitAlert.className = 'alert border rounded-3 p-3 mb-0';
+                profitAlert.style.background = 'var(--surface-2)';
+                profitAlert.style.borderColor = 'var(--border)';
+                profitMarginDisplay.style.color = 'var(--ink)';
+                profitAmountDisplay.style.color = 'var(--ink)';
                 profitMarginDisplay.textContent = '--%';
                 profitAmountDisplay.textContent = '-- ج.م';
             }
@@ -190,7 +252,7 @@
 
         costPriceInput.addEventListener('input', calculateProfit);
         sellingPriceInput.addEventListener('input', calculateProfit);
-        calculateProfit(); // Run on load
+        calculateProfit();
 
         // Image Preview
         const imageFileInput = document.getElementById('imageFileInput');
@@ -209,6 +271,11 @@
                 };
                 reader.readAsDataURL(file);
             }
+        });
+
+        // Clickable drop zone
+        imagePlaceholder.addEventListener('click', function() {
+            imageFileInput.click();
         });
     </script>
 }

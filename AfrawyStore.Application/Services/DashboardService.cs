@@ -65,7 +65,7 @@ public class DashboardService : IDashboardService
             TotalAmount = s.TotalAmount,
             TotalProfit = s.TotalProfit,
             Discount = s.Discount,
-            PaymentMethod = s.PaymentMethod,
+            
             Status = s.Status,
             CreatedByName = s.CreatedBy?.FullName ?? "Unknown",
             ItemCount = s.SaleItems.Count,

@@ -8,7 +8,6 @@ public class Sale : BaseEntity
     public decimal TotalAmount { get; set; }
     public decimal TotalProfit { get; set; }
     public decimal Discount { get; set; } = 0;
-    public PaymentMethod PaymentMethod { get; set; }
     public SaleStatus Status { get; set; } = SaleStatus.Completed;
     public int CreatedById { get; set; }
     public string? Note { get; set; }

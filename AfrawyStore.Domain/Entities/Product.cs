@@ -2,6 +2,7 @@ namespace AfrawyStore.Domain.Entities;
 
 public class Product : BaseEntity
 {
+    //Stock Keeping Unit => barcode
     public string SKU { get; set; } = string.Empty;
     public string Name { get; set; } = string.Empty;
     public string? Description { get; set; }
@@ -19,3 +20,6 @@ public class Product : BaseEntity
     public ICollection<InventoryLog> InventoryLogs { get; set; } = new List<InventoryLog>();
     public ICollection<SaleItem> SaleItems { get; set; } = new List<SaleItem>();
 }
+// profit = selling - cost
+// Profit Margin = (profit / selling) * 100;
+    // if for ex => 30% means 30% of sellingPrice is profit

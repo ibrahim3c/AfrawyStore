@@ -28,11 +28,6 @@ public class SalesReportDto
     // Daily breakdown table rows
     public List<SalesReportRowDto> DailyRows { get; set; } = new();
 
-    // Payment method breakdown
-    public int CashCount  { get; set; }
-    public int CardCount  { get; set; }
-    public int OtherCount { get; set; }
-
     // Computed
     public decimal ProfitMarginPercent =>
         TotalRevenue > 0 ? Math.Round(TotalProfit / TotalRevenue * 100, 1) : 0;

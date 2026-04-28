@@ -13,19 +13,10 @@ public class SaleDto
     public decimal TotalAmount { get; set; }
     public decimal TotalProfit { get; set; }
     public decimal Discount { get; set; }
-    public PaymentMethod PaymentMethod { get; set; }
     public SaleStatus Status { get; set; }
     public string CreatedByName { get; set; } = string.Empty;
     public int ItemCount { get; set; }
     public string? Note { get; set; }
-
-    public string PaymentMethodLabel => PaymentMethod switch
-    {
-        PaymentMethod.Cash => "نقدي",
-        PaymentMethod.Card => "بطاقة",
-        PaymentMethod.Other => "أخرى",
-        _ => "غير محدد"
-    };
 
     public string StatusLabel => Status switch
     {
@@ -46,19 +37,10 @@ public class SaleDetailDto
     public decimal TotalAmount { get; set; }
     public decimal TotalProfit { get; set; }
     public decimal Discount { get; set; }
-    public PaymentMethod PaymentMethod { get; set; }
     public SaleStatus Status { get; set; }
     public string CreatedByName { get; set; } = string.Empty;
     public string? Note { get; set; }
     public List<SaleItemDto> Items { get; set; } = new();
-
-    public string PaymentMethodLabel => PaymentMethod switch
-    {
-        PaymentMethod.Cash => "نقدي",
-        PaymentMethod.Card => "بطاقة",
-        PaymentMethod.Other => "أخرى",
-        _ => "غير محدد"
-    };
 
     public string StatusLabel => Status switch
     {
@@ -95,9 +77,6 @@ public class CreateSaleDto
 
     [Range(0, 1000000, ErrorMessage = "الخصم يجب أن يكون صفر أو أكثر")]
     public decimal Discount { get; set; } = 0;
-
-    [Required(ErrorMessage = "طريقة الدفع مطلوبة")]
-    public PaymentMethod PaymentMethod { get; set; } = PaymentMethod.Cash;
 
     [MaxLength(300, ErrorMessage = "الملاحظة يجب ألا تتجاوز 300 حرف")]
     public string? Note { get; set; }

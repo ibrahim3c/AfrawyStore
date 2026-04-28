@@ -256,20 +256,14 @@
             return;
         }
 
-        // Get payment method
-        const paymentMethodEl = document.querySelector('input[name="payment"]:checked');
-        const paymentMethodValue = paymentMethodEl ? paymentMethodEl.value : 'Cash';
-        
-        // Map string to enum index
-        const paymentMethodMap = { 'Cash': 0, 'Card': 1, 'Other': 2 };
-        const paymentMethod = paymentMethodMap[paymentMethodValue] ?? 0;
+
 
         const note = document.getElementById('saleNote')?.value || null;
 
         const payload = {
             items: cart.map(c => ({ productId: c.productId, quantity: c.quantity })),
             discount: discount,
-            paymentMethod: paymentMethod,
+
             note: note
         };
 

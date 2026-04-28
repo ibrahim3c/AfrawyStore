@@ -156,16 +156,7 @@
                         </span>
                     }
                 </div>
-                <div class="mb-3">
-                    <small class="text-muted d-block">طريقة الدفع</small>
-                    <span class="fw-semibold">
-                        @{
-                            var icon = Model.PaymentMethod == AfrawyStore.Domain.Enums.PaymentMethod.Cash ? "bi-cash" :
-                                       Model.PaymentMethod == AfrawyStore.Domain.Enums.PaymentMethod.Card ? "bi-credit-card" : "bi-wallet2";
-                        }
-                        <i class="bi @icon me-1"></i>@Model.PaymentMethodLabel
-                    </span>
-                </div>
+
                 <div class="mb-3">
                     <small class="text-muted d-block">الكاشير</small>
                     <span class="fw-semibold">@Model.CreatedByName</span>

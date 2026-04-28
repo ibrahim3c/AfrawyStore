@@ -81,7 +81,7 @@
                         <th class="text-center">عدد الأصناف</th>
                         <th class="text-center">الخصم</th>
                         <th class="text-center">الإجمالي</th>
-                        <th class="text-center">طريقة الدفع</th>
+        
                         <th class="text-center">الحالة</th>
                         <th>الكاشير</th>
                         <th class="text-end pe-4">الإجراءات</th>
@@ -109,15 +109,7 @@
                                 }
                             </td>
                             <td class="text-center fw-bold numeric text-dark">@sale.TotalAmount.ToString("N2") ج</td>
-                            <td class="text-center">
-                                @{
-                                    var payIcon = sale.PaymentMethod == AfrawyStore.Domain.Enums.PaymentMethod.Cash ? "bi-cash" :
-                                                  sale.PaymentMethod == AfrawyStore.Domain.Enums.PaymentMethod.Card ? "bi-credit-card" : "bi-wallet2";
-                                }
-                                <span class="badge bg-light text-dark border">
-                                    <i class="bi @payIcon me-1"></i>@sale.PaymentMethodLabel
-                                </span>
-                            </td>
+
                             <td class="text-center">
                                 @if (sale.Status == AfrawyStore.Domain.Enums.SaleStatus.Completed)
                                 {
@@ -143,7 +135,7 @@
                     @if (!Model.Any())
                     {
                         <tr>
-                            <td colspan="9" class="text-center py-5 text-muted">
+                            <td colspan="8" class="text-center py-5 text-muted">
                                 <i class="bi bi-inbox fs-2 d-block mb-2 text-black-50"></i>
                                 لا توجد عمليات بيع
                                 <div class="mt-3">
