@@ -7,8 +7,8 @@ public class SaleItem : BaseEntity
     public decimal Quantity { get; set; }
     public decimal UnitPrice { get; set; }
     public decimal UnitCost { get; set; }
-    public decimal LineTotal { get; set; }
-    public decimal LineProfit { get; set; }
+    public decimal LineTotal { get; set; } // Quantity × UnitPrice
+    public decimal LineProfit { get; set; } // (UnitPrice - UnitCost) × Quantity
 
     // Navigation
     public Sale Sale { get; set; } = null!;

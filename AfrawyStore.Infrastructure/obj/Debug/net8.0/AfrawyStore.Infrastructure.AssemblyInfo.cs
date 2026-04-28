@@ -13,7 +13,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("AfrawyStore.Infrastructure")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+c0e3ef5882ffba5a542f95dd48302e13444a505e")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+1dda0af586f52b4ccc39ae802771d76be9c93bb8")]
 [assembly: System.Reflection.AssemblyProductAttribute("AfrawyStore.Infrastructure")]
 [assembly: System.Reflection.AssemblyTitleAttribute("AfrawyStore.Infrastructure")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]

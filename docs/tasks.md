@@ -113,48 +113,42 @@
 ## Milestone 7 — Reports & Export
 > Sales, inventory, profit/loss, low-stock reports with PDF/CSV export.
 
-- [ ] 7.1 IReportService + ReportService
-- [ ] 7.2 ReportViewModel
-- [ ] 7.3 ReportsController — tab-based report views
-- [ ] 7.4 Daily/periodic sales report (date range filter)
-- [ ] 7.5 Inventory status report
-- [ ] 7.6 Profit & loss report (by period, product, category)
-- [ ] 7.7 Low-stock report
-- [ ] 7.8 CSV export
-- [ ] 7.9 PDF export (DinkToPdf or iTextSharp)
+- [x] 7.1 IReportService + ReportService
+- [x] 7.2 ReportViewModel
+- [x] 7.3 ReportsController — tab-based report views
+- [x] 7.4 Daily/periodic sales report (date range filter)
+- [x] 7.5 Inventory status report
+- [x] 7.6 Profit & loss report (by period, product, category)
+- [x] 7.7 Low-stock report
+- [x] 7.8 CSV export
+- [x] 7.9 PDF export (DinkToPdf or iTextSharp)
 
----
-
+<!-- ---
+not required
 ## Milestone 8 — Alerts Service
 > Centralized alert logic consumed by all pages.
 
 - [ ] 8.1 IAlertService + AlertService
 - [ ] 8.2 Low-stock count injected into layout (navbar badge)
 - [ ] 8.3 Dashboard alert card linked to `/Inventory?filter=low`
-- [ ] 8.4 Row-level badges on product and inventory pages
+- [ ] 8.4 Row-level badges on product and inventory pages -->
 
----
-
+<!-- ---
+not required
 ## Milestone 9 — Security, Validation & Performance
 > Hardening pass across the entire application.
 
 - [ ] 9.1 Anti-forgery tokens on all POST forms
 - [ ] 9.2 All routes protected with [Authorize]
 - [ ] 9.3 Role-gated routes ([Authorize(Roles = "Admin")])
-- [ ] 9.4 Input sanitization review
-- [ ] 9.5 Database indexes (SKU, CategoryId, SaleDate, ProductId)
-- [ ] 9.6 Pagination on all list pages
-- [ ] 9.7 Dashboard queries use SQL aggregation
+- [ ] 9.4 Input sanitization review -->
 
 ---
 
 ## Milestone 10 — Backup, Polish & Deployment
 > Final touches before go-live.
 
-- [ ] 10.1 Automatic daily SQL Server backup
-- [ ] 10.2 Manual backup trigger from settings
-- [ ] 10.3 Print styles for receipts (80mm thermal)
-- [ ] 10.4 Responsive breakpoints (sidebar collapse ≤1024px)
-- [ ] 10.5 Skeleton loaders for data-heavy pages
-- [ ] 10.6 Docker + docker-compose setup (optional)
-- [ ] 10.7 Final QA pass & bug fixes
+- [ ] 10.1 Print styles for receipts (80mm thermal)
+- [ ] 10.2 Responsive breakpoints (sidebar collapse ≤1024px)
+- [ ] 10.3 make the website responsive
+- [ ] 10.4 Skeleton loaders for data-heavy pages
